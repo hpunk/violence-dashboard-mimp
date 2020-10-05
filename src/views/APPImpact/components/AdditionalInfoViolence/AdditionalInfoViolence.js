@@ -1,14 +1,14 @@
-
 import React, { Component } from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
+import Card from "react-bootstrap/Card";
 
-class Home extends Component {
+class AdditionalInfoViolence extends Component {
     render() {
         return (
             <React.Fragment>
-                <h1>Main view</h1>
+                {"la data de violencia"}
             </React.Fragment>
         );
     }
 }
-export default withStyles()(Home);
+export default withStyles()(AdditionalInfoViolence);

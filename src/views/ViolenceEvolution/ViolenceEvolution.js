@@ -1,14 +1,21 @@
 
 import React, { Component } from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
-import Nav from "react-bootstrap/Nav";
+import { Layout } from 'antd';
+
+const { Header, Footer, Sider, Content } = Layout;
 
 class Home extends Component {
     render() {
         return (
-            <React.Fragment>
-                <h1>Evolution view</h1>
-            </React.Fragment>
+            <Layout>
+            <Header>Header</Header>
+            <Layout>
+                <Content>Content</Content>
+                <Sider>Sider</Sider>
+            </Layout>
+            <Footer>Footer</Footer>
+            </Layout>
         );
     }
 }
