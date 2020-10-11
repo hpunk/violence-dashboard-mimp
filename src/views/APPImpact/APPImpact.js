@@ -13,7 +13,7 @@ const { Sider, Content, Header } = Layout;
 class APPImpact extends Component {
     render() {
         return (
-            <div style={{height: '900px', width: '100%'}}>
+            <div style={{height: '950px', width: '100%'}}>
                 <Layout style={{height: '100%', width: '100%'}}>
                     <Header style={{height: '13%', width:'100%', backgroundColor:'white',borderRadius: '40px 10px',borderColor:'black', borderStyle:'groove'}}>
                         <Filter />
