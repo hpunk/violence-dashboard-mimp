@@ -12,7 +12,7 @@ const draw = (props) => {
     const radius = Math.min(width, height) / 2;
     const legendRectSize = 25;
     const legendSpacing = 6; 
-    console.log(schemeCategory20b);
+
     let color = d3.scaleOrdinal(schemeSet3);
 
     let svg = d3.select('.'+id)
@@ -36,13 +36,13 @@ const draw = (props) => {
     .attr('class', 'tooltip');
 
     tooltip.append('div')                          
-    .attr('class', 'label');         
+    .attr('class', 'label-pie');         
 
     tooltip.append('div')                    
-    .attr('class', 'count');               
+    .attr('class', 'count-píe');               
 
     tooltip.append('div') 
-    .attr('class', 'percent');
+    .attr('class', 'percent-pie');
 
     dataset.forEach(function(d) {
     d.count = +d.count;
@@ -55,28 +55,9 @@ const draw = (props) => {
     .append('path')
     .attr('d', arc)
     .attr('fill', function(d) { return color(d.data.label); })
-    .each(function(d) { return this._current - d; });
+    .each(function(d) { return this._current - d; });                                                        
 
 
-    path.on('mouseover', function(d) {    
-    let total = d3.sum(dataset.map(function(d) {     
-    return (d.enabled) ? d.count : 0; 
-    }));                                                      
-    let percent = Math.round(1000 * d.data.count / total) / 10;
-    tooltip.select('.label').html(d.data.label);        
-    tooltip.select('.count').html('$' + d.data.count);          
-    tooltip.select('.percent').html(percent + '%');      
-    tooltip.style('display', 'block');                   
-    });                                                           
-
-    path.on('mouseout', function() {                      
-    tooltip.style('display', 'none');
-    });
-
-    path.on('mousemove', function(d) {                
-    tooltip.style('top', (event.layerY + 10) + 'px')
-        .style('left', (event.layerX + 10) + 'px');
-    });
 
     let legend = svg.selectAll('.legend')
     .data(color.domain())

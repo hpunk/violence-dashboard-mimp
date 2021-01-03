@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Descriptions } from 'antd';
-import PieChart from '../../../../charts/Pie';
+import GroupedBarChart from '../../../../charts/GroupedBarChart';
 import { Typography } from 'antd';
 
 
@@ -21,24 +21,28 @@ class AdditionalInfoAPP extends Component {
                     <Descriptions.Item label="Total beneficiados">120</Descriptions.Item>
                 </Descriptions>
                 <div style={{display:'flex'}}>
-                    <div>
-                        <PieChart
-                            id={"pie_app_edad"}
-                            data={[{label:"test1", count:2},{label:"test2",count:7}]}
-                            width={260}
-                            height={260}
-                        />
-                        <div style={{marginLeft:'60px'}}><Text>Distribución por edades</Text></div>
-                    </div>
-                    <div style={{marginLeft:"100px"}}>
-                        <PieChart
-                            id={"pie_app_tipo"}
-                            data={[{label:"test1", count:2},{label:"test5",count:3},{label:"test9",count:2},{label:"test8",count:3},{label:"test7",count:3},{label:"test4",count:3},{label:"test11",count:3},{label:"test12",count:3},{label:"test5",count:3},{label:"test5",count:3},{label:"test5",count:3},{label:"test5",count:3},{label:"test5",count:3},{label:"test5",count:3},{label:"test5",count:3},{label:"test5",count:3},{label:"test5",count:3},{label:"test5",count:3}]}
-                            width={260}
-                            height={260}
-                        />
-                        <div style={{marginLeft:'40px'}}><Text>Distribución por tipo de beneficiario</Text></div>
-                    </div>
+                    <GroupedBarChart 
+                        id={'barchart_impact'}
+                        width={500}
+                        height={260}
+                        data = {[
+                            {
+                                'group': 'grupo a',
+                                'data' : {
+                                    'M' : 12,
+                                    'F' : 20
+                                }
+                            },
+                            {
+                                'group': 'grupo b',
+                                'data' : {
+                                    'M' : 10,
+                                    'F' : 5
+                                }
+                            }
+                        ]}
+                        subgroups={['M','F']}
+                    />
                 </div>
             </React.Fragment>
         );
