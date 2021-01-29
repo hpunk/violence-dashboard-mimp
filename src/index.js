@@ -8,14 +8,16 @@ import { createBrowserHistory } from "history";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { theme } from "./theme";
 import Main from "./views/Main/Main";
+import Navbar from "./components/Navbar";
 
 const history = createBrowserHistory();
 
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>
         <Router history={history}>
+            <Navbar />
             <Switch>
-            <Route path="/" exact component={Main}></Route>
+            <Route path="/home" exact component={Main}></Route>
                 {
                     routes.map((prop,key)=>{
                         return(

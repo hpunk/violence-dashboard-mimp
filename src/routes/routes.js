@@ -6,7 +6,7 @@ import Main from "../views/Main/Main";
 
 const IndexRoutes = [
     {
-        path: `${process.env.PUBLIC_URL}/`, component: Main, exact: true, private: false
+        path: `${process.env.PUBLIC_URL}/home`, component: Main, exact: true, private: false
     },
     {
         path: `${process.env.PUBLIC_URL}/app-impact`, component: APPImpact, exact: true, private: false
