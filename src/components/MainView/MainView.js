@@ -4,7 +4,7 @@ import Routes from '../../Routes'
 
 const MainView = () => {
   return (
-    <s.MainViewContainer>
+    <s.MainViewContainer id="contenedor">
       <Routes />
     </s.MainViewContainer>
   )
