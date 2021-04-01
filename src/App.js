@@ -4,11 +4,10 @@ import * as Palette from './colors'
 
 // Components
 import Sidebar from './components/Sidebar/Sidebar';
-import MainView from './components/MainView/MainView'
+import Main from './views/Main'
 
 
 const App = () => {
-  const backgroundImage = 'images/mountain.jpg';
   const sidebarHeader = {
     fullName: 'Proyecto de Tesis',
     shortName: 'Tesis'
@@ -34,7 +33,7 @@ const App = () => {
         fonts={fonts}
         colorPalette={Palette.creation}
       />
-      <MainView />
+      <Main />
     </s.App>
   );
 }

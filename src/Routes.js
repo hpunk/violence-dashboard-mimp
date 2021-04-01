@@ -2,12 +2,13 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 // Components
-import Home from './components/MainView/Home/Home';
-import Impact from './components/MainView/Impact/Impact';
-import Evolution from './components/MainView/Evolution/Evolution';
-import Clustering from './components/MainView/Clustering/Clustering';
+import Home from './views/Home/Home';
+import Impact from './views/Impact/Impact';
+import Evolution from './views/Evolution/Evolution';
+import Clustering from './views/Clustering/Clustering';
 
 const Routes = () => {
+  console.log("holis");
   return (
     <Switch>
       <Route exact path='/' component={Home} />

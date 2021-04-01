@@ -1,22 +1,31 @@
-import React, { Component } from 'react'
-import { PieColors, PieHoverColors } from '../../../colors/PieColors'
-import { Doughnut, Bar, HorizontalBar, } from 'react-chartjs-2'
-import { VIOLENCE_TYPES } from '../../../constants/enums'
+import React, { Component } from 'react';
+import { PieColors, PieHoverColors } from '../../colors/PieColors';
+import { Doughnut, Bar, HorizontalBar, } from 'react-chartjs-2';
+import { VIOLENCE_TYPES } from '../../constants/enums';
+
 import { 
   AppDataContainer, 
   ViolenceDataContainer, 
   ImpactContainer 
-} from './Impact.styles'
+} from './Impact.styles';
+
 import { 
   Typography,
   Table,
  } from 'antd';
+
 import {
   AppTableColumns,
-} from './ImpactChartsUtils';
+} from './ImpactChartUtils';
 
 import 'antd/dist/antd.css';
-import AppService from '../../../services/appService'
+
+import AppService from '../../services/appService';
+
+import {
+    bar_data,
+    horizontal_bar_data,
+} from '../../data_test/datatest';
 
 const { Title } = Typography;
 
@@ -47,14 +56,6 @@ class Impact extends Component{
         {type: "economical", quantity : 15},
       ],
       app_list: [],
-      selected_app : {
-        date : "",
-        code : "",
-        total_assistants: 0,
-        asisstants_by_age : [],
-        assistants_by_type : [],
-        type : "",
-      },
       line_chart_data : [],
       map_cases_data : [],
     }
@@ -63,13 +64,16 @@ class Impact extends Component{
 
   changeSelectedApp = (object) => {
     const { selected_app_index, app_list } = this.state;
+    const same_index = selected_app_index === object.index;
     if(selected_app_index !== null)
       app_list[selected_app_index].selected = false;
-    app_list[object.index].selected = true;
-    this.setState({ selected_app_index : object.index, app_list })
+    if(!same_index)
+      app_list[object.index].selected = true;
+    this.setState({ selected_app_index : same_index ? null : object.index, app_list })
   }
 
   componentDidMount(){
+    console.log("que fue");
     this.loadAPP();
   }
   
@@ -86,8 +90,6 @@ class Impact extends Component{
     
   }
 
-  
-
   updateViolenceBeforeData = (data) => this.setState({ violence_before : data })
 
   updateData = () => {
@@ -97,8 +99,8 @@ class Impact extends Component{
   }
 
   render(){
-    const { violence_before, app_list } = this.state;
-
+    const { violence_before, app_list, selected_app_index } = this.state;
+    console.log(selected_app_index);
     return (
       <ImpactContainer id="impact-container">
         <AppDataContainer id="app-container">
@@ -107,42 +109,17 @@ class Impact extends Component{
             dataSource={app_list} 
           />
           <Bar
-            data={{
-              labels: ["0-5","5-10","10-16","16-21","21-35"],
-              datasets:
-              [
-                {
-                  label:"Hombres",
-                  backgroundColor:"skyblue",
-                  data:[10,20,30,40,2,34,1,24,53,13]
-                },
-                {
-                  label:"Mujeres",
-                  backgroundColor:"grey",
-                  data:[2,54,23,12,45,32,11,5,45,12],
-                }
-              ]
+            data={bar_data}
+            options={{
+              title: {text :"Por edad de Asistente", display: true}
             }}
-            options={["a","b","c","d"]}
           />
           <HorizontalBar
-            data={{
-              labels: ["Estudiantes","Trabajadores del CEM","Serenazgo","Otros","Autoridades locales", "Profesores", "Reporteros","Militares"],
-              datasets:
-              [
-                {
-                  label:"Hombres",
-                  backgroundColor:"blue",
-                  data:[10,20,30,40,2,34,1,24,53,13]
-                },
-                {
-                  label:"Mujeres",
-                  backgroundColor:"red",
-                  data:[2,54,23,12,45,32,11,5,45,12]
-                }
-              ]
+            Title={"Por tipo de asistente"}
+            data={horizontal_bar_data}
+            options={{
+              title: {text :"Por tipo de Asistente", display: true}
             }}
-            options={["a","b","c","d"]}
           />
         </AppDataContainer>
         <ViolenceDataContainer id="violence-container">
@@ -182,4 +159,4 @@ class Impact extends Component{
   }
 }
 
-export default Impact
+export default Impact;
