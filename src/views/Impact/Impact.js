@@ -6,12 +6,19 @@ import { VIOLENCE_TYPES } from '../../constants/enums';
 import { 
   AppDataContainer, 
   ViolenceDataContainer, 
-  ImpactContainer 
+  ImpactContainer,
+  InputsCardAPP,
+  InputsCardViolence,
+  ButtonWrapper,
+  ButtonLabelWrapper,
 } from './Impact.styles';
 
 import { 
   Typography,
   Table,
+  Space,
+  DatePicker,
+  Select,
  } from 'antd';
 
 import {
@@ -26,13 +33,19 @@ import {
     bar_data,
     horizontal_bar_data,
 } from '../../data_test/datatest';
+import { select } from 'd3';
 
-const { Title } = Typography;
+import moment from 'moment';
+
+
+const { Title, Text } = Typography;
 
 class Impact extends Component{
   constructor(props){
     super(props)
     this.state = {
+      search_app : true,
+      charts_app : false,
       selected_app_index : null,
       selected_app : null,
       app_filter : {
@@ -72,6 +85,22 @@ class Impact extends Component{
     this.setState({ selected_app_index : same_index ? null : object.index, app_list })
   }
 
+  activateAppSearch = () => {
+    this.setState({ search_app : true, charts_app : false });
+  }
+
+  seeAppCharts = () => {
+    this.setState({ search_app : false, charts_app : true })
+  }
+  
+  searchApp = () => {
+    console.log("buscando");
+    const { app_list , selected_app_index } = this.state;
+    if(selected_app_index !== null )
+      app_list[selected_app_index].selected = false;
+    this.setState({ selected_app_index : null, app_list})
+  }
+
   componentDidMount(){
     console.log("que fue");
     this.loadAPP();
@@ -99,31 +128,92 @@ class Impact extends Component{
   }
 
   render(){
-    const { violence_before, app_list, selected_app_index } = this.state;
-    console.log(selected_app_index);
+    const { violence_before, app_list, selected_app_index, search_app, charts_app } = this.state;
+    const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
     return (
       <ImpactContainer id="impact-container">
         <AppDataContainer id="app-container">
-          <Table 
-            columns={AppTableColumns(this.changeSelectedApp)} 
-            dataSource={app_list} 
-          />
-          <Bar
-            data={bar_data}
-            options={{
-              title: {text :"Por edad de Asistente", display: true}
-            }}
-          />
-          <HorizontalBar
-            Title={"Por tipo de asistente"}
-            data={horizontal_bar_data}
-            options={{
-              title: {text :"Por tipo de Asistente", display: true}
-            }}
-          />
+          <InputsCardAPP>
+            <Space  align={"right"}>
+              <ButtonLabelWrapper>
+                <Text type="primary">Fecha inicio</Text>
+                <DatePicker defaultValue={moment('01/01/2019', 'DD/MM/YYYY')} format={dateFormatList} />
+              </ButtonLabelWrapper>
+              <ButtonLabelWrapper>
+                <Text type="primary">Fecha fin</Text>
+                <DatePicker defaultValue={moment('30/01/2019', 'DD/MM/YYYY')} format={dateFormatList} />
+              </ButtonLabelWrapper>
+              <ButtonLabelWrapper>
+                <Text type="primary">Departamento</Text>
+                <Select defaultValue="Lima" style={{ width: 120 }} />
+              </ButtonLabelWrapper>
+              <ButtonLabelWrapper>
+                <Text type="primary">Provincia</Text>
+                <Select defaultValue="Lima" style={{ width: 120 }} />
+              </ButtonLabelWrapper>
+              <ButtonLabelWrapper>
+                <Text type="primary">Distrito</Text>
+                <Select defaultValue="Lima" style={{ width: 120 }} />
+              </ButtonLabelWrapper>
+              <div style={{marginTop:"25px"}}><button onClick={this.searchApp}> Buscar </button></div>
+            </Space>
+          </InputsCardAPP>
+          { search_app ?
+            <div>
+              <ButtonWrapper>
+                <button onClick={this.seeAppCharts} disabled={selected_app_index === null}> Ver gráficos </button>
+                {selected_app_index === null && <h5 style={{marginTop:"12px", marginLeft: "5px"}}>Seleccionar una APP</h5>}
+              </ButtonWrapper>
+              <Table 
+                columns={AppTableColumns(this.changeSelectedApp)} 
+                dataSource={app_list} 
+              />
+            </div>
+            :
+            <InputsCardAPP>
+              <button onClick={this.activateAppSearch}> Seleccionar APP </button>
+              <Space  align={"right"}>
+                <div>Id: 114</div>
+                <div>Departamento: Lima</div>
+                <div>Provincia: Lima</div>
+                <div>Distrito: Lima</div>
+                <div>Tipo Acción Preventiva: Charla en colegio</div>
+              </Space>
+            </InputsCardAPP>
+          }
+          { charts_app &&
+            <Bar
+              data={bar_data}
+              options={{
+                title: {text :"Por edad de Asistente", display: true}
+              }}
+            />
+          }
+          { charts_app && 
+            <HorizontalBar
+              Title={"Por tipo de asistente"}
+              data={horizontal_bar_data}
+              options={{
+                title: {text :"Por tipo de Asistente", display: true}
+              }}
+            />
+          }
         </AppDataContainer>
         <ViolenceDataContainer id="violence-container">
-          <button onClick={this.updateData}> cambiar data </button>
+          <InputsCardViolence>
+            <Space align={"right"}>
+              <ButtonLabelWrapper>
+                <Text type="primary">Días antes</Text>
+                <Select defaultValue="5" style={{ width: 120 }} />
+              </ButtonLabelWrapper>
+              <ButtonLabelWrapper>
+                <Text type="primary">Días despues</Text>
+                <Select defaultValue="5" style={{ width: 120 }} />
+              </ButtonLabelWrapper>
+              <button onClick={this.updateData}> Cargar datos </button>
+            </Space>
+          </InputsCardViolence>
+          
           <div style={{display:'flex'}}>
             <div style={{height:'50%', width: '50%', textAlign:'center'}}>
               <Title level={5}>Casos de violencia antes</Title>
@@ -153,7 +243,6 @@ class Impact extends Component{
             </div>
           </div>
         </ViolenceDataContainer>
-        
       </ImpactContainer>
     )
   }
