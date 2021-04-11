@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ViolenceTypesWrapper from '../../charts/linechart/impact/ViolenceTypesWrapper';
 
 class Evolution extends Component{
   constructor(props){
@@ -9,7 +10,10 @@ class Evolution extends Component{
   }
 
   render(){
-    return <h1>Evolution</h1>
+    console.log("que fue")
+    return <div>
+     hola
+    </div>
   }
 }
 
