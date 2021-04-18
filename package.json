@@ -3,16 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@d3fc/d3fc-series": "^6.0.4",
     "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "antd": "^4.12.3",
+    "chart-stackedbar-js": "^1.0.3",
     "chart.js": "^2.9.4",
     "d3": "^6.5.0",
     "d3-collection": "^1.0.7",
+    "d3-scale": "^3.3.0",
     "d3fc-chart": "^1.4.1",
+    "d3fc-extent": "^2.2.2",
     "fontsource-roboto": "^4.0.0",
     "framer-motion": "^2.6.15",
     "node-sass": "^4.14.1",
@@ -21,6 +25,7 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-simple-maps": "^2.3.0",
     "s": "^1.0.0"
   },
   "scripts": {

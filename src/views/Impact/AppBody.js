@@ -1,6 +1,7 @@
 import React from 'react';
-import { Bar, HorizontalBar, } from 'react-chartjs-2';
+import { Bar, HorizontalBar } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
+
 
 import { 
     Space,
@@ -97,6 +98,7 @@ function AppBody({ selected, tableData, handleSelect, selectMode, setSelectMode 
                             title: {text :"Por tipo de Asistente", display: true}
                         }}
                     />
+                    
                 </div>
             }
         </React.Fragment>

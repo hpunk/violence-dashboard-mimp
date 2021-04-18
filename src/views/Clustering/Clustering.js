@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ClusteringAlgorithmsFilter from './ClusteringAlgorithmsFilter';
+import ClusteringDataFilter from './ClusteringDataFilter';
 
 class Clustering extends Component{
   constructor(props){
@@ -18,9 +20,13 @@ class Clustering extends Component{
     console.log(flag);
     return(
       <React.Fragment>
-        <button onClick={this.updateState}>
-          Actualizar
-        </button>
+        <ClusteringDataFilter />
+        <ClusteringAlgorithmsFilter />
+        {
+        //<button onClick={this.updateState}>
+        //  Actualizar
+        //</button>
+        }
         <iframe key={flag} width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~gustavo_alzamora_2021/3.embed"></iframe>
       </React.Fragment>
     );
