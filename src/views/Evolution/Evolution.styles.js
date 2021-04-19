@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 export const MapContainer = styled.div`
     width: 40%;
     height: 100%;
+    display: flex;
+    flex-wrap: wrap;
 `
 
 export const ChartsContainer = styled.div`
@@ -37,6 +39,11 @@ export const MapFilterContainer = styled.div`
     height: 10%;
     display: flex;
     align-content:'center';
+`
+export const ChoroplethContainer = styled.div`
+    width: 98%;
+    height: 90%;
+    background-color: 'black';
 `
 
 export const EvolutionCardAPP = styled.div`

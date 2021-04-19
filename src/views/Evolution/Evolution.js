@@ -2,13 +2,18 @@ import React, { Component } from 'react';
 import { ChartsDataAttributes } from './utils/EvolutionUtils';
 import EvolutionFilter from './EvolutionFilter';
 import EvolutionChartsFilter from './EvolutionChartsFilter';
-import {EvolutionContainer,MapContainer,ChartsContainer, SingleChartContainer,ChartsFilterContainer, MapFilterContainer} from './Evolution.styles';
+import {EvolutionContainer,MapContainer,ChartsContainer, SingleChartContainer,ChartsFilterContainer, MapFilterContainer, ChoroplethContainer} from './Evolution.styles';
 import './Evolution.styles';
 import EvolutionService from '../../services/evolutionService';
 import EvolutionChartData from './classes/EvolutionChartData';
 import ChartFilterTypes from './classes/ChartFilterTypes';
 import { values } from 'd3-collection';
 import SimpleLineChart from '../../charts/linechart/SimpleLineChart';
+import Map from '../../charts/choropleth/map';
+
+
+const INDIA_TOPO_JSON = require('./india.topo.json');
+const PERU_DEPARTAMENTO = require('./peru_departamental_simple.topo.json');
 
 
 class Evolution extends Component{
@@ -81,10 +86,10 @@ class Evolution extends Component{
 
       this.setState({ chart_filter, charts_to_show : new_charts_to_show });
   }
+
     
   render(){
-    const { chart_filter, charts_to_show, charts_data } = this.state;
-    console.log("el groupped chart ",charts_data);
+    const { chart_filter, charts_to_show, charts_data, map_data } = this.state;
 
     return(
       <EvolutionContainer>
@@ -92,6 +97,9 @@ class Evolution extends Component{
             <MapFilterContainer>
                 <EvolutionFilter />
             </MapFilterContainer>
+            <ChoroplethContainer>
+              <Map mapJson={PERU_DEPARTAMENTO} />
+            </ChoroplethContainer>
         </MapContainer>
         <ChartsContainer>
           <ChartsFilterContainer>
