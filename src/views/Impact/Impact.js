@@ -5,6 +5,7 @@ import ViolenceBody from './ViolenceBody';
 import AppBody from './AppBody';
 import AppService from '../../services/appService';
 import 'antd/dist/antd.css';
+import moment from 'moment';
 
 import { 
   AppDataContainer, 
@@ -23,12 +24,19 @@ class Impact extends Component{
       selected_app_index : null,
       selected_app : null,
       app_filter : {
-        start_date : new Date(),
-        end_date : new Date(),
+        startDate : moment('01/01/2020','DD/MM/YYYY'),
+        endDate : moment('01/01/2020','DD/MM/YYYY'),
+        state: 0,
+        province: 0,
+        district: 0,
+        stateLabel: "TODOS",
+        provinceLabel:"TODOS",
+        districtLabel:"TODOS",
       },
       cases_filter : {
         days_before : 7,
         days_after : 7,
+        
       },
       pie_chart_data:{
         before : [
@@ -70,11 +78,21 @@ class Impact extends Component{
   }
   
   searchApp = () => {
-    console.log("buscando");
-    const { app_list , selected_app_index } = this.state;
+    const { app_filter,app_list , selected_app_index } = this.state;
     if(selected_app_index !== null )
       app_list[selected_app_index].selected = false;
-    this.setState({ selected_app_index : null, app_list, charts_app : false, select_app_mode : true})
+
+    const formattedFilter = {
+      state : app_filter.state,
+      province: app_filter.province,
+      district: app_filter.district,
+      startDate: app_filter.startDate.format('YYYY-MM-DD'),
+      endDate: app_filter.endDate.format('YYYY-MM-DD'),
+    };
+    this.appService.searchAPP(formattedFilter).then( res => {
+      console.log(res);
+      this.setState({selected_app_index : null, app_list, charts_app : false, select_app_mode : true, app_list:res.map( (item,index) => this.addTableFields(item,index))});
+    })
   }
 
   componentDidMount(){
@@ -89,10 +107,30 @@ class Impact extends Component{
   }
 
   loadAPP = () => {
-    this.appService.searchAPP().then( res => {
+    const { app_filter } = this.state;
+    const formattedFilter = {
+      state : app_filter.state,
+      province: app_filter.province,
+      district: app_filter.district,
+      startDate: app_filter.startDate.format('YYYY-MM-DD'),
+      endDate: app_filter.endDate.format('YYYY-MM-DD'),
+    };
+    this.appService.searchAPP(formattedFilter).then( res => {
+      console.log(res);
       this.setState({app_list:res.map( (item,index) => this.addTableFields(item,index))});
     })
     
+  }
+
+  onAPPFilterChange = (field,value) => {
+    const { app_filter } = this.state;
+    if(field==="startDate" || field === "endDate"){
+      app_filter[field] = moment(value.format('DD/MM/YYYY'),'DD/MM/YYYY');
+    }
+    else {
+      app_filter[field] = value;
+    }
+    this.setState({ app_filter });
   }
 
   updateViolenceBeforeData = (data) => this.setState({ violence_before : data })
@@ -105,13 +143,15 @@ class Impact extends Component{
   }
 
   render(){
-    const { pie_chart_data, app_list, selected_app_index, select_app_mode, show_violence_charts } = this.state;
+    const { pie_chart_data, app_list, selected_app_index, select_app_mode, show_violence_charts,app_filter } = this.state;
     console.log(select_app_mode);
     return (
       <ImpactContainer id="impact-container">
         <AppDataContainer id="app-container">
           <AppFilter
             onSearch={this.searchApp}
+            filter={app_filter}
+            onChange={this.onAPPFilterChange}
           />
           <AppBody
             selected={selected_app_index}

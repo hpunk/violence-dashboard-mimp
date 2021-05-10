@@ -14,7 +14,7 @@ const App = () => {
   };
   
   const menuItems = [
-    {name: 'Home', to: '/', icon: '/icons/home.svg', subMenuItems: [] },
+    {name: 'Inicio', to: '/', icon: '/icons/home.svg', subMenuItems: [] },
     {name: 'Impacto APP', to: '/app-impact', icon: '/icons/prevencion.svg', subMenuItems: [] },
     {name: 'Evolución de la violencia', to: '/violence-evolution', icon: '/icons/evolucion.svg', subMenuItems: [] },
     {name: 'Clustering', to: '/clustering', icon: '/icons/cluster.svg', subMenuItems: [] }

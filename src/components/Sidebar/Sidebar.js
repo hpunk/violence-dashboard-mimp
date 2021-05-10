@@ -61,6 +61,7 @@ const Sidebar = props => {
 
   const handleMenuItemClick = (name) => {
     setSelectedMenuItem(name);
+    setSidebarState(false);
   }
 
 
@@ -87,11 +88,13 @@ const Sidebar = props => {
 
   return (
     <s.SidebarContainer backgroundImage={backgroundImage} isSidebarOpen={isSidebarOpen} colorPalette={colorPalette}>
-      <s.SidebarHeader font={fonts.header}>{header}</s.SidebarHeader>
-      <s.MenuItemContainer>{menuItemsJSX}</s.MenuItemContainer>
       <s.TogglerContainer onClick={() => setSidebarState(!isSidebarOpen)}>
         <s.Toggler />
       </s.TogglerContainer>
+      <s.SidebarHeader font={fonts.header}>{header}</s.SidebarHeader>
+      
+      <s.MenuItemContainer>{menuItemsJSX}</s.MenuItemContainer>
+      
     </s.SidebarContainer>
   )
 }

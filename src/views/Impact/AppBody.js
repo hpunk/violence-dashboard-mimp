@@ -18,6 +18,8 @@ import {
     ButtonWrapper,
 } from './Impact.styles';
 
+import { DEPARTAMENTOS, PROVINCIAS, DISTRITOS, APP_CODES_2017_2018, APP_CODES_2019_2020 } from '../../constants/enums';
+
 function AppBody({ selected, tableData, handleSelect, selectMode, setSelectMode }){
 
     const headers = [
@@ -35,29 +37,21 @@ function AppBody({ selected, tableData, handleSelect, selectMode, setSelectMode 
                 />,
         },
         {
-            title: 'Código',
-            dataIndex: 'code',
-            key: 'code',
+            title: 'CEM organizador',
+            dataIndex: 'cemcode',
+            key: 'cemcode',
         },
         {
-            title: 'Departamento',
+            title: 'Ubigeo de APP',
             dataIndex: 'state',
             key: 'state',
-        },
-        {
-            title: 'Provincia',
-            dataIndex: 'province',
-            key: 'province',
-        },
-        {
-            title: 'Distrito',
-            dataIndex: 'district',
-            key: 'district',
+            render: (_,object) => DEPARTAMENTOS.find(d => object.stateCode == d.value).label +"-"+PROVINCIAS.find(d => object.provinceCode == d.value).label+"-"+DISTRITOS.find(d => object.districtCode == d.value).label,
         },
         {
             title: 'Tipo',
             dataIndex: 'type',
             key: 'type',
+            render: (_,object) => object.startDate['3'] == '7' || object.startDate['3'] == '8' ? APP_CODES_2017_2018.find(d => object.actionCode == d.code).value : APP_CODES_2019_2020.find(d => object.actionCode == d.code).value,
         },
     ];
 

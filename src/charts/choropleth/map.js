@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import { scaleQuantile } from 'd3-scale';
 import ReactTooltip from 'react-tooltip';
-
+import {Slider} from 'antd';
 import LinearGradient from './LinearGradient.js';
 import './map.css';
 
@@ -104,6 +104,12 @@ function Map({mapJson}) {
   const onChangeButtonClick = () => {
     setData(getHeatMapData());
   };
+  
+  const marks = {
+    0: '05/2020',
+    33: '06/2020',
+    66: '07/2020',
+  };
 
   return (
       <div>
@@ -134,8 +140,8 @@ function Map({mapJson}) {
           </Geographies>
         </ComposableMap>
         <LinearGradient data={gradientData} />
-        <div className="center">
-          <button className="mt16" onClick={onChangeButtonClick}>Change</button>
+        <div className="center" style={{"width":"500px", "paddingLeft":"100px"}}>
+          <Slider included={false} marks={marks} />
         </div>
         </div>
   );

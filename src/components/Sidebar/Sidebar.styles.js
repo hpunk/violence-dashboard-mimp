@@ -25,7 +25,10 @@ export const SidebarHeader = styled.h3`
   font-family: ${p => p.font}
 `
 
-export const MenuItemContainer = styled.div``;
+export const MenuItemContainer = styled.div`
+position: relative;
+top:8%;
+`;
 export const ItemContainer = styled.div``;
 
 // Menu items -------------------------------------------------------------
@@ -110,9 +113,8 @@ export const DropdownIcon = styled.span`
 export const TogglerContainer = styled.div`
   position: absolute;
   width: 30%;
-  bottom: 10%;
-  left: 0;
-  right: 0;
+  left: 33%;
+  top: 8%;
   margin: 0 auto;
 `
 
