@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 
 export const AppDataContainer = styled.div`
-    width: 40%;
+    width: 48%;
     height: 100%;
 `
 
 export const ViolenceDataContainer = styled.div`
-    width: 60%;
+    width: 52%;
     height: 100%;
     flex: none;
 `

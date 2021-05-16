@@ -1,11 +1,13 @@
-import React from 'react';
+import React,{ useState }  from 'react';
 import { Bar, HorizontalBar } from 'react-chartjs-2';
+
 import PropTypes from 'prop-types';
 
 
 import { 
-    Space,
+    Typography,
     Table,
+    Radio
 } from 'antd';
 
 import {
@@ -15,84 +17,116 @@ import {
 
 import {
     InputsCardAPP,
-    ButtonWrapper,
 } from './Impact.styles';
 
-import { DEPARTAMENTOS, PROVINCIAS, DISTRITOS, APP_CODES_2017_2018, APP_CODES_2019_2020 } from '../../constants/enums';
+import { APP_TYPE_GROUPS_2017_2018, APP_TYPE_GROUPS_2019_2020, APP_CODES_2017_2018, APP_CODES_2019_2020 } from '../../constants/enums';
 
-function AppBody({ selected, tableData, handleSelect, selectMode, setSelectMode }){
+const { Text } = Typography;
+
+function AppBody({ location, tableData, handleViewOne, handleViewTotal, selectMode, setSelectMode, assistantsChartData, chartType, setChartType, date }){
 
     const headers = [
         {
-            title: 'Ver',
+            title: 'Acciones',
             dataIndex: 'selected',
             key: 'selected',
-            render: (selectedItem,object) => 
-                <input
-                    type="checkbox" 
-                    id={`selected${object.index}`} 
-                    name={`selected${object.index}`} 
-                    checked={selectedItem} 
-                    onClick={() => handleSelect(object)} 
-                />,
-        },
-        {
-            title: 'CEM organizador',
-            dataIndex: 'cemcode',
-            key: 'cemcode',
-        },
-        {
-            title: 'Ubigeo de APP',
-            dataIndex: 'state',
-            key: 'state',
-            render: (_,object) => DEPARTAMENTOS.find(d => object.stateCode == d.value).label +"-"+PROVINCIAS.find(d => object.provinceCode == d.value).label+"-"+DISTRITOS.find(d => object.districtCode == d.value).label,
+            render: (_,object) => 
+                <button
+                    id={`view${object.index}`} 
+                    name={`view${object.index}`}
+                    onClick={() => handleViewOne(object)}
+                >
+                    Ver asistentes
+                </button>,
         },
         {
             title: 'Tipo',
             dataIndex: 'type',
             key: 'type',
-            render: (_,object) => object.startDate['3'] == '7' || object.startDate['3'] == '8' ? APP_CODES_2017_2018.find(d => object.actionCode == d.code).value : APP_CODES_2019_2020.find(d => object.actionCode == d.code).value,
+            render: (_,object) =>  date._i[9] == '7' || date._i[9] == '8' ? APP_CODES_2017_2018.find(d => object.actionType === d.code).value : APP_CODES_2019_2020.find(d => object.actionType === d.code).value,
+        },
+        {
+            title: 'Número',
+            dataIndex: 'count',
+            key: 'count'
         },
     ];
 
+
+    const group = assistantsChartData && assistantsChartData.actionType ?
+    date._i[9] == '7' || date._i[9] == '8' ? APP_TYPE_GROUPS_2017_2018.find(t => t.code == assistantsChartData.actionType.substr(0,t.code.length)).value : APP_TYPE_GROUPS_2019_2020.find(t => t.code == assistantsChartData.actionType.substr(0,t.code.length)).value
+    :
+    "Todos";
+
+    const appType = assistantsChartData && assistantsChartData.actionType ? 
+    date._i[9] == '7' || date._i[9] == '8' ? APP_CODES_2017_2018.find(d => assistantsChartData.actionType == d.code).value : APP_CODES_2019_2020.find(d => assistantsChartData.actionType == d.code).value
+     : 
+     "Todos";
     return (
         <React.Fragment>
+            <div style={{fontWeight:"bold", marginLeft:"10px"}}><Text type="primary" >{`Datos para : ${location}`}</Text></div>
             { selectMode ?
                 <div>
-                <ButtonWrapper>
-                    <button onClick={() => setSelectMode(false)} disabled={selected === null}> Ver gráficos </button>
-                    {selected === null && <h5 style={{marginTop:"12px", marginLeft: "5px"}}>Seleccionar una APP</h5>}
-                </ButtonWrapper>
-                <Table 
-                    columns={headers} 
-                    dataSource={tableData} 
-                />
+                    <InputsCardAPP>
+                        <button onClick={() => handleViewTotal()}> Ver asistentes total </button>
+                    
+                    <Table 
+                        columns={headers} 
+                        dataSource={tableData} 
+                    />
+                    </InputsCardAPP>
                 </div>
                 :
                 <div>
                     <InputsCardAPP>
-                    <button onClick={() => setSelectMode(true)}> Cambiar APP </button>
-                    <Space  align={"right"}>
-                        <div>Id: 114</div>
-                        <div>Departamento: Lima</div>
-                        <div>Provincia: Lima</div>
-                        <div>Distrito: Lima</div>
-                        <div>Tipo Acción Preventiva: Charla en colegio</div>
-                    </Space>
+                        <button onClick={() => {
+                            setSelectMode(true);
+                            setChartType("a");
+                            }}> Volver </button>
+                        <div style={{fontWeight:"bold"}}>Grupo Acciones Preventivas Promocionales:</div>
+                        <div>{`${group}`}</div>
+                        <div style={{fontWeight:"bold"}}>Tipo de Acción Preventiva Promocional: </div>
+                        <div>{`${appType}`}</div>
+                        <Radio.Group onChange={() => setChartType(chartType==="a"?"b":"a")} defaultValue="a">
+                            <Radio.Button value="a">Por edad</Radio.Button>
+                            <Radio.Button value="b">Por tipo (Top 10)</Radio.Button>
+                        </Radio.Group>
+                        { chartType === "a" ?
+                            <div style={{height:"700px" , maxWidth:"763px"}}>
+                            <HorizontalBar
+                                data={bar_data(assistantsChartData)}
+                                options={{
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        x: {
+                                        stacked: true,
+                                        },
+                                        y: {
+                                        stacked: true
+                                        },
+                                    }
+                                }}
+                            />
+                            </div>
+                            :
+                            <div style={{height:"700px", maxWidth:"763px"}}>
+                            <HorizontalBar
+                                data={horizontal_bar_data(assistantsChartData)}
+                                options={{
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        x: {
+                                        stacked: true,
+                                        },
+                                        y: {
+                                        stacked: true
+                                        },
+                                    }
+                                }}
+                            />
+                            </div>
+                        }
                     </InputsCardAPP>
-                    <Bar
-                        data={bar_data}
-                        options={{
-                            title: {text :"Por edad de Asistente", display: true}
-                        }}
-                    />
-                    <HorizontalBar
-                        data={horizontal_bar_data}
-                        options={{
-                            title: {text :"Por tipo de Asistente", display: true}
-                        }}
-                    />
-                    
                 </div>
             }
         </React.Fragment>

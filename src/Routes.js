@@ -8,7 +8,6 @@ import Evolution from './views/Evolution/Evolution';
 import Clustering from './views/Clustering/Clustering';
 
 const Routes = () => {
-  console.log("holis");
   return (
     <Switch>
       <Route exact path='/' component={Home} />

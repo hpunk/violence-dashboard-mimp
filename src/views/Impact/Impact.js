@@ -23,6 +23,9 @@ class Impact extends Component{
       show_violence_charts: false,
       selected_app_index : null,
       selected_app : null,
+      chart_type : "a",
+      location: "PERÚ",
+      date: moment('01/01/2020','DD/MM/YYYY'),
       app_filter : {
         startDate : moment('01/01/2020','DD/MM/YYYY'),
         endDate : moment('01/01/2020','DD/MM/YYYY'),
@@ -53,10 +56,16 @@ class Impact extends Component{
         ]
       },
       app_list: [],
+      app_assistants: null,
+      assistants_chart_data : null,
       line_chart_data : [],
       map_cases_data : [],
     }
     this.appService = new AppService();
+  }
+
+  setChartType = (option) => {
+    this.setState({ chart_type : option });
   }
 
   changeSelectedApp = (object) => {
@@ -68,6 +77,7 @@ class Impact extends Component{
       app_list[object.index].selected = true;
     this.setState({ selected_app_index : same_index ? null : object.index, app_list, show_violence_charts: false })
   }
+
 
   activateAppSearch = () => {
     this.setState({ select_app_mode : true, charts_app : false });
@@ -90,13 +100,11 @@ class Impact extends Component{
       endDate: app_filter.endDate.format('YYYY-MM-DD'),
     };
     this.appService.searchAPP(formattedFilter).then( res => {
-      console.log(res);
-      this.setState({selected_app_index : null, app_list, charts_app : false, select_app_mode : true, app_list:res.map( (item,index) => this.addTableFields(item,index))});
+      this.setState({selected_app_index : null, charts_app : false, select_app_mode : true, app_list:res.map( (item,index) => this.addTableFields(item,index))});
     })
   }
 
   componentDidMount(){
-    console.log("que fue");
     this.loadAPP();
   }
   
@@ -107,7 +115,14 @@ class Impact extends Component{
   }
 
   loadAPP = () => {
-    const { app_filter } = this.state;
+    const { app_filter,app_list , selected_app_index } = this.state;
+    if(selected_app_index !== null )
+      app_list[selected_app_index].selected = false;
+
+    let location = app_filter.stateLabel === 'TODOS' ? 'PERÚ' : app_filter.stateLabel;
+    location += app_filter.provinceLabel === 'TODOS' ? "" : `-${app_filter.provinceLabel}`;
+    location += app_filter.districtLabel === 'TODOS' ? "" : `-${app_filter.districtLabel}`;
+
     const formattedFilter = {
       state : app_filter.state,
       province: app_filter.province,
@@ -116,15 +131,22 @@ class Impact extends Component{
       endDate: app_filter.endDate.format('YYYY-MM-DD'),
     };
     this.appService.searchAPP(formattedFilter).then( res => {
-      console.log(res);
-      this.setState({app_list:res.map( (item,index) => this.addTableFields(item,index))});
+      this.setState({ 
+        selected_app_index : null,
+        location,
+        charts_app : false,
+        select_app_mode : true,
+        app_assistants: res.aggregatedAssistants,
+        app_list:res.preventiveActions.map( (item,index) => this.addTableFields(item,index)),
+        date: app_filter.startDate,
+      });
     })
     
   }
 
   onAPPFilterChange = (field,value) => {
     const { app_filter } = this.state;
-    if(field==="startDate" || field === "endDate"){
+    if(field=="startDate" || field == "endDate"){
       app_filter[field] = moment(value.format('DD/MM/YYYY'),'DD/MM/YYYY');
     }
     else {
@@ -142,23 +164,36 @@ class Impact extends Component{
     this.setState({pie_chart_data, show_violence_charts:true})
   }
 
+  viewAssistantsSingleApp = (object) => {
+    this.setState({ assistants_chart_data : object, select_app_mode : false });
+  }
+
+  viewAssistantsTotal = () => {
+    const { app_assistants } = this.state;
+    this.setState({ assistants_chart_data : app_assistants, select_app_mode : false });
+  }
+
   render(){
-    const { pie_chart_data, app_list, selected_app_index, select_app_mode, show_violence_charts,app_filter } = this.state;
-    console.log(select_app_mode);
+    const { pie_chart_data, app_list, selected_app_index, select_app_mode, show_violence_charts,app_filter, assistants_chart_data, chart_type,location, date } = this.state;
     return (
       <ImpactContainer id="impact-container">
         <AppDataContainer id="app-container">
           <AppFilter
-            onSearch={this.searchApp}
+            onSearch={this.loadAPP}
             filter={app_filter}
             onChange={this.onAPPFilterChange}
           />
           <AppBody
-            selected={selected_app_index}
-            handleSelect={this.changeSelectedApp}
+            chartType={chart_type}
+            setChartType={this.setChartType}
+            location={location}
+            handleViewOne={this.viewAssistantsSingleApp}
+            handleViewTotal={this.viewAssistantsTotal}
             tableData={app_list}
+            assistantsChartData={assistants_chart_data}
             selectMode={select_app_mode}
-            setSelectMode={(value) => this.setState({select_app_mode:value})}c
+            setSelectMode={(value) => this.setState({select_app_mode:value})}
+            date={date}
           />
         </AppDataContainer>
         <ViolenceDataContainer id="violence-container">
