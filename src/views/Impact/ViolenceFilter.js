@@ -13,22 +13,31 @@ import {
 import PropTypes from 'prop-types';
 
 const { Text } = Typography;
+const { Option } = Select;
 
-function ViolenceFilter({filter, handleUpdateData}){
+function ViolenceFilter({onFilterChange}){
+    let dayOptions = [];
+    for(let i=1;i<16;i++)
+        dayOptions.push(<Option value={i}>{i}</Option>);
+
+    
     return (
         <React.Fragment>
-            <div style={{"width":"100%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"260px"}}> <Text type="primary" >Casos de violencia:</Text> </div>
+            <div style={{"width":"50%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"260px"}}> <Text type="primary" >Casos de violencia:</Text> </div>
             <InputsCardViolence>
                 <Space align={"right"}>
                     <ButtonLabelWrapper>
                     <Text type="primary">Días antes</Text>
-                    <Select defaultValue="5" style={{ width: 120 }} />
+                    <Select defaultValue="5" style={{ width: 120 }} onChange={(e)=> onFilterChange("days_before",e)}>
+                        {dayOptions}
+                    </Select>
                     </ButtonLabelWrapper>
                     <ButtonLabelWrapper>
                     <Text type="primary">Días despues</Text>
-                    <Select defaultValue="5" style={{ width: 120 }} />
+                    <Select defaultValue="5" style={{ width: 120 }} onChange={(e)=> onFilterChange("days_after",e)}>
+                        {dayOptions}
+                    </Select>
                     </ButtonLabelWrapper>
-                    <button onClick={handleUpdateData}> Cargar datos </button>
                 </Space>
             </InputsCardViolence>
         </React.Fragment>
@@ -36,7 +45,7 @@ function ViolenceFilter({filter, handleUpdateData}){
 }
 
 ViolenceFilter.propTypes = {
-    onSearch : PropTypes.func,
+    handleGetViolenceData : PropTypes.func,
     filter: PropTypes.object,
 }
 

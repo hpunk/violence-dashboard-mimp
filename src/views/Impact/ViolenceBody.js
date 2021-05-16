@@ -8,116 +8,201 @@ import { Doughnut,Line } from 'react-chartjs-2';
 import { VIOLENCE_TYPES } from '../../constants/enums';
 
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 const { Title } = Typography;
 
-function ViolenceBody({selectedApp, showCharts, pieData}){
+function ViolenceBody({ data, filter }){
+
+    const sumXFirstValues = (array, x) =>{
+        let sum = 0;
+        for(let i = 0; i < x; i++){
+            sum += array[i];
+        }
+        return sum;
+    }
+
+    const sumXLastValues = (array, x) =>{
+        let sum = 0;
+        for(let i = 0; i < x; i++){
+            sum += array[array.length-1-i];
+        }
+        return sum;
+    }
+
+    let violenceTypes = [];
+    let violenceCountBefore = [];
+    let violenceCountAfter = [];
+    const totalLength = data && data.psychologicalV ? data.psychologicalV.length : 0;
+    const dates = data && data.dates ? data.dates : [];
+    let xLineLabel = [];
+
+    if(data){
+        violenceTypes.push(VIOLENCE_TYPES.economical);
+        violenceTypes.push(VIOLENCE_TYPES.physical);
+        violenceTypes.push(VIOLENCE_TYPES.psychological);
+        violenceTypes.push(VIOLENCE_TYPES.sexual);
+
+        violenceCountBefore.push(sumXFirstValues(data.economicalV,filter.days_before));
+        violenceCountBefore.push(sumXFirstValues(data.physicalV,filter.days_before));
+        violenceCountBefore.push(sumXFirstValues(data.psychologicalV,filter.days_before));
+        violenceCountBefore.push(sumXFirstValues(data.sexualV,filter.days_before));
+
+        violenceCountAfter.push(sumXLastValues(data.economicalV,filter.days_after));
+        violenceCountAfter.push(sumXLastValues(data.physicalV,filter.days_after));
+        violenceCountAfter.push(sumXLastValues(data.psychologicalV,filter.days_after));
+        violenceCountAfter.push(sumXLastValues(data.sexualV,filter.days_after));
+
+        
+
+        for(let i = 0; i<totalLength; i++){
+            if(i<filter.days_before) xLineLabel.push(`${i-filter.days_before}`);
+            else if(i>=totalLength-filter.days_after) xLineLabel.push(`${i-totalLength-filter.days_after+1}`);
+            else xLineLabel.push("APP");
+        }
+    }
+
     return (
         <React.Fragment>
-            { selectedApp !== null && showCharts ?
             <div>
-                <div style={{display:'flex'}}>
-                    <div style={{height:'50%', width: '50%', textAlign:'center'}}>
+                <div style={{ height:"100%", width:"100%"}}>
+                    <div style={{height:'20%', width: '60%', marginLeft:'20%', textAlign:'center'}}>
                         <Title level={5}>Casos de violencia antes</Title>
-                        <Doughnut 
+                        <Doughnut
+                        options={{
+                            responsive: true,
+                            interaction: {
+                                intersect: false,
+                                mode:"nearest"
+                            },
+                            tooltips: {
+                                displayColors: true,
+                                titleFontSize: 14,
+                                
+                                bodyFontSize: 14,
+                                xPadding: 10,
+                                intersect: false,
+                                mode: "nearest",
+                                yPadding: 10,
+                            },
+                        }}
                         data={{
                             datasets: [{
-                                data: pieData.before.map( vb => vb.quantity ),
+                                data: violenceCountBefore,
                                 backgroundColor: PieColors,
                                 hoverBackgroundColor: PieHoverColors,
                             }],
-                            labels: pieData.before.map( vb => VIOLENCE_TYPES[vb.type])
+                            labels: violenceTypes
                         }}
                         />
                     </div>
-                    <div style={{height:'50%', width: '50%', textAlign:'center'}}>
+                    <div style={{height:'20%', width: '60%', marginLeft:'20%', textAlign:'center'}}>
                         <Title level={5}>Casos de violencia después</Title>
                         <Doughnut 
+                        options={{
+                            responsive: true,
+                            interaction: {
+                                intersect: false,
+                                mode:"nearest"
+                            },
+                            tooltips: {
+                                displayColors: true,
+                                titleFontSize: 14,
+                                
+                                bodyFontSize: 14,
+                                xPadding: 10,
+                                intersect: false,
+                                mode: "nearest",
+                                yPadding: 10,
+                            },
+                        }}
                         data={{
                             datasets: [{
-                                data: pieData.after.map( vb => vb.quantity ),
+                                data: violenceCountAfter,
                                 backgroundColor: PieColors,
                                 hoverBackgroundColor: PieHoverColors,
                             }],
-                            labels: pieData.after.map( vb => VIOLENCE_TYPES[vb.type])
+                            labels: violenceTypes
                         }}
                         />
                     </div>
                 </div>
-                <div style={{height:'90%', width: '80%', marginTop:"30px", paddingLeft:"200px"}}>
+                <div style={{height:'400px', width: '98%', maxWidth:"820px", marginTop:"30px", paddingLeft:"3.6%"}}>
                     <Line
                         data={{
-                            labels: ['-5','-4','-3','-2','-1','APP','1','2','3','4','5'],
+                            labels: xLineLabel,
+                            dates: dates,
                             datasets: [
                                 {
-                                    data: [80, 70, 90, 70, 90, 40, 30, 70, 80, 90, 70],
-                                    label: 'V. Física',
-                                    borderColor:'red',
-                                    borderWidth: 1,
+                                    data: data && data.economicalV ? data.economicalV : [],
+                                    label: 'Económica',
+                                    borderColor: PieHoverColors[0],
+                                    borderWidth: 2,
                                     radius: 2,
                                     backgroundColor: 'transparent',
                                 },
                                 {
-                                    data: [40, 20, 30, 12, 32, 63, 21, 34, 68, 24, 46],
-                                    label: 'V. Sexual',
-                                    borderColor:'green',
-                                    borderWidth: 1,
+                                    data: data && data.physicalV ?  data.physicalV : [],
+                                    label: 'Física',
+                                    borderColor:PieHoverColors[1],
+                                    borderWidth: 2,
                                     radius: 2,
                                     backgroundColor: 'transparent',
                                 },
                                 {
-                                    data: [10, 20, 30, 40, 50, 10, 70, 90, 50, 50, 40],
-                                    label: 'V. Económica',
-                                    borderColor:'blue',
-                                    borderWidth: 1,
+                                    data: data && data.psychologicalV ? data.psychologicalV : [],
+                                    label: 'Psicológica',
+                                    borderColor: PieHoverColors[2],
+                                    borderWidth: 2,
                                     radius: 2,
                                     backgroundColor: 'transparent',
                                 },
                                 {
-                                    data: [50, 10, 70, 90, 60, 50, 40, 10, 20, 30, 50],
-                                    label: 'V. Psicológica',
-                                    borderColor:'purple',
-                                    borderWidth: 1,
+                                    data: data && data.sexualV ?  data.sexualV : [],
+                                    label: 'Sexual',
+                                    borderColor: PieHoverColors[3],
+                                    borderWidth: 2,
                                     radius: 2,
                                     backgroundColor: 'transparent',
-                                }
+                                },
                             ]
                         }}
                         options={{
                             responsive: true,
                             interaction: {
-                            mode: 'index',
-                            intersect: false,
+                                intersect: false,
+                                mode:"nearest"
                             },
-                            stacked: false,
-                            plugins: {
-                            title: {
-                                display: true,
-                                text: 'Chart.js Line Chart - Multi Axis'
-                            }
+                            tooltips: {
+                                displayColors: true,
+                                titleFontSize: 14,
+                                
+                                bodyFontSize: 14,
+                                xPadding: 10,
+                                intersect: false,
+                                mode: "index",
+                                yPadding: 10,
+                                callbacks: {
+                                    label: (tooltipItem, data) => {
+                                        return `${data.datasets[tooltipItem.datasetIndex].label}: ${tooltipItem.value}`;
+                                    },
+                                    title: (tooltipItem,data) => {
+                                        return `${moment(data.dates[tooltipItem[0].index],'YYYY-MM-DD').format('DD/MM/YYYY')}${data.labels[tooltipItem[0].index]=="APP"?" (APP)":""}`;
+                                    }
+                                    
+                                }
                             },
+                            maintainAspectRatio: false,
                             scales: {
                             y: {
                                 type: 'linear',
                                 display: true,
                                 position: 'left',
                             },
-                            y1: {
-                                type: 'linear',
-                                display: true,
-                                position: 'right',
 
-                                // grid line settings
-                                grid: {
-                                drawOnChartArea: false, // only want the grid lines for one axis to show up
-                                },
-                            },
                     }}}/>
                 </div>
                 </div>
-                :
-                ""
-          }
         </React.Fragment>
     );
 }

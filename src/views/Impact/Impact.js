@@ -37,8 +37,8 @@ class Impact extends Component{
         districtLabel:"TODOS",
       },
       cases_filter : {
-        days_before : 7,
-        days_after : 7,
+        days_before : 5,
+        days_after : 5,
         
       },
       pie_chart_data:{
@@ -55,10 +55,10 @@ class Impact extends Component{
           {type: "economical", quantity : 25},
         ]
       },
-      app_list: [],
+      app_list: null,
       app_assistants: null,
       assistants_chart_data : null,
-      line_chart_data : [],
+      line_chart_data : null,
       map_cases_data : [],
     }
     this.appService = new AppService();
@@ -106,6 +106,7 @@ class Impact extends Component{
 
   componentDidMount(){
     this.loadAPP();
+    this.getViolenceData();
   }
   
   addTableFields = (item,index) => {
@@ -139,7 +140,7 @@ class Impact extends Component{
         app_assistants: res.aggregatedAssistants,
         app_list:res.preventiveActions.map( (item,index) => this.addTableFields(item,index)),
         date: app_filter.startDate,
-      });
+      }, () => this.getViolenceData());
     })
     
   }
@@ -173,8 +174,31 @@ class Impact extends Component{
     this.setState({ assistants_chart_data : app_assistants, select_app_mode : false });
   }
 
+  getViolenceData = () => {
+    const { app_filter, cases_filter } = this.state;
+    const formattedFilter = {
+      state : app_filter.state,
+      province: app_filter.province,
+      district: app_filter.district,
+      appDateStart: app_filter.startDate.format('YYYY-MM-DD'),
+      appDateEnd: app_filter.endDate.format('YYYY-MM-DD'),
+      daysBefore: cases_filter.days_before,
+      daysAfter: cases_filter.days_after,
+    };
+    this.appService.getViolenceData(formattedFilter).then( res => {
+      this.setState({ line_chart_data: res });
+    });
+  }
+
+  onViolenceFilterChange = (field,value) => {
+    const { cases_filter } = this.state;
+    cases_filter[field] = value;
+    this.setState({ cases_filter }, () => this.getViolenceData());
+  }
+
   render(){
-    const { pie_chart_data, app_list, selected_app_index, select_app_mode, show_violence_charts,app_filter, assistants_chart_data, chart_type,location, date } = this.state;
+    const { line_chart_data, app_list, select_app_mode,app_filter, assistants_chart_data, 
+      chart_type,location, date, cases_filter } = this.state;
     return (
       <ImpactContainer id="impact-container">
         <AppDataContainer id="app-container">
@@ -198,12 +222,13 @@ class Impact extends Component{
         </AppDataContainer>
         <ViolenceDataContainer id="violence-container">
           <ViolenceFilter
-            handleUpdateData={this.updateData}
+            filter={cases_filter}
+            handleGetViolenceData={this.getViolenceData}
+            onFilterChange={this.onViolenceFilterChange}
           />
           <ViolenceBody
-            selectedApp={selected_app_index}
-            showCharts={show_violence_charts}
-            pieData={pie_chart_data}
+            filter={cases_filter}
+            data={line_chart_data}
           />
         </ViolenceDataContainer>
       </ImpactContainer>

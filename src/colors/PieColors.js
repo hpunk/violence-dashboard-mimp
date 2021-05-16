@@ -1,13 +1,13 @@
 export const PieHoverColors = [
     "#E65232",
-    "#E6C032",
-    "#B0E73C",
+    "#aba622",
+    "#2e9a2a",
     "#2D99E3",
 ];
 
 export const PieColors = [
     "#E66E54",
-    "#E7C855",
-    "#B8E655",
+    "#ddd531",
+    "#51ce4d",
     "#5FADE2",
 ];

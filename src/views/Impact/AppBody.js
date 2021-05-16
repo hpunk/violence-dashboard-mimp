@@ -27,7 +27,7 @@ function AppBody({ location, tableData, handleViewOne, handleViewTotal, selectMo
 
     const headers = [
         {
-            title: 'Acciones',
+            title: '',
             dataIndex: 'selected',
             key: 'selected',
             render: (_,object) => 
