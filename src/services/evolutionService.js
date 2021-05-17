@@ -1,5 +1,5 @@
 export default class EvolutionService {
-    filterChartData = filter => {
+    /*filterChartData = filter => {
         let data = [];
         for(let i =0;i<96;i++){
             data.push({
@@ -48,6 +48,17 @@ export default class EvolutionService {
             
         }
         return Promise.resolve(data);
+    }
+    */
+
+    filterChartData = filter => {
+        const url = `http://localhost:8080/evolution/cases-by-week?startDate=${filter.startDate}&endDate=${filter.endDate}&state=${filter.state}&filterBy=${filter.filterBy}&province=${filter.province}`;
+        return fetch(url).then(response => response.json());
+    }
+
+    getMapData = filter => {
+        const url = `http://localhost:8080/evolution/cases-by-month?startDate=${filter.startDate}&endDate=${filter.endDate}&state=${filter.state}&filterBy=${filter.filterBy}`;
+        return fetch(url).then(response => response.json());
     }
 /*
     example = filter => {

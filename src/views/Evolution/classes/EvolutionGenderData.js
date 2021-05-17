@@ -18,6 +18,7 @@ export default class EvolutionGenderData {
         this.inf = new AttributeData("Infantes");
         this.nin = new AttributeData("Niños");
         this.adol = new AttributeData("Adolescentes");
+        this.adol_t = new AttributeData("Adolescentes tardíos");
         this.jov = new AttributeData("Jóvenes");
         this.adul = new AttributeData("Adultos");
         this.mayo = new AttributeData("Adultos mayores");

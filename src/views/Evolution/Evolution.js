@@ -10,7 +10,8 @@ import ChartFilterTypes from './classes/ChartFilterTypes';
 import { values } from 'd3-collection';
 import SimpleLineChart from '../../charts/linechart/SimpleLineChart';
 import Map from '../../charts/choropleth/map';
-
+import moment from 'moment';
+import { DEPARTAMENTOS_MANDATORY, PROVINCIAS_MANDATORY } from '../../constants/enums';
 
 const INDIA_TOPO_JSON = require('./india.topo.json');
 const PERU_DEPARTAMENTO = require('./peru_departamental_simple.topo.json');
@@ -22,26 +23,28 @@ class Evolution extends Component{
     this.state = {
         violence_attribute_groups : ['violence_types','first_time','factors','group_age','relation_vict_aggr'],
         groups: {
-            violence_types : ['physical_violence','psychological_violence','economical_violence','sexual_violence'],
-            first_time : ['first_time'],
-            factors : ['aggr_alcohol','aggr_drugs','vict_alcohol','vict_drugs','vict_lgtbi','vict_disability'],
-            group_age : ['inf','nin','adol','jov','adul','mayo'],
-            relation_vict_aggr: ['family','love','no_relation'],
+          violence_types : ['physical_violence','psychological_violence','economical_violence','sexual_violence'],
+          first_time : ['first_time'],
+          factors : ['aggr_alcohol','aggr_drugs','vict_alcohol','vict_drugs','vict_lgtbi','vict_disability'],
+          group_age : ['inf','nin','adol','jov','adul','mayo'],
+          relation_vict_aggr: ['family','love','no_relation'],
         },
         labels : {physical_violence: 'V. Física', psychological_violence: 'V. Psicológica', economical_violence: 'V. Económica', sexual_violence: 'V. Sexual'},
         charts_data : null,
         data_filter: {
-            start_date : "",
-            end_date : "",
-            filter_by: "",
-            state: "",
-        },
-        chart_filter: {
-            selected_place: "",
-            victim_sex: "man_victim",
-            types: new ChartFilterTypes(),
+          startDate : moment('01/01/2020','DD/MM/YYYY'),
+          endDate : moment('01/02/2020','DD/MM/YYYY'),
+          filter_by: "STATE",
+          state: 1,
+          stateLabel: "AMAZONAS",
+          province: 101,
+          provinceLabel: "CHACHAPOYAS",
+          victim_sex: "man_victim",
+          types: new ChartFilterTypes(),
         },
         charts_to_show : [],
+        map_data: [],
+        date_map: 1,
     }
     this.evolutionService = new EvolutionService();
   }
@@ -63,8 +66,15 @@ class Evolution extends Component{
   }
 
   loadChartsData = () => {
-      const { filter } = this.state;
-      this.evolutionService.filterChartData(filter)
+      const { data_filter } = this.state;
+      const formattedFilter = {
+        state : data_filter.state,
+        startDate: data_filter.startDate.format('YYYY-MM-DD'),
+        endDate: data_filter.endDate.format('YYYY-MM-DD'),
+        filterBy: data_filter.filter_by,
+        province: data_filter.province,
+      };
+      this.evolutionService.filterChartData(formattedFilter)
         .then( res => {
             this.prepareDataForChart(res);
         });
@@ -72,46 +82,105 @@ class Evolution extends Component{
 
   componentDidMount = () => {
       this.loadChartsData();
+      this.getMapData();
   }
 
   handleChartFilterChange = (field, value) =>{
-      const { chart_filter } = this.state;
-      let new_charts_to_show = null;
+      const { data_filter, charts_to_show } = this.state;
+      let new_charts_to_show = [];
       if(field === "types"){
-        chart_filter.types = new ChartFilterTypes();
+        data_filter.types = new ChartFilterTypes();
         new_charts_to_show = value;
         if(values.length > 0)
-            value.forEach(type => chart_filter.types[type] = true);
+            value.forEach(type => data_filter.types[type] = true);
       }
-
-      this.setState({ chart_filter, charts_to_show : new_charts_to_show });
+      else{
+        data_filter[field] = value;
+        new_charts_to_show = charts_to_show;
+      }
+      if(field==="state"){
+        data_filter['stateLabel'] = DEPARTAMENTOS_MANDATORY.find(i => i.value == value).label;
+      }
+      else if(field==="province"){
+        data_filter['provinceLabel'] = PROVINCIAS_MANDATORY.find(i => i.value == value).label;
+      }
+      this.setState({ data_filter, charts_to_show : new_charts_to_show }, () => {
+        if(field ==="state" || field ==="province")
+          this.loadChartsData();
+      });
   }
 
+  handleMapFilterChange = (field, value) => {
+    const { data_filter } = this.state;
+    if(field=="startDate" || field == "endDate"){
+      data_filter[field] = moment(value.format('DD/MM/YYYY'),'DD/MM/YYYY');
+    } else {
+      data_filter[field] = value;
+      if(field==="filter_by"){
+        data_filter['state'] = 1;
+        data_filter['province'] = 101;
+        data_filter['provinceLabel'] = PROVINCIAS_MANDATORY.find(i => i.value == 101).label;
+        data_filter['stateLabel'] = DEPARTAMENTOS_MANDATORY.find(i => i.value == 1).label;
+      }
+      else if(field==="state"){
+        data_filter['province'] = value*100 + 1;
+        data_filter['provinceLabel'] = PROVINCIAS_MANDATORY.find(i => i.value == value*100+1).label;
+        data_filter['stateLabel'] = DEPARTAMENTOS_MANDATORY.find(i => i.value == value).label;
+      }
+      else if(field==="province"){
+        data_filter[field] = value;
+        data_filter['provinceLabel'] = PROVINCIAS_MANDATORY.find(i => i.value == value).label;
+      }
+    }
+    this.setState({ data_filter });
+  }
+
+  getMapData = () => {
+    const { data_filter } = this.state;
+    this.setState({ date_map:1 });
+    const formattedFilter = {
+      state : data_filter.state,
+      startDate: data_filter.startDate.format('YYYY-MM-DD'),
+      endDate: data_filter.endDate.format('YYYY-MM-DD'),
+      filterBy: data_filter.filter_by,
+    };
+    this.evolutionService.getMapData(formattedFilter).then( res => {
+      this.setState({ map_data : res});
+    });
+  }
     
   render(){
-    const { chart_filter, charts_to_show, charts_data, map_data } = this.state;
-
+    const { data_filter, charts_to_show, charts_data, map_data,date_map } = this.state;
     return(
       <EvolutionContainer>
         <MapContainer>
             <MapFilterContainer>
-                <EvolutionFilter />
+                <EvolutionFilter
+                  filter={data_filter}
+                  onChange={this.handleMapFilterChange}
+                  onSearch={() => {this.getMapData(); this.loadChartsData();}}
+                />
             </MapFilterContainer>
             <ChoroplethContainer>
-              <Map mapJson={PERU_DEPARTAMENTO} />
+              <Map 
+                mapJson={PERU_DEPARTAMENTO}
+                mapData={map_data}
+                date={date_map}
+                setDate={(e) => this.setState({date_map:e})}
+              />
             </ChoroplethContainer>
         </MapContainer>
         <ChartsContainer>
           <ChartsFilterContainer>
             <EvolutionChartsFilter
-                filter={chart_filter}
+                filter={data_filter}
                 onChange={this.handleChartFilterChange}
             />
           </ChartsFilterContainer>
           {
               charts_to_show.map(chart => 
                     <SingleChartContainer key={chart}>
-                        <SimpleLineChart key={chart} data={charts_data[chart_filter.victim_sex][chart]} dates={charts_data.dates} />
+                        <SimpleLineChart key={chart} data={charts_data[data_filter.victim_sex][chart]} dates={charts_data.dates} />
                     </SingleChartContainer>
               )
           }

@@ -12,6 +12,8 @@ import {
     ButtonLabelWrapper,
 } from '../Impact/Impact.styles';
 
+import { DEPARTAMENTOS_MANDATORY, PROVINCIAS_MANDATORY } from '../../constants/enums';
+
 import {
   EvolutionCardAPP,
 } from './Evolution.styles';
@@ -19,24 +21,41 @@ import {
 import PropTypes from 'prop-types';
 
 const { Text } = Typography;
+const { Option } = Select;
 
 function EvolutionChartsFilter({filter, onChange}){
     const [selected, setSelected] = useState([]);
+    const stateOptions = DEPARTAMENTOS_MANDATORY.map(d => <Option key={d.value}>{d.label}</Option>);
+    const provinceOptions = PROVINCIAS_MANDATORY.filter(p => p.state == filter.state).map(d => <Option key={d.value}>{d.label}</Option>); 
     return (
         <React.Fragment>
           <EvolutionCardAPP width={20}>
             <Space  align={"right"}>
+            { filter.filter_by === "STATE" ?
               <ButtonLabelWrapper>
-                <Text type="primary">Provincia: </Text>
-                <Select defaultValue="Lima" style={{ width: 120 }} />
+                <Text type="primary">Departamento</Text>
+                <Select value={filter.stateLabel} style={{ width: 120 }} onChange={e => onChange('state',e)}>
+                  {stateOptions}
+                </Select>
               </ButtonLabelWrapper>
+              :
+              <ButtonLabelWrapper>
+                <Text type="primary">Provincia</Text>
+                <Select value={filter.provinceLabel} style={{ width: 120 }} onChange={e => onChange('province',e)}>
+                  {provinceOptions}
+                </Select>
+              </ButtonLabelWrapper>
+            }
             </Space>
           </EvolutionCardAPP>
           <EvolutionCardAPP width={25}>
             <Space  align={"right"}>
               <ButtonLabelWrapper>
                 <Text type="primary">Sexo víctimas: </Text>
-                <Select defaultValue="Todos" style={{ width: 120 }} />
+                <Select value={filter.victim_sex} style={{ width: 120 }} onChange={e => onChange("victim_sex",e)}>
+                  <Option key={"man_victim"}>{"Hombre"}</Option>
+                  <Option key={"woman_victim"}>{"Mujer"}</Option>
+                </Select>
               </ButtonLabelWrapper>
             </Space>
           </EvolutionCardAPP>
