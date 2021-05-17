@@ -55,6 +55,7 @@ function EvolutionChartsFilter({filter, onChange}){
                 <Select value={filter.victim_sex} style={{ width: 120 }} onChange={e => onChange("victim_sex",e)}>
                   <Option key={"man_victim"}>{"Hombre"}</Option>
                   <Option key={"woman_victim"}>{"Mujer"}</Option>
+                  <Option key={"total_victim"}>{"Todos"}</Option>
                 </Select>
               </ButtonLabelWrapper>
             </Space>

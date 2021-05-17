@@ -4,7 +4,7 @@ import { Line, Utils } from 'react-chartjs-2';
 
 
 function SimpleLineChart({data, yAxis, xAxis, dates }){
-    const colors = ['red','green','blue','black','purple','orange'];
+    const colors = ['red','green','blue','black','purple','orange','grey'];
     let labels = dates.map((_,i) => i+1);
 
     return (
@@ -18,17 +18,29 @@ function SimpleLineChart({data, yAxis, xAxis, dates }){
             responsive: true,
             maintainAspectRatio: false,
             interaction: {
-              mode: 'index',
               intersect: false,
+              mode:"nearest"
+            },
+            tooltips: {
+                displayColors: true,
+                titleFontSize: 14,
+                
+                bodyFontSize: 14,
+                xPadding: 10,
+                intersect: false,
+                mode: "index",
+                yPadding: 10,
+                callbacks: {
+                    label: (tooltipItem, data) => {
+                        return `${data.datasets[tooltipItem.datasetIndex].label}: ${tooltipItem.value}`;
+                    },
+                    title: (tooltipItem,data) => {
+                        return `${dates[tooltipItem[0].index]}`;
+                    }
+                    
+                }
             },
             stacked: false,
-            plugins: {
-              title: {
-                display: true,
-                text: 'HOLAA',
-                align: 'start'
-              }
-            },
             scales: {
               y: {
                   type: 'linear',

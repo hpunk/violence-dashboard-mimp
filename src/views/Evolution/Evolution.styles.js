@@ -54,3 +54,11 @@ export const EvolutionCardAPP = styled.div`
     border: 2px solid #40a9ff;
     background-color: white;
 `
+export const MapCardAPP = styled.div`
+    flex: none;
+    margin: 8px 4px;
+    padding: 4px;
+    width: 100%;
+    border: 2px solid #40a9ff;
+    background-color: #c7c5c5;
+`

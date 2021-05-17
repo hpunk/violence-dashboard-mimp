@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ChartsDataAttributes } from './utils/EvolutionUtils';
 import EvolutionFilter from './EvolutionFilter';
 import EvolutionChartsFilter from './EvolutionChartsFilter';
-import {EvolutionContainer,MapContainer,ChartsContainer, SingleChartContainer,ChartsFilterContainer, MapFilterContainer, ChoroplethContainer} from './Evolution.styles';
+import {EvolutionContainer,MapContainer,ChartsContainer, SingleChartContainer,ChartsFilterContainer, MapFilterContainer, ChoroplethContainer, MapCardAPP} from './Evolution.styles';
 import './Evolution.styles';
 import EvolutionService from '../../services/evolutionService';
 import EvolutionChartData from './classes/EvolutionChartData';
@@ -12,7 +12,9 @@ import SimpleLineChart from '../../charts/linechart/SimpleLineChart';
 import Map from '../../charts/choropleth/map';
 import moment from 'moment';
 import { DEPARTAMENTOS_MANDATORY, PROVINCIAS_MANDATORY } from '../../constants/enums';
+import {Typography} from 'antd';
 
+const {Text} = Typography;
 const INDIA_TOPO_JSON = require('./india.topo.json');
 const PERU_DEPARTAMENTO = require('./peru_departamental_simple.topo.json');
 
@@ -53,7 +55,7 @@ class Evolution extends Component{
 
     let temp = new EvolutionChartData();
     for(let i=0; i<data.length; i++){
-        temp.dates.push(data[i].date);
+        temp.dates.push(`${moment(data[i].startDate,'YYYY-MM-DD').format('DD/MM/YYYY')}-${moment(data[i].endDate,'YYYY-MM-DD').format('DD/MM/YYYY')}`);
         for(let j = 0; j<ChartsDataAttributes.length; j++) {
             const attr = ChartsDataAttributes[j];
             temp['man_victim'][attr].data.push(data[i][`man_${attr}`]);
@@ -162,12 +164,15 @@ class Evolution extends Component{
                 />
             </MapFilterContainer>
             <ChoroplethContainer>
+              <div style={{"width":"100%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Casos por mes:</Text> </div>
+              <MapCardAPP>
               <Map 
                 mapJson={PERU_DEPARTAMENTO}
                 mapData={map_data}
                 date={date_map}
                 setDate={(e) => this.setState({date_map:e})}
               />
+              </MapCardAPP>
             </ChoroplethContainer>
         </MapContainer>
         <ChartsContainer>
@@ -177,13 +182,22 @@ class Evolution extends Component{
                 onChange={this.handleChartFilterChange}
             />
           </ChartsFilterContainer>
+          <div style={{width:"99%",height:"90%"}}>
+          <div style={{"width":"100%", height:"5%","fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Casos por semana:</Text> </div>
+          <div style={{width:"100%",height:"95%"}}>
           {
               charts_to_show.map(chart => 
                     <SingleChartContainer key={chart}>
-                        <SimpleLineChart key={chart} data={charts_data[data_filter.victim_sex][chart]} dates={charts_data.dates} />
+                        <SimpleLineChart 
+                          key={chart} 
+                          data={charts_data[data_filter.victim_sex][chart]} 
+                          dates={charts_data.dates} 
+                        />
                     </SingleChartContainer>
               )
           }
+          </div>
+          </div>
         </ChartsContainer>
       </EvolutionContainer>
     );

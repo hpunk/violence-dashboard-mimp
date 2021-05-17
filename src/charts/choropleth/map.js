@@ -92,6 +92,17 @@ function Map({mapJson, mapData, date, setDate}) {
 
   return (
       <div>
+        <div style={{fontWeight:"bold"}}>Línea de tiempo:</div>
+        <div className="center" style={{"width":"500px", "paddingLeft":"100px"}}>
+          
+          <Slider
+            min={1}
+            max={mapData.length}
+            tipFormatter={value => { return value!==0 && mapData.length > 0 ? `${MESES[mapData[value-1].month] }/${mapData[value-1].year}`: ""}}
+            onChange={e => setDate(e)}
+            value={typeof date === 'number' ? date : 0}
+          />
+        </div>
       <ReactTooltip>{tooltipContent}</ReactTooltip>
         <ComposableMap
           projectionConfig={PROJECTION_CONFIG}
@@ -119,15 +130,7 @@ function Map({mapJson, mapData, date, setDate}) {
           </Geographies>
         </ComposableMap>
         <LinearGradient data={gradientData} />
-        <div className="center" style={{"width":"500px", "paddingLeft":"100px"}}>
-          <Slider
-            min={1}
-            max={mapData.length}
-            tipFormatter={value => { return value!==0 && mapData.length > 0 ? `${MESES[mapData[value-1].month] }/${mapData[value-1].year}`: ""}}
-            onChange={e => setDate(e)}
-            value={typeof date === 'number' ? date : 0}
-          />
-        </div>
+        
         </div>
   );
 }
