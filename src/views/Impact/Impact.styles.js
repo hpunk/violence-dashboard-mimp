@@ -44,9 +44,3 @@ export const ButtonWrapper = styled.div`
 export const ButtonLabelWrapper = styled.div`
     display: block;
 `
-
-export const Image = styled.div`
-    width: 100px;
-    height: 100px;
-    background:url(small-multiple.png);
-`

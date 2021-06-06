@@ -1,33 +1,70 @@
 import React from 'react';
 import { 
     Space,
-    DatePicker,
     Select,
     Typography,
+    Button,
+    InputNumber,
 } from 'antd';
 
 import { 
-    InputsCardAPP,
+    InputsCardAlgorithm,
     ButtonLabelWrapper,
-} from '../Impact/Impact.styles';
+} from './Clustering.styles';
 
-import moment from 'moment';
 import PropTypes from 'prop-types';
 
 const { Text } = Typography;
+const {Option} = Select;
 
-function ClusteringAlgorithmsFilter({filter, onSearch}){
-    const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
+function ClusteringAlgorithmsFilter({filter, onCluster, onChange, isLoading}){
+    let kOptions = [1,2,3,4,5,6,7,8];
+    kOptions = kOptions.map(i => <Option key={i}>{i}</Option>)
+    
     return (
-        <InputsCardAPP>
-            <Space  align={"right"}>
-              <ButtonLabelWrapper>
-                <Text type="primary">Algoritmo</Text>
-                <Select defaultValue="Average Linkage" style={{ width: 200 }} />
-              </ButtonLabelWrapper>
-              <div ><button onClick={onSearch}> Encontrar grupos </button></div>
-            </Space>
-          </InputsCardAPP>
+        <div>
+          <div style={{"width":"90%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Algoritmo de clustering:</Text> </div>
+          <InputsCardAlgorithm>
+              <Space  align={"right"}>
+                <ButtonLabelWrapper style={{ maxWidth: '120px' }}>
+                  <Text type="primary">Algoritmo</Text>
+                  <Select value={filter.algorithmLabel} style={{ width: 120 }} onChange={e => onChange('algorithm',e)}>
+                    <Option key={0}>{'K-Medoids'}</Option>
+                    <Option key={1}>{'DBSCAN'}</Option>
+                    <Option key={2}>{'Linkage'}</Option>
+                  </Select>
+                </ButtonLabelWrapper>
+                {
+                  filter.algorithm == 0 &&
+                  <ButtonLabelWrapper style={{ maxWidth: '140px' }}>
+                    <Text type="primary">K (# de grupos)</Text>
+                    <InputNumber min={1} max={12} value={filter.k} onChange={(e)=> onChange("k",e)} />
+                  </ButtonLabelWrapper>
+                }
+                {
+                  filter.algorithm == 1 &&
+                  <React.Fragment>
+                    <ButtonLabelWrapper>
+                      <Text type="primary">Núm. vecinos</Text>
+                      <InputNumber min={1} max={20} style={{ maxWidth: '120px' }} value={filter.mins} onChange={(e)=> onChange("mins",e)} />
+                    </ButtonLabelWrapper>
+                    <ButtonLabelWrapper>
+                    <Text type="primary">EPS</Text>
+                    <InputNumber min={0.01} step="0.01" max={0.8} style={{ maxWidth: '120px' }} value={filter.eps} onChange={(e)=> onChange("eps",e)} />
+                  </ButtonLabelWrapper>
+                </React.Fragment>
+                }
+                {
+                  filter.algorithm == 2 &&
+                  <ButtonLabelWrapper style={{ maxWidth: '120px' }}>
+                    <Text type="primary"># de Grupos</Text>
+                    <InputNumber min={0} max={12} value={filter.k} onChange={(e)=> onChange("k",e)} />
+                  </ButtonLabelWrapper>
+                }
+                <div style={{marginTop:"25px"}}><Button type={"primary"} onClick={onCluster} disabled={!filter.isValid || isLoading}> Encontrar grupos </Button></div>
+              </Space>
+            </InputsCardAlgorithm>
+        </div>
     );
 }
 
