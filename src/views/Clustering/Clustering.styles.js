@@ -25,6 +25,18 @@ export const AlgorithmContainer = styled.div`
 export const ClusteringDataContainer = styled.div`
     width: 100%;
     height: 90%;
+    display: flex;
+`
+
+export const ClusteringGraphic = styled.div`
+    width: 65%;
+    height: 100%;
+    flex: none;
+`
+
+export const ClusteringDataDownload = styled.div`
+    width: 35%;
+    height: 100%;
     flex: none;
 `
 
@@ -48,6 +60,16 @@ export const InputsCardAlgorithm = styled.div`
     padding: 4px;
     width: 83%;
     max-width: 549px;
+    border: 2px solid #40a9ff;
+    background-color: white;
+`
+
+export const DownloadCard = styled.div`
+    flex: none;
+    margin: 8px 4px;
+    padding: 4px;
+    width: 80%;
+    max-width: 500px;
     border: 2px solid #40a9ff;
     background-color: white;
 `

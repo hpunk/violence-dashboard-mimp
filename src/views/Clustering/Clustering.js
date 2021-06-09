@@ -9,11 +9,14 @@ import {
   DataFilterContainer,
   AlgorithmContainer ,
   DataCountContainer,
+  ClusteringGraphic,
+  ClusteringDataDownload,
 } from './Clustering.styles';
 import { Spin } from 'antd';
 import { clusteringAlgorithmsNames } from './utils/utils';
 import DataFilter from './DataFilter';
 import DataCount from './DataCount';
+import DownloadArea from './DownloadArea';
 
 class Clustering extends Component{
   constructor(props){
@@ -65,7 +68,7 @@ class Clustering extends Component{
     this.setState({ loading: true });
     this.service.countDataToCluster(formattedFilter).then(response => {
       const { filter } = this.state;
-      filter.isValid = (response.count > 50) && (response.count <= 450);
+      filter.isValid = (response.count >= 50) && (response.count <= 450);
       this.setState({ filter, count : response.count, dendrogram:false, clusters :[], loading: false });
     })
   }
@@ -149,6 +152,7 @@ class Clustering extends Component{
             <DataCount
               count={count}
             />
+            {!filter.isValid && <div>Mín. : 50, Máx. : 450</div>}
           </DataCountContainer>
           <AlgorithmContainer>
             <ClusteringAlgorithmsFilter
@@ -159,17 +163,22 @@ class Clustering extends Component{
             />
           </AlgorithmContainer>
         </ClusteringFilterContainer>
-        { loading && <Spin size="large" />}
-        { !loading && !dendrogram && clusters.length > 0  &&
-          <ClusteringDataContainer id="clustering-data-container">
-            <iframe key={flag_scatter} width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~gustavo_alzamora_2021/11.embed"></iframe>
-          </ClusteringDataContainer>
-        }
-        { !loading && dendrogram &&
-          <ClusteringDataContainer id="clustering-data-container">
-            <iframe key={flag_dendro} width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~gustavo_alzamora_2021/23.embed"></iframe>
-          </ClusteringDataContainer>
-        }
+        <ClusteringDataContainer id="clustering-data-container">
+          <ClusteringGraphic>
+            { loading && <Spin size="large" />}
+            { !loading && !dendrogram && clusters.length > 0  &&
+              <iframe key={flag_scatter} width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~gustavo_alzamora_2021/11.embed"></iframe>
+            }
+            { !loading && dendrogram &&
+              <iframe key={flag_dendro} width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~gustavo_alzamora_2021/23.embed"></iframe>
+            }
+          </ClusteringGraphic>
+          <ClusteringDataDownload>
+            { !loading && clusters.length > 0 && <DownloadArea
+              clusters = {clusters}
+            />}
+          </ClusteringDataDownload>
+        </ClusteringDataContainer>
       </ClusteringContainer>
     );
   }
