@@ -62,3 +62,13 @@ export const MapCardAPP = styled.div`
     border: 2px solid #40a9ff;
     background-color: #c7c5c5;
 `
+
+export const InputsCardAPP = styled.div`
+    flex: none;
+    margin: 8px 4px;
+    padding: 4px;
+    width: 100%;
+    max-width: 633px;
+    border: 2px solid #40a9ff;
+    background-color: white;
+`

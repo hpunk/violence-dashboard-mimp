@@ -45,6 +45,10 @@ function DataFilter({filter, onSearch, onChange, isLoading}){
         onChange('districtLabel',DISTRITOS.find(i => i.value == value).label);
     };
 
+    const disabledEndDate = current => {
+      return (current.diff(startLocal,'days') < 0) ||  Number(current.format('YYYY'))-Number(startLocal.format('YYYY')) != 0;
+    }
+
     return (
         <React.Fragment>
           <div style={{"width":"100%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Filtros de casos de violencia a ser considerados:</Text> </div>
@@ -55,11 +59,17 @@ function DataFilter({filter, onSearch, onChange, isLoading}){
                   <DatePicker value={startLocal} format={dateFormatList} onChange={e => {
                       setStartLocal(e);
                       onChange('startDate',e);
+                      if((endLocal.diff(e,'days') < 0) || (Number(endLocal.format('YYYY'))-Number(e.format('YYYY')) > 0)){
+                        setEndLocal(e);
+                        onChange('endDate',e);
+                      }
                       }} allowClear={false}/>
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
                   <Text type="primary">Fecha fin</Text>
-                  <DatePicker value={endLocal} format={dateFormatList} onChange={e => {
+                  <DatePicker value={endLocal} format={dateFormatList} 
+                    disabledDate={disabledEndDate}
+                    onChange={e => {
                       setEndLocal(e);
                       onChange('endDate',e);
                       }} allowClear={false}/>

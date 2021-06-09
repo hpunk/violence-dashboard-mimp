@@ -15,7 +15,6 @@ import { DEPARTAMENTOS_MANDATORY, PROVINCIAS_MANDATORY } from '../../constants/e
 import {Typography} from 'antd';
 
 const {Text} = Typography;
-const INDIA_TOPO_JSON = require('./india.topo.json');
 const PERU_DEPARTAMENTO = require('./peru_departamental_simple.topo.json');
 
 

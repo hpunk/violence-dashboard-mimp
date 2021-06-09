@@ -7,9 +7,10 @@ import {
 } from 'antd';
 
 import { 
-    InputsCardAPP,
     ButtonLabelWrapper,
 } from '../Impact/Impact.styles';
+
+import {InputsCardAPP} from './Evolution.styles';
 
 import { DEPARTAMENTOS_MANDATORY } from '../../constants/enums';
 
@@ -21,7 +22,8 @@ const { Option } = Select;
 
 function EvolutionFilter({filter, onSearch, onChange}){
     const [showStateSelector, setShowStateSelector] = useState(filter.filter_by == "PROVINCE");
-
+    const [startLocal,setStartLocal] = useState(filter.startDate);
+    const [endLocal,setEndLocal] = useState(filter.endDate);
     const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 
     const stateOptions = DEPARTAMENTOS_MANDATORY.map(d => <Option key={d.value}>{d.label}</Option>);
@@ -36,24 +38,40 @@ function EvolutionFilter({filter, onSearch, onChange}){
       setShowStateSelector(value=="PROVINCE")
     }
 
+    const disabledEndDate = current => {
+      return (current.diff(startLocal,'days') < 0) || (current.diff(startLocal,'months') >24);
+    }
+
     return (
         <InputsCardAPP>
             <Space  align={"right"}>
               <ButtonLabelWrapper>
                 <Text type="primary">Fecha inicio:</Text>
-                <DatePicker value={filter.startDate} format={dateFormatList} onChange={e => onChange('startDate',e)} />
+                <DatePicker value={startLocal} format={dateFormatList} allowClear={false}
+                onChange={e => {
+                  setStartLocal(e);
+                  onChange('startDate',e);
+                  if((endLocal.diff(e,'days') < 0) || (endLocal.diff(e,'years') > 2)){
+                    setEndLocal(e);
+                    onChange('endDate',e);
+                  }
+                }
+                } />
               </ButtonLabelWrapper>
               <ButtonLabelWrapper>
                 <Text type="primary">Fecha fin:</Text>
-                <DatePicker value={filter.endDate} format={dateFormatList} onChange={e => onChange('endDate',e)} />
+                <DatePicker disabledDate={disabledEndDate} value={endLocal} format={dateFormatList} onChange={e => {
+                      setEndLocal(e);
+                      onChange('endDate',e);
+                      }} allowClear={false} />
               </ButtonLabelWrapper>
-              <ButtonLabelWrapper>
+              {false && <ButtonLabelWrapper>
                 <Text type="primary">Filtrar por:</Text>
                 <Select defaultValue="Departamento" style={{ width: 120 }} onChange={e => changeFilterBy(e)}>
                   <Option key={"STATE"}>{"Departamento"}</Option>
                   <Option key={"PROVINCE"}>{"Provincia"}</Option>
                 </Select>
-              </ButtonLabelWrapper>
+              </ButtonLabelWrapper>}
               { showStateSelector &&
               <ButtonLabelWrapper>
                 <Text type="primary">Departamento</Text>
