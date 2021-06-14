@@ -52,12 +52,12 @@ export default class EvolutionService {
     */
 
     filterChartData = filter => {
-        const url = `http://localhost:8080/evolution/cases-by-week?startDate=${filter.startDate}&endDate=${filter.endDate}&state=${filter.state}&filterBy=${filter.filterBy}&province=${filter.province}`;
+        const url = `http://34.136.70.2/evolution/cases-by-week?startDate=${filter.startDate}&endDate=${filter.endDate}&state=${filter.state}&filterBy=${filter.filterBy}&province=${filter.province}`;
         return fetch(url).then(response => response.json());
     }
 
     getMapData = filter => {
-        const url = `http://localhost:8080/evolution/cases-by-month?startDate=${filter.startDate}&endDate=${filter.endDate}&state=${filter.state}&filterBy=${filter.filterBy}`;
+        const url = `http://34.136.70.2/evolution/cases-by-month?startDate=${filter.startDate}&endDate=${filter.endDate}&state=${filter.state}&filterBy=${filter.filterBy}`;
         return fetch(url).then(response => response.json());
     }
 /*
