@@ -61,7 +61,7 @@ function ClusteringAlgorithmsFilter({filter, onCluster, onChange, isLoading}){
                     <InputNumber min={0} max={12} value={filter.k} onChange={(e)=> onChange("k",e)} />
                   </ButtonLabelWrapper>
                 }
-                <div style={{marginTop:"25px"}}><Button type={"primary"} onClick={onCluster} disabled={!filter.isValid || isLoading}> Encontrar grupos </Button></div>
+                <div style={{marginTop:"25px"}}><Button type={"primary"} onClick={onCluster} disabled={isLoading}> Encontrar grupos </Button></div>
               </Space>
             </InputsCardAlgorithm>
         </div>

@@ -62,7 +62,6 @@ class Evolution extends Component{
             temp['total_victim'][attr].data.push(data[i][`man_${attr}`]+data[i][`woman_${attr}`]);
         }
     }
-
     this.setState({ charts_data : temp.getGrouped() });
   }
 
@@ -92,8 +91,9 @@ class Evolution extends Component{
       if(field === "types"){
         data_filter.types = new ChartFilterTypes();
         new_charts_to_show = value;
-        if(values.length > 0)
+        if(values.length > 0){
             value.forEach(type => data_filter.types[type] = true);
+        }
       }
       else{
         data_filter[field] = value;
@@ -106,7 +106,7 @@ class Evolution extends Component{
         data_filter['provinceLabel'] = PROVINCIAS_MANDATORY.find(i => i.value == value).label;
       }
       this.setState({ data_filter, charts_to_show : new_charts_to_show }, () => {
-        if(field ==="state" || field ==="province")
+        if(field ==="state" || field ==="province" || field === "types")
           this.loadChartsData();
       });
   }
@@ -185,15 +185,15 @@ class Evolution extends Component{
           <div style={{"width":"100%", height:"5%","fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Casos por semana:</Text> </div>
           <div style={{width:"100%",height:"95%"}}>
           {
-              charts_to_show.map(chart => 
-                    <SingleChartContainer key={chart}>
-                        <SimpleLineChart 
-                          key={chart} 
-                          data={charts_data[data_filter.victim_sex][chart]} 
-                          dates={charts_data.dates} 
-                        />
-                    </SingleChartContainer>
-              )
+            charts_to_show.map(chart => 
+              <SingleChartContainer key={chart}>
+                  <SimpleLineChart 
+                    key={chart} 
+                    data={charts_data[data_filter.victim_sex][chart]} 
+                    dates={charts_data.dates} 
+                  />
+              </SingleChartContainer>
+            )
           }
           </div>
           </div>

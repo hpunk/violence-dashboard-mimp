@@ -100,7 +100,7 @@ function DataFilter({filter, onSearch, onChange, isLoading}){
                     type={"primary"}
                     disabled={isLoading}
                   > 
-                    Verificar 
+                    Filtrar 
                   </Button>
                 </div>
               </Space>

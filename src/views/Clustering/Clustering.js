@@ -18,6 +18,8 @@ import DataFilter from './DataFilter';
 import DataCount from './DataCount';
 import DownloadArea from './DownloadArea';
 
+const MAX_CASES = 380;
+
 class Clustering extends Component{
   constructor(props){
     super(props)
@@ -38,7 +40,7 @@ class Clustering extends Component{
         k : 3,
         mins : 6,
         eps : 0.1,
-        isValid: false,
+        isValid: true,
       },
       clusters:[],
       dendrogram:false,
@@ -68,7 +70,7 @@ class Clustering extends Component{
     this.setState({ loading: true });
     this.service.countDataToCluster(formattedFilter).then(response => {
       const { filter } = this.state;
-      filter.isValid = (response.count >= 50) && (response.count <= 450);
+      filter.isValid = (response.count <= 380);
       this.setState({ filter, count : response.count, dendrogram:false, clusters :[], loading: false });
     })
   }
@@ -79,7 +81,6 @@ class Clustering extends Component{
       filter[field] = moment(value.format('DD/MM/YYYY'),'DD/MM/YYYY');
     else
       filter[field] = value;
-    filter.isValid = false;
     this.setState({ filter });
   }
 
@@ -152,7 +153,7 @@ class Clustering extends Component{
             <DataCount
               count={count}
             />
-            {!filter.isValid && <div>Mín. : 50, Máx. : 450</div>}
+            {!filter.isValid && <div>Se trabajará con una muestra de 380 casos en esta versión</div>}
           </DataCountContainer>
           <AlgorithmContainer>
             <ClusteringAlgorithmsFilter
