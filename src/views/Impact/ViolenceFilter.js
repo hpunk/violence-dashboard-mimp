@@ -23,23 +23,7 @@ function ViolenceFilter({onFilterChange}){
     
     return (
         <React.Fragment>
-            <div style={{"width":"50%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"260px"}}> <Text type="primary" >Casos de violencia:</Text> </div>
-            <InputsCardViolence>
-                <Space align={"right"}>
-                    <ButtonLabelWrapper>
-                    <Text type="primary">Días antes</Text>
-                    <Select defaultValue="5" style={{ width: 120 }} onChange={(e)=> onFilterChange("days_before",e)}>
-                        {dayOptions}
-                    </Select>
-                    </ButtonLabelWrapper>
-                    <ButtonLabelWrapper>
-                    <Text type="primary">Días despues</Text>
-                    <Select defaultValue="5" style={{ width: 120 }} onChange={(e)=> onFilterChange("days_after",e)}>
-                        {dayOptions}
-                    </Select>
-                    </ButtonLabelWrapper>
-                </Space>
-            </InputsCardViolence>
+            <div style={{"width":"50%","height": "7%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"260px"}}></div>
         </React.Fragment>
     );
 }

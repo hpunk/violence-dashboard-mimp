@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 
 export const AppDataContainer = styled.div`
-    width: 48%;
+    width: 52%;
     height: 100%;
 `
 
 export const ViolenceDataContainer = styled.div`
-    width: 52%;
+    width: 48%;
     height: 100%;
     flex: none;
 `
@@ -21,7 +21,7 @@ export const InputsCardAPP = styled.div`
     flex: none;
     margin: 8px 4px;
     padding: 4px;
-    width: 100%;
+    width: 80%;
     border: 2px solid #40a9ff;
     background-color: white;
 `

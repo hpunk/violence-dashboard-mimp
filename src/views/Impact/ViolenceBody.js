@@ -12,8 +12,8 @@ import moment from 'moment';
 
 const { Title } = Typography;
 
-function ViolenceBody({ data, filter }){
-
+function ViolenceBody({ data, filter, appData }){
+    console.log("el appData",appData);
     const sumXFirstValues = (array, x) =>{
         let sum = 0;
         for(let i = 0; i < x; i++){
@@ -56,21 +56,36 @@ function ViolenceBody({ data, filter }){
         
 
         for(let i = 0; i<totalLength; i++){
-            if(i<filter.days_before) xLineLabel.push(`${i-filter.days_before}`);
-            else if(i>=totalLength-filter.days_after) xLineLabel.push(`${i-totalLength-filter.days_after+1}`);
-            else xLineLabel.push("APP");
+            xLineLabel.push(`${i+1}`);
         }
     }
 
     return (
         <React.Fragment>
             <div>
-                <div style={{ height:"100%", width:"100%"}}>
-                    <div style={{height:'20%', width: '60%', marginLeft:'20%', textAlign:'center'}}>
-                        <Title level={5}>Casos de violencia antes</Title>
-                        <Doughnut
+
+                <div style={{height:'400px', width: '98%', maxWidth:"820px", marginTop:"30px", paddingLeft:"3.6%"}}>
+                    <Line
+                        data={{
+                            labels: xLineLabel,
+                            dates: dates,
+                            datasets: [
+                                {
+                                    data: appData,
+                                    label: 'Acciones Preventivas Promocionales',
+                                    borderColor: PieHoverColors[0],
+                                    borderWidth: 2,
+                                    radius: 2,
+                                    backgroundColor: 'transparent',
+                                },
+                            ]
+                        }}
                         options={{
                             responsive: true,
+                            title: {
+                                display: true,
+                                text: 'Cantidad de acciones preventivas registradas en el mes',
+                            },
                             interaction: {
                                 intersect: false,
                                 mode:"nearest"
@@ -82,50 +97,43 @@ function ViolenceBody({ data, filter }){
                                 bodyFontSize: 14,
                                 xPadding: 10,
                                 intersect: false,
-                                mode: "nearest",
+                                mode: "index",
                                 yPadding: 10,
+                                callbacks: {
+                                    label: (tooltipItem, data) => {
+                                        return `${data.datasets[tooltipItem.datasetIndex].label}: ${tooltipItem.value}`;
+                                    },
+                                    title: (tooltipItem,data) => {
+                                        return `${moment(data.dates[tooltipItem[0].index],'YYYY-MM-DD').format('DD/MM/YYYY')}`;
+                                    }
+                                    
+                                }
                             },
-                        }}
-                        data={{
-                            datasets: [{
-                                data: violenceCountBefore,
-                                backgroundColor: PieColors,
-                                hoverBackgroundColor: PieHoverColors,
-                            }],
-                            labels: violenceTypes
-                        }}
-                        />
-                    </div>
-                    <div style={{height:'20%', width: '60%', marginLeft:'20%', textAlign:'center'}}>
-                        <Title level={5}>Casos de violencia después</Title>
-                        <Doughnut 
-                        options={{
-                            responsive: true,
-                            interaction: {
-                                intersect: false,
-                                mode:"nearest"
-                            },
-                            tooltips: {
-                                displayColors: true,
-                                titleFontSize: 14,
+                            maintainAspectRatio: false,
+                            scales: {
                                 
-                                bodyFontSize: 14,
-                                xPadding: 10,
-                                intersect: false,
-                                mode: "nearest",
-                                yPadding: 10,
-                            },
-                        }}
-                        data={{
-                            datasets: [{
-                                data: violenceCountAfter,
-                                backgroundColor: PieColors,
-                                hoverBackgroundColor: PieHoverColors,
-                            }],
-                            labels: violenceTypes
-                        }}
-                        />
-                    </div>
+                                yAxes: [{
+                                    type: 'linear',
+                                    display: true,
+                                    position: 'left',
+                                    ticks: {
+                                        precision: 0,
+                                    },
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Número de acciones preventivas',
+                                    }
+                                }],
+                                xAxes: [{
+                                    display: true,
+                                    position: 'left',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Días del mes',
+                                    }
+                                }],
+                            }
+                        }}/>
                 </div>
                 <div style={{height:'400px', width: '98%', maxWidth:"820px", marginTop:"30px", paddingLeft:"3.6%"}}>
                     <Line
@@ -169,6 +177,10 @@ function ViolenceBody({ data, filter }){
                         }}
                         options={{
                             responsive: true,
+                            title: {
+                                display: true,
+                                text: 'Cantidad de casos de violencia registrados en el mes',
+                            },
                             interaction: {
                                 intersect: false,
                                 mode:"nearest"
@@ -194,13 +206,30 @@ function ViolenceBody({ data, filter }){
                             },
                             maintainAspectRatio: false,
                             scales: {
-                            y: {
-                                type: 'linear',
-                                display: true,
-                                position: 'left',
-                            },
+                                
+                                yAxes: [{
+                                    type: 'linear',
+                                    display: true,
+                                    position: 'left',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Número de casos',
+                                    },
+                                    ticks: {
+                                        precision: 0,
+                                    },
+                                }],
+                                xAxes: [{
+                                    display: true,
+                                    position: 'left',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Días del mes',
+                                    }
+                                }],
+                            }
 
-                    }}}/>
+                    }}/>
                 </div>
                 </div>
         </React.Fragment>

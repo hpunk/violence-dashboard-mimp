@@ -28,18 +28,19 @@ class Impact extends Component{
       date: moment('01/01/2020','DD/MM/YYYY'),
       app_filter : {
         startDate : moment('01/01/2020','DD/MM/YYYY'),
-        endDate : moment('01/01/2020','DD/MM/YYYY'),
+        endDate : moment('31/01/2020','DD/MM/YYYY'),
         state: 0,
         province: 0,
         district: 0,
         stateLabel: "TODOS",
         provinceLabel:"TODOS",
         districtLabel:"TODOS",
+        apps_day: moment('01/01/2020','DD/MM/YYYY'),
+        index_apps_day: 0,
       },
       cases_filter : {
-        days_before : 5,
-        days_after : 5,
-        
+        days_before : 0,
+        days_after : 0,
       },
       pie_chart_data:{
         before : [
@@ -55,6 +56,9 @@ class Impact extends Component{
           {type: "economical", quantity : 25},
         ]
       },
+      day_apps : moment('01/01/2020','DD/MM/YYYY'),
+      app_per_day : null,
+      app_chart_data : null,
       app_list: null,
       app_assistants: null,
       assistants_chart_data : null,
@@ -86,23 +90,6 @@ class Impact extends Component{
   seeAppCharts = () => {
     this.setState({ select_app_mode : false, charts_app : true })
   }
-  
-  searchApp = () => {
-    const { app_filter,app_list , selected_app_index } = this.state;
-    if(selected_app_index !== null )
-      app_list[selected_app_index].selected = false;
-
-    const formattedFilter = {
-      state : app_filter.state,
-      province: app_filter.province,
-      district: app_filter.district,
-      startDate: app_filter.startDate.format('YYYY-MM-DD'),
-      endDate: app_filter.endDate.format('YYYY-MM-DD'),
-    };
-    this.appService.searchAPP(formattedFilter).then( res => {
-      this.setState({selected_app_index : null, charts_app : false, select_app_mode : true, app_list:res.map( (item,index) => this.addTableFields(item,index))});
-    })
-  }
 
   componentDidMount(){
     this.loadAPP();
@@ -131,29 +118,53 @@ class Impact extends Component{
       startDate: app_filter.startDate.format('YYYY-MM-DD'),
       endDate: app_filter.endDate.format('YYYY-MM-DD'),
     };
-    this.appService.searchAPP(formattedFilter).then( res => {
+    this.appService.getPreventiveActionsPerDay(formattedFilter).then( res => {
       this.setState({ 
+        app_per_day: res,
         selected_app_index : null,
         location,
         charts_app : false,
         select_app_mode : true,
-        app_assistants: res.aggregatedAssistants,
-        app_list:res.preventiveActions.map( (item,index) => this.addTableFields(item,index)),
+        //app_assistants: res.aggregatedAssistants,
+        app_list:res[0].preventiveActions.map( (item,index) => this.addTableFields(item,index)),
         date: app_filter.startDate,
       }, () => this.getViolenceData());
     })
     
   }
 
-  onAPPFilterChange = (field,value) => {
-    const { app_filter } = this.state;
-    if(field=="startDate" || field == "endDate"){
+  onAPPFilterChange = (field,value,label) => {
+    const { app_filter, app_per_day } = this.state;
+    if(field=="startDate"){
       app_filter[field] = moment(value.format('DD/MM/YYYY'),'DD/MM/YYYY');
+      app_filter.endDate = moment(value.format('DD/MM/YYYY'),'DD/MM/YYYY').add(1,"month").subtract(1,"days");
+      app_filter.apps_day = moment(value.format('DD/MM/YYYY'),'DD/MM/YYYY');
+      app_filter.index_apps_day = 0;
+      this.setState({ app_filter, day_apps: app_filter.startDate, app_list:[] }, () => {this.loadAPP();});
+    } else if(field == "apps_day"){
+      app_filter.index_apps_day = value.diff(app_filter.startDate,"days");
+      app_filter.apps_day = moment(value.format('DD/MM/YYYY'),'DD/MM/YYYY');
+      this.setState({ app_filter, app_list : app_per_day[app_filter.index_apps_day].preventiveActions.map( (item,index) => this.addTableFields(item,index)),});
     }
     else {
       app_filter[field] = value;
+      app_filter.apps_day = app_filter.startDate;
+      app_filter.index_apps_day = 0;
+      if(field == "district"){
+        app_filter.districtLabel = label;
+      } else if(field == "province"){
+        app_filter.provinceLabel = label;
+        app_filter.district = 0;
+        app_filter.districtLabel = "TODOS";
+      } else {
+        app_filter.stateLabel = label;
+        app_filter.district = 0;
+        app_filter.districtLabel = "TODOS";
+        app_filter.province = 0;
+        app_filter.provinceLabel = "TODOS";
+      }
+      this.setState({ app_filter }, () => {this.loadAPP();});
     }
-    this.setState({ app_filter });
   }
 
   updateViolenceBeforeData = (data) => this.setState({ violence_before : data })
@@ -198,7 +209,9 @@ class Impact extends Component{
 
   render(){
     const { line_chart_data, app_list, select_app_mode,app_filter, assistants_chart_data, 
-      chart_type,location, date, cases_filter } = this.state;
+      chart_type,location, date, cases_filter, day_apps, app_per_day } = this.state;
+
+    const appLineChartData = app_per_day && app_per_day.length > 0 ? app_per_day.map(day => day.count) : [];
     return (
       <ImpactContainer id="impact-container">
         <AppDataContainer id="app-container">
@@ -206,6 +219,19 @@ class Impact extends Component{
             onSearch={this.loadAPP}
             filter={app_filter}
             onChange={this.onAPPFilterChange}
+          />
+          
+          <ViolenceBody
+            filter={cases_filter}
+            data={line_chart_data}
+            appData={appLineChartData}
+          />
+        </AppDataContainer>
+        <ViolenceDataContainer id="violence-container">
+          <ViolenceFilter
+            filter={cases_filter}
+            handleGetViolenceData={this.getViolenceData}
+            onFilterChange={this.onViolenceFilterChange}
           />
           <AppBody
             chartType={chart_type}
@@ -218,17 +244,9 @@ class Impact extends Component{
             selectMode={select_app_mode}
             setSelectMode={(value) => this.setState({select_app_mode:value})}
             date={date}
-          />
-        </AppDataContainer>
-        <ViolenceDataContainer id="violence-container">
-          <ViolenceFilter
-            filter={cases_filter}
-            handleGetViolenceData={this.getViolenceData}
-            onFilterChange={this.onViolenceFilterChange}
-          />
-          <ViolenceBody
-            filter={cases_filter}
-            data={line_chart_data}
+            dayApps={day_apps}
+            filter={app_filter}
+            onChange={this.onAPPFilterChange}
           />
         </ViolenceDataContainer>
       </ImpactContainer>
