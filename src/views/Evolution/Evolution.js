@@ -23,6 +23,13 @@ class Evolution extends Component{
     super(props)
     this.state = {
         violence_attribute_groups : ['violence_types','first_time','factors','group_age','relation_vict_aggr'],
+        titles : {
+          "violence_types" : "Casos de violencia por semana (tipos de violencia)",
+          "first_time" : "Casos de violencia por semana (víctimas agredida por primera vez)",
+          "factors" : "Casos de violencia por semana (factores asociados a los casos de violencia)",
+          "group_age" : "Casos de violencia por semana (grupo de edad al que pertenece la víctima)",
+          "relation_vict_aggr" : "Casos de violencia por semana (tipo de vínculo entre persona agresora y persona agredida)",
+        },
         groups: {
           violence_types : ['physical_violence','psychological_violence','economical_violence','sexual_violence'],
           first_time : ['first_time'],
@@ -151,7 +158,7 @@ class Evolution extends Component{
   }
     
   render(){
-    const { data_filter, charts_to_show, charts_data, map_data,date_map } = this.state;
+    const { data_filter, charts_to_show, charts_data, map_data,date_map,titles } = this.state;
     return(
       <EvolutionContainer>
         <MapContainer>
@@ -189,7 +196,8 @@ class Evolution extends Component{
               <SingleChartContainer key={chart}>
                   <SimpleLineChart 
                     key={chart} 
-                    data={charts_data[data_filter.victim_sex][chart]} 
+                    data={charts_data[data_filter.victim_sex][chart]}
+                    title={titles[chart]}
                     dates={charts_data.dates} 
                   />
               </SingleChartContainer>

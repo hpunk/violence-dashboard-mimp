@@ -1,16 +1,11 @@
 import React from 'react';
-import { 
-    Typography,
-} from 'antd';
 
-import { PieColors, PieHoverColors } from '../../colors/PieColors';
-import { Doughnut,Line } from 'react-chartjs-2';
+import { PieHoverColors } from '../../colors/PieColors';
+import { Line } from 'react-chartjs-2';
 import { VIOLENCE_TYPES } from '../../constants/enums';
 
 import PropTypes from 'prop-types';
 import moment from 'moment';
-
-const { Title } = Typography;
 
 function ViolenceBody({ data, filter, appData }){
     console.log("el appData",appData);
@@ -111,7 +106,6 @@ function ViolenceBody({ data, filter, appData }){
                             },
                             maintainAspectRatio: false,
                             scales: {
-                                
                                 yAxes: [{
                                     type: 'linear',
                                     display: true,

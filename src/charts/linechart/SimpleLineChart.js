@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Line } from 'react-chartjs-2';
 
 
-function SimpleLineChart({data, dates }){
+function SimpleLineChart({data, dates, title }){
     const colors = ['red','green','blue','black','purple','orange','grey'];
     let labels = dates.map((_,i) => i+1);
     return (
@@ -19,6 +19,10 @@ function SimpleLineChart({data, dates }){
             interaction: {
               intersect: false,
               mode:"nearest"
+            },
+            title: {
+              display: true,
+              text: title,
             },
             tooltips: {
                 displayColors: true,
@@ -41,22 +45,28 @@ function SimpleLineChart({data, dates }){
             },
             stacked: false,
             scales: {
-              y: {
-                  type: 'linear',
+              yAxes: [{
+                type: 'linear',
+                display: true,
+                position: 'left',
+                ticks: {
+                    precision: 0,
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Casos de violencia',
+                }
+              }],
+              xAxes: [{
                   display: true,
                   position: 'left',
-              },
-              y1: {
-                  type: 'linear',
-                  display: true,
-                  position: 'right',
-                  grid: {
-                    drawOnChartArea: false,
-                  },
-              },
-            }
-          }
-        }
+                  scaleLabel: {
+                      display: true,
+                      labelString: 'Número de semana en el período seleccionado',
+                  }
+              }],
+            },
+          }}
       />
     );
 }
