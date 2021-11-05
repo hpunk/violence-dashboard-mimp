@@ -13,7 +13,7 @@ export default class EvolutionGenderData {
         this.aggr_drugs = new AttributeData("Agres. Drogas");
         this.vict_alcohol = new AttributeData("Víct. Alcohol");
         this.vict_drugs = new AttributeData("Víct. Drogas");
-        this.vict_lgtbi = new AttributeData("Víct. LGTBI+");
+        this.vict_lgtbi = new AttributeData("Víct. LGBTI+");
         this.vict_disability = new AttributeData("Víct. con discapacidad");
         this.inf = new AttributeData("Infantes");
         this.nin = new AttributeData("Niños");
@@ -22,7 +22,7 @@ export default class EvolutionGenderData {
         this.jov = new AttributeData("Jóvenes");
         this.adul = new AttributeData("Adultos");
         this.mayo = new AttributeData("Adultos mayores");
-        this.family = new AttributeData("Vínc. Familiar");
+        this.family = new AttributeData("Vínculo Familiar");
         this.love = new AttributeData("Vínculo Amoroso");
         this.no_relation = new AttributeData("Sin Vínculo/Otro");
     }

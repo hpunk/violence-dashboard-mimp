@@ -50,9 +50,10 @@ class Evolution extends Component{
           victim_sex: "man_victim",
           types: new ChartFilterTypes(),
         },
-        charts_to_show : [],
+        charts_to_show : ["violence_types"],
         map_data: [],
         date_map: 1,
+        period: null,
     }
     this.evolutionService = new EvolutionService();
   }
@@ -69,7 +70,8 @@ class Evolution extends Component{
             temp['total_victim'][attr].data.push(data[i][`man_${attr}`]+data[i][`woman_${attr}`]);
         }
     }
-    this.setState({ charts_data : temp.getGrouped() });
+    const period = `${moment(data[0].startDate,'YYYY-MM-DD').format('DD/MM/YYYY')}-${moment(data[data.length-1].endDate,'YYYY-MM-DD').format('DD/MM/YYYY')}`;
+    this.setState({ charts_data : temp.getGrouped(), period });
   }
 
   loadChartsData = () => {
@@ -158,11 +160,12 @@ class Evolution extends Component{
   }
     
   render(){
-    const { data_filter, charts_to_show, charts_data, map_data,date_map,titles } = this.state;
+    const { data_filter, charts_to_show, charts_data, map_data,date_map,titles, period } = this.state;
     return(
       <EvolutionContainer>
         <MapContainer>
             <MapFilterContainer>
+            <div style={{"width":"100%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Evolución de violencia en Perú:</Text> </div>
                 <EvolutionFilter
                   filter={data_filter}
                   onChange={this.handleMapFilterChange}
@@ -170,7 +173,7 @@ class Evolution extends Component{
                 />
             </MapFilterContainer>
             <ChoroplethContainer>
-              <div style={{"width":"100%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Casos por mes:</Text> </div>
+              <div style={{"width":"100%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px", "marginTop": "10px"}}> <Text type="primary" >Casos de violencia por departamento por mes:</Text> </div>
               <MapCardAPP>
               <Map 
                 mapJson={PERU_DEPARTAMENTO}
@@ -182,6 +185,7 @@ class Evolution extends Component{
             </ChoroplethContainer>
         </MapContainer>
         <ChartsContainer>
+        
           <ChartsFilterContainer>
             <EvolutionChartsFilter
                 filter={data_filter}
@@ -189,9 +193,9 @@ class Evolution extends Component{
             />
           </ChartsFilterContainer>
           <div style={{width:"99%",height:"90%"}}>
-          <div style={{"width":"100%", height:"5%","fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Casos por semana:</Text> </div>
+          <div style={{"width":"100%", height:"5%","fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >{`Casos de violencia por semana para el departamento de ${data_filter.stateLabel} en período ${period}`}</Text> </div>
           <div style={{width:"100%",height:"95%"}}>
-          {
+          { charts_data && charts_data.dates.length > 0 ? 
             charts_to_show.map(chart => 
               <SingleChartContainer key={chart}>
                   <SimpleLineChart 
@@ -201,7 +205,7 @@ class Evolution extends Component{
                     dates={charts_data.dates} 
                   />
               </SingleChartContainer>
-            )
+            ) : null
           }
           </div>
           </div>

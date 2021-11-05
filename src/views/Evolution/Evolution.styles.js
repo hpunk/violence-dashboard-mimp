@@ -22,15 +22,16 @@ export const EvolutionContainer = styled.div`
 
 export const SingleChartContainer = styled.div`
     width: 95%;
-    height: 30%;
+    height: 28%;
     padding-left: 4%;
     display: flex;
     margin-bottom:3%
 `
 export const ChartsFilterContainer = styled.div`
     width: 93%;
-    height: 10%;
+    height: 9%;
     padding-left: 7%;
+    margin-top: 1%;
     display: flex;
     align-content:'center';
 `
@@ -38,7 +39,7 @@ export const ChartsFilterContainer = styled.div`
 export const MapFilterContainer = styled.div`
     width: 98%;
     height: 10%;
-    display: flex;
+    flex: none;
     align-content:'center';
 `
 export const ChoroplethContainer = styled.div`
@@ -51,6 +52,7 @@ export const EvolutionCardAPP = styled.div`
     flex: none;
     margin: 8px 4px;
     padding: 4px;
+    height: 70%;
     width: ${props => props.width}%;
     border: 2px solid #40a9ff;
     background-color: white;
@@ -69,6 +71,7 @@ export const InputsCardAPP = styled.div`
     margin: 8px 4px;
     padding: 4px;
     width: 100%;
+    height: 70%;
     max-width: 633px;
     border: 2px solid #40a9ff;
     background-color: white;

@@ -43,6 +43,7 @@ function EvolutionFilter({filter, onSearch, onChange}){
     }
 
     return (
+      <React.Fragment>
         <InputsCardAPP>
             <Space  align={"right"}>
               <ButtonLabelWrapper>
@@ -83,6 +84,7 @@ function EvolutionFilter({filter, onSearch, onChange}){
               <div style={{marginTop:"25px"}}><button onClick={() => onSearch()}> Buscar </button></div>
             </Space>
           </InputsCardAPP>
+        </React.Fragment>
     );
 }
 

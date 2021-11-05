@@ -48,7 +48,7 @@ function EvolutionChartsFilter({filter, onChange}){
             }
             </Space>
           </EvolutionCardAPP>
-          <EvolutionCardAPP width={25}>
+          <EvolutionCardAPP width={20}>
             <Space  align={"right"}>
               <ButtonLabelWrapper>
                 <Text type="primary">Sexo víctimas: </Text>
@@ -60,23 +60,24 @@ function EvolutionChartsFilter({filter, onChange}){
               </ButtonLabelWrapper>
             </Space>
           </EvolutionCardAPP>
-          <EvolutionCardAPP width={50}>
+          <EvolutionCardAPP width={60}>
           <Space  align={"right"}>
             <ButtonLabelWrapper>
-              <Text type="primary">Características: </Text>
-              <Checkbox.Group style={{ width: '100%' }} onChange={(e)=>{ setSelected(e); onChange("types",e); }}>
+              <Text type="primary">Ver casos de violencia por:</Text>
+              <Text type="secondary">(Máximo 3 a la vez)</Text>
+              <Checkbox.Group style={{ width: '100%' }} defaultValue={['violence_types']} onChange={(e)=>{ setSelected(e); onChange("types",e); }}>
                 <Row>
                   <Col span={8}>
                     <Checkbox  disabled={!filter.types.violence_types && selected.length===3} value="violence_types">Tipos violencia</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox disabled={!filter.types.first_time && selected.length===3} value="first_time">1° vez</Checkbox>
+                    <Checkbox disabled={!filter.types.first_time && selected.length===3} value="first_time">1ra vez agresión</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox disabled={!filter.types.factors && selected.length===3} value="factors">Factores</Checkbox>
+                    <Checkbox disabled={!filter.types.factors && selected.length===3} value="factors">Factores del caso</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox disabled={!filter.types.group_age && selected.length===3} value="group_age">Edad</Checkbox>
+                    <Checkbox disabled={!filter.types.group_age && selected.length===3} value="group_age">Edad de víctima</Checkbox>
                   </Col>
                   <Col span={8}>
                     <Checkbox disabled={!filter.types.relation_vict_aggr && selected.length===3} value="relation_vict_aggr">Vínculo</Checkbox>

@@ -1,6 +1,6 @@
 export default class ChartFilterTypes {
     constructor() {
-        this.violence_types = false;
+        this.violence_types = true;
         this.age = false;
         this.first_time = false;
         this.relation = false;
