@@ -14,10 +14,11 @@ const LinearGradient = props => {
   };
   return (
     <div>
+      <div style={{"marginLeft":"30%", fontWeight:"bold", width:400}}>Intensidad de color por número de casos</div>
       <div style={boxStyle} className="display-flex">
-        <span>{data.min}</span>
+        <span style={{fontWeight:"bold"}}>{data.min}</span>
         <span className="fill"></span>
-        <span>{data.max}</span>
+        <span style={{fontWeight:"bold"}}>{data.max}</span>
       </div>
       <div style={{ ...boxStyle, ...gradientStyle }} className="mt8"></div>
     </div>

@@ -8,10 +8,10 @@ import './map.css';
 
 const PROJECTION_CONFIG = {
   scale: 1300,
-  center: [-74.9629, -9.5937] // always in [East Latitude, North Longitude]
+  center: [-74.9629, -9.5937]
 };
 
-// Red Variants
+
 const COLOR_RANGE = [
   '#ffedea',
   '#ffcec5',
@@ -26,19 +26,15 @@ const COLOR_RANGE = [
 
 const DEFAULT_COLOR = '#EEE';
 
-const getRandomInt = () => {
-  return parseInt(Math.random() * 100);
-};
-
 const geographyStyle = {
   default: {
     outline: 'none',
     borders: 'blue'
   },
   hover: {
-    fill: '#ccc',
+    fill: '#f1c232',
     transition: 'all 250ms',
-    outline: 'none'
+    outline: 'none',
   },
   pressed: {
     outline: 'none'
@@ -49,6 +45,7 @@ const geographyStyle = {
 
 function Map({mapJson, mapData, date, setDate}) {
   const [tooltipContent, setTooltipContent] = useState('');
+  const [localDate, setLocalDate] = useState(date);
   //const [data, setData] = useState(getHeatMapData());
   const data = mapData.length > 0 ? mapData[date-1].casesByUbigeo : [];
 
@@ -65,7 +62,7 @@ function Map({mapJson, mapData, date, setDate}) {
 
   const onMouseEnter = (geo, current = { value: 'NA' }) => {
     return () => {
-      setTooltipContent(`${geo.properties.NOMBDEP}: H: ${current.casesMale} M: ${current.casesFemale}`);
+      setTooltipContent(`${geo.properties.NOMBDEP}: ${current.casesMale +current.casesFemale} casos de violencia`);
     };
   };
 
@@ -99,9 +96,13 @@ function Map({mapJson, mapData, date, setDate}) {
             min={1}
             max={mapData.length}
             tipFormatter={value => { return value!==0 && mapData.length > 0 ? `${MESES[mapData[value-1].month] }/${mapData[value-1].year}`: ""}}
-            onChange={e => setDate(e)}
+            onChange={e => {setDate(e); setLocalDate(e);}}
             value={typeof date === 'number' ? date : 0}
           />
+        </div>
+        <div>
+          <input label={"Fecha"} disabled={true} key="stateMap" value={mapData.length > 0 ? `${MESES[mapData[date-1].month] }/${mapData[date-1].year}`: ""}/>
+          <input label={"Casos"} disabled={true} key="stateMap" value={tooltipContent}/>
         </div>
       <ReactTooltip>{tooltipContent}</ReactTooltip>
         <ComposableMap
