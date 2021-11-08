@@ -24,7 +24,7 @@ function DataCount({count}){
     
     return (
         <div>
-          <div style={{"width":"100%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" ># Casos:</Text> </div>
+          <div style={{"width":"100%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Casos:</Text> </div>
           <InputsCardAlgorithm>
               <Space  align={"right"}>
                 <ButtonLabelWrapper style={{ maxWidth: '120px' }}>

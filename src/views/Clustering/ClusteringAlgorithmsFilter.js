@@ -23,7 +23,7 @@ function ClusteringAlgorithmsFilter({filter, onCluster, onChange, isLoading}){
     
     return (
         <div>
-          <div style={{"width":"90%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Algoritmo de clustering:</Text> </div>
+          <div style={{"width":"90%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Método para encontrar grupos:</Text> </div>
           <InputsCardAlgorithm>
               <Space  align={"right"}>
                 <ButtonLabelWrapper style={{ maxWidth: '120px' }}>
