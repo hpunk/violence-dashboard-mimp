@@ -52,7 +52,7 @@ export const EvolutionCardAPP = styled.div`
     flex: none;
     margin: 8px 4px;
     padding: 4px;
-    height: 70%;
+    height: 75%;
     width: ${props => props.width}%;
     border: 2px solid #40a9ff;
     background-color: white;
