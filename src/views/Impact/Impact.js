@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import AppFilter from './AppFilter';
-import ViolenceFilter from './ViolenceFilter';
 import ViolenceBody from './ViolenceBody';
 import AppBody from './AppBody';
 import AppService from '../../services/appService';
@@ -64,6 +63,8 @@ class Impact extends Component{
       assistants_chart_data : null,
       line_chart_data : null,
       map_cases_data : [],
+      loading_app: false,
+      loading_violence: false,
     }
     this.appService = new AppService();
   }
@@ -108,8 +109,8 @@ class Impact extends Component{
       app_list[selected_app_index].selected = false;
 
     let location = app_filter.stateLabel === 'TODOS' ? 'PERÚ' : app_filter.stateLabel;
-    location += app_filter.provinceLabel === 'TODOS' ? "" : `-${app_filter.provinceLabel}`;
-    location += app_filter.districtLabel === 'TODOS' ? "" : `-${app_filter.districtLabel}`;
+    location = (app_filter.provinceLabel === 'TODOS' ? "" : `${app_filter.provinceLabel}-`) + location;
+    location = (app_filter.districtLabel === 'TODOS' ? "" : `${app_filter.districtLabel}-`) + location;
 
     const formattedFilter = {
       state : app_filter.state,
@@ -118,6 +119,7 @@ class Impact extends Component{
       startDate: app_filter.startDate.format('YYYY-MM-DD'),
       endDate: app_filter.endDate.format('YYYY-MM-DD'),
     };
+    this.setState({loading_app:true});
     this.appService.getPreventiveActionsPerDay(formattedFilter).then( res => {
       this.setState({ 
         app_per_day: res,
@@ -128,6 +130,7 @@ class Impact extends Component{
         //app_assistants: res.aggregatedAssistants,
         app_list:res[0].preventiveActions.map( (item,index) => this.addTableFields(item,index)),
         date: app_filter.startDate,
+        loading_app:false,
       }, () => this.getViolenceData());
     })
     
@@ -196,8 +199,9 @@ class Impact extends Component{
       daysBefore: cases_filter.days_before,
       daysAfter: cases_filter.days_after,
     };
+    this.setState({loading_violence:true});
     this.appService.getViolenceData(formattedFilter).then( res => {
-      this.setState({ line_chart_data: res });
+      this.setState({ line_chart_data: res, loading_violence:false });
     });
   }
 
@@ -209,7 +213,7 @@ class Impact extends Component{
 
   render(){
     const { line_chart_data, app_list, select_app_mode,app_filter, assistants_chart_data, 
-      chart_type,location, date, cases_filter, day_apps, app_per_day } = this.state;
+      chart_type,location, date, cases_filter, day_apps, app_per_day, loading_app, loading_violence } = this.state;
 
     const appLineChartData = app_per_day && app_per_day.length > 0 ? app_per_day.map(day => day.count) : [];
     return (
@@ -219,19 +223,7 @@ class Impact extends Component{
             onSearch={this.loadAPP}
             filter={app_filter}
             onChange={this.onAPPFilterChange}
-          />
-          
-          <ViolenceBody
-            filter={cases_filter}
-            data={line_chart_data}
-            appData={appLineChartData}
-          />
-        </AppDataContainer>
-        <ViolenceDataContainer id="violence-container">
-          <ViolenceFilter
-            filter={cases_filter}
-            handleGetViolenceData={this.getViolenceData}
-            onFilterChange={this.onViolenceFilterChange}
+            loading={loading_violence || loading_app}
           />
           <AppBody
             chartType={chart_type}
@@ -248,6 +240,17 @@ class Impact extends Component{
             filter={app_filter}
             onChange={this.onAPPFilterChange}
           />
+          
+          
+        </AppDataContainer>
+        <ViolenceDataContainer id="violence-container">
+
+          <ViolenceBody
+            filter={cases_filter}
+            data={line_chart_data}
+            appData={appLineChartData}
+          />
+          
         </ViolenceDataContainer>
       </ImpactContainer>
     )

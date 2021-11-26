@@ -23,7 +23,7 @@ import {
 } from './Impact.styles';
 
 import { APP_TYPE_GROUPS_2017_2018, APP_TYPE_GROUPS_2019_2020, APP_CODES_2017_2018, APP_CODES_2019_2020 } from '../../constants/enums';
-
+import "./styles.css";
 const { Text } = Typography;
 
 function AppBody({ location, tableData, handleViewOne, selectMode, setSelectMode, assistantsChartData, chartType, setChartType, date, onChange,filter }){
@@ -33,13 +33,16 @@ function AppBody({ location, tableData, handleViewOne, selectMode, setSelectMode
             dataIndex: 'selected',
             key: 'selected',
             render: (_,object) => 
+                <div style={{"max-width":"100.57px"}}>
                 <button
+                    style={{"font-weight": "bold"}}
                     id={`view${object.index}`} 
                     name={`view${object.index}`}
                     onClick={() => handleViewOne(object)}
                 >
                     Ver asistentes
-                </button>,
+                </button>
+                </div>,
         },
         {
             title: 'Tipo',
@@ -48,7 +51,7 @@ function AppBody({ location, tableData, handleViewOne, selectMode, setSelectMode
             render: (_,object) =>  date._i[9] == '7' || date._i[9] == '8' ? APP_CODES_2017_2018.find(d => object.actionType === d.code).value : APP_CODES_2019_2020.find(d => object.actionType === d.code).value,
         },
         {
-            title: 'Número',
+            title: 'Cantidad',
             dataIndex: 'count',
             key: 'count'
         },
@@ -71,13 +74,13 @@ function AppBody({ location, tableData, handleViewOne, selectMode, setSelectMode
      "Todos";
     return (
         <React.Fragment>
-            <div style={{fontWeight:"bold", marginLeft:"10px"}}><Text type="primary" >{`Datos para : ${location}`}</Text></div>
             { selectMode ?
                 <div>
                     <InputsCardAPP>
                     <Space  align={"right"}>
                     <ButtonLabelWrapper>
-                    <Text type="primary">Día del mes </Text>
+                    <div style={{fontWeight:"bold"}}><Text type="primary" >{`Acciones preventivas llevadas a cabo en ${location}`}</Text></div>
+                    <Text strong type="primary">el día </Text>
                     <DatePicker
                         disabledDate={disableDate}
                         value={filter.apps_day}
@@ -101,12 +104,12 @@ function AppBody({ location, tableData, handleViewOne, selectMode, setSelectMode
                         <button onClick={() => {
                             setSelectMode(true);
                             setChartType("a");
-                            }}> Volver </button>
-                        <div style={{fontWeight:"bold"}}>Grupo Acciones Preventivas Promocionales:</div>
-                        <div>{`${group}`}</div>
-                        <div style={{fontWeight:"bold"}}>Tipo de Acción Preventiva Promocional: </div>
-                        <div>{`${appType}`}</div>
-                        <Radio.Group onChange={() => setChartType(chartType==="a"?"b":"a")} defaultValue="a">
+                            }}> Volver a acciones preventivas</button>
+                        <div style={{fontWeight:"bold", fontSize:"17px"}}>Grupo Acciones Preventivas Promocionales:</div>
+                        <div style={{ fontSize:"17px"}}>{`${group}`}</div>
+                        <div style={{fontWeight:"bold", fontSize:"17px"}}>Tipo de Acción Preventiva Promocional: </div>
+                        <div style={{ fontSize:"17px"}}>{`${appType}`}</div>
+                        <Radio.Group size={"large"} onChange={() => setChartType(chartType==="a"?"b":"a")} defaultValue="a">
                             <Radio.Button value="a">Por edad</Radio.Button>
                             <Radio.Button value="b">Por tipo (Top 10)</Radio.Button>
                         </Radio.Group>
@@ -117,12 +120,16 @@ function AppBody({ location, tableData, handleViewOne, selectMode, setSelectMode
                                 options={{
                                     maintainAspectRatio: false,
                                     scales: {
-                                        x: {
-                                        stacked: true,
-                                        },
-                                        y: {
-                                        stacked: true
-                                        },
+                                        xAxes: [{
+                                            display: true,
+                                            position: 'left',
+                                            scaleLabel: {
+                                                display: true,
+                                                labelString: 'Cantidad asistentes',
+                                                weight : "bold",
+                                                fontSize: "17"
+                                            }
+                                        }],
                                     }
                                 }}
                             />

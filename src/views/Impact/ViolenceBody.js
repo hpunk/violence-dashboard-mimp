@@ -59,7 +59,7 @@ function ViolenceBody({ data, filter, appData }){
         <React.Fragment>
             <div>
 
-                <div style={{height:'400px', width: '98%', maxWidth:"820px", marginTop:"30px", paddingLeft:"3.6%"}}>
+                <div style={{height:'500px', width: '98%', maxWidth:"820px", marginTop:"30px", paddingLeft:"3.6%"}}>
                     <Line
                         data={{
                             labels: xLineLabel,
@@ -80,6 +80,12 @@ function ViolenceBody({ data, filter, appData }){
                             title: {
                                 display: true,
                                 text: 'Cantidad de acciones preventivas registradas en el mes',
+                                fontSize: "14"
+                            },
+                            legend:{
+                                labels: {
+                                    usePointStyle : true,
+                                }
                             },
                             interaction: {
                                 intersect: false,
@@ -116,6 +122,8 @@ function ViolenceBody({ data, filter, appData }){
                                     scaleLabel: {
                                         display: true,
                                         labelString: 'Número de acciones preventivas',
+                                        weight : "bold",
+                                        fontSize: "17"
                                     }
                                 }],
                                 xAxes: [{
@@ -124,12 +132,14 @@ function ViolenceBody({ data, filter, appData }){
                                     scaleLabel: {
                                         display: true,
                                         labelString: 'Días del mes',
+                                        weight : "bold",
+                                        fontSize: "17"
                                     }
                                 }],
                             }
                         }}/>
                 </div>
-                <div style={{height:'400px', width: '98%', maxWidth:"820px", marginTop:"30px", paddingLeft:"3.6%"}}>
+                <div style={{height:'500px', width: '98%', maxWidth:"820px", marginTop:"30px", paddingLeft:"3.6%"}}>
                     <Line
                         data={{
                             labels: xLineLabel,
@@ -171,9 +181,15 @@ function ViolenceBody({ data, filter, appData }){
                         }}
                         options={{
                             responsive: true,
+                            legend:{
+                                labels: {
+                                    usePointStyle : true,
+                                }
+                            },
                             title: {
                                 display: true,
-                                text: 'Cantidad de casos de violencia registrados en el mes',
+                                text: 'Cantidad de casos de violencia registrados en el mes por tipo de violencia',
+                                fontSize: "14",
                             },
                             interaction: {
                                 intersect: false,
@@ -208,6 +224,8 @@ function ViolenceBody({ data, filter, appData }){
                                     scaleLabel: {
                                         display: true,
                                         labelString: 'Número de casos',
+                                        weight : "bold",
+                                        fontSize: "17"
                                     },
                                     ticks: {
                                         precision: 0,
@@ -219,6 +237,8 @@ function ViolenceBody({ data, filter, appData }){
                                     scaleLabel: {
                                         display: true,
                                         labelString: 'Días del mes',
+                                        weight : "bold",
+                                        fontSize: "17"
                                     }
                                 }],
                             }

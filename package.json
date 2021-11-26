@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@d3fc/d3fc-series": "^6.0.4",
     "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
