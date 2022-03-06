@@ -70,8 +70,8 @@ class Evolution extends Component{
             temp['total_victim'][attr].data.push(data[i][`man_${attr}`]+data[i][`woman_${attr}`]);
         }
     }
-    const period = `${moment(data[0].startDate,'YYYY-MM-DD').format('DD/MM/YYYY')}-${moment(data[data.length-1].endDate,'YYYY-MM-DD').format('DD/MM/YYYY')}`;
-    this.setState({ charts_data : temp.getGrouped(), period });
+
+    this.setState({ charts_data : temp.getGrouped() });
   }
 
   loadChartsData = () => {
@@ -83,6 +83,8 @@ class Evolution extends Component{
         filterBy: data_filter.filter_by,
         province: data_filter.province,
       };
+      const period = `${moment(data_filter.startDate.day('Sunday'),'YYYY-MM-DD').format('DD/MM/YYYY')}-${moment(data_filter.endDate.day('Saturday'),'YYYY-MM-DD').format('DD/MM/YYYY')}`;
+      this.setState({ period });
       this.evolutionService.filterChartData(formattedFilter)
         .then( res => {
             this.prepareDataForChart(res);
@@ -122,8 +124,10 @@ class Evolution extends Component{
 
   handleMapFilterChange = (field, value) => {
     const { data_filter } = this.state;
-    if(field=="startDate" || field == "endDate"){
-      data_filter[field] = moment(value.format('DD/MM/YYYY'),'DD/MM/YYYY');
+    if(field=="dates"){
+      data_filter["startDate"] = moment(value[0].format('DD/MM/YYYY'),'DD/MM/YYYY');
+      data_filter["endDate"] = moment(value[1].format('DD/MM/YYYY'),'DD/MM/YYYY');
+      this.setState({ data_filter }, () => { this.getMapData(); this.loadChartsData(); });
     } else {
       data_filter[field] = value;
       if(field==="filter_by"){
@@ -141,8 +145,8 @@ class Evolution extends Component{
         data_filter[field] = value;
         data_filter['provinceLabel'] = PROVINCIAS_MANDATORY.find(i => i.value == value).label;
       }
+      this.setState({ data_filter });
     }
-    this.setState({ data_filter });
   }
 
   getMapData = () => {

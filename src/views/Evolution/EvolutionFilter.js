@@ -4,6 +4,7 @@ import {
     DatePicker,
     Select,
     Typography,
+    Spin,
 } from 'antd';
 
 import { 
@@ -12,15 +13,19 @@ import {
 
 import {InputsCardAPP} from './Evolution.styles';
 
+import moment from 'moment';
+
 import { DEPARTAMENTOS_MANDATORY } from '../../constants/enums';
+
+import {QuestionCircleOutlined} from "@ant-design/icons";
 
 import PropTypes from 'prop-types';
 
 const { Text } = Typography;
 const { Option } = Select;
+const { RangePicker } = DatePicker;
 
-
-function EvolutionFilter({filter, onSearch, onChange}){
+function EvolutionFilter({filter, onSearch, onChange, loading=true}){
     const [showStateSelector, setShowStateSelector] = useState(filter.filter_by == "PROVINCE");
     const [startLocal,setStartLocal] = useState(filter.startDate);
     const [endLocal,setEndLocal] = useState(filter.endDate);
@@ -42,32 +47,42 @@ function EvolutionFilter({filter, onSearch, onChange}){
       return (current.diff(startLocal,'days') < 0) || (current.diff(startLocal,'months') >24);
     }
 
+    const disabledDate = current => {
+      return current < moment('01-01-2017','DD-MM-YYYY') || current > moment('03-01-2021','DD-MM-YYYY');
+    }
+
     return (
       <React.Fragment>
         <InputsCardAPP>
             <Space  align={"right"}>
               <ButtonLabelWrapper>
-                <Text type="primary">Fecha inicio:</Text>
-                <DatePicker value={startLocal} format={dateFormatList} allowClear={false}
-                onChange={e => {
-                  setStartLocal(e);
-                  onChange('startDate',e);
-                  if((endLocal.diff(e,'days') < 0) || (endLocal.diff(e,'years') > 2)){
-                    setEndLocal(e);
-                    onChange('endDate',e);
-                  }
-                }
-                } />
+                <Text strong type="primary">Rango de fechas:</Text>
+                <RangePicker 
+                  value={[startLocal,endLocal]}
+                  placeholder={["Semana inicio","Semana fin"]}
+                  format={dateFormatList}
+                  allowClear={false}
+                  onChange={e => {
+                    setStartLocal(e[0]);
+                    setEndLocal(e[1]);
+                    onChange("dates",e);
+                  }} 
+                  picker="week"
+                  disabledDate={disabledDate}
+                />
+                
+                <ButtonLabelWrapper>
+                <div class="tooltip" style={{width:"50%"}}>
+                  <QuestionCircleOutlined />
+                  <span class="tooltiptext">Filtros para los casos de violencia y acciones preventivas: Mes y año, departamento, provincia y distrito</span>
+                </div>
+                  {loading && <Spin size="large" />}
+                
+                  </ButtonLabelWrapper>
               </ButtonLabelWrapper>
-              <ButtonLabelWrapper>
-                <Text type="primary">Fecha fin:</Text>
-                <DatePicker disabledDate={disabledEndDate} value={endLocal} format={dateFormatList} onChange={e => {
-                      setEndLocal(e);
-                      onChange('endDate',e);
-                      }} allowClear={false} />
-              </ButtonLabelWrapper>
+
               {false && <ButtonLabelWrapper>
-                <Text type="primary">Filtrar por:</Text>
+                <Text strong type="primary">Filtrar por:</Text>
                 <Select defaultValue="Departamento" style={{ width: 120 }} onChange={e => changeFilterBy(e)}>
                   <Option key={"STATE"}>{"Departamento"}</Option>
                   <Option key={"PROVINCE"}>{"Provincia"}</Option>
@@ -75,13 +90,12 @@ function EvolutionFilter({filter, onSearch, onChange}){
               </ButtonLabelWrapper>}
               { showStateSelector &&
               <ButtonLabelWrapper>
-                <Text type="primary">Departamento</Text>
+                <Text strong type="primary">Departamento</Text>
                 <Select value={filter.stateLabel} style={{ width: 120 }} onChange={e => changeState(e)}>
                   {stateOptions}
                 </Select>
               </ButtonLabelWrapper>
               }
-              <div style={{marginTop:"25px"}}><button onClick={() => onSearch()}> Buscar </button></div>
             </Space>
           </InputsCardAPP>
         </React.Fragment>

@@ -1,3 +1,5 @@
+import { app_evolution_url } from '../config/baseUrls';
+
 export default class EvolutionService {
     /*filterChartData = filter => {
         let data = [];
@@ -52,12 +54,12 @@ export default class EvolutionService {
     */
 
     filterChartData = filter => {
-        const url = `http://52.200.157.158:8080/evolution/cases-by-week?startDate=${filter.startDate}&endDate=${filter.endDate}&state=${filter.state}&filterBy=${filter.filterBy}&province=${filter.province}`;
+        const url = `http://${app_evolution_url}/evolution/cases-by-week?startDate=${filter.startDate}&endDate=${filter.endDate}&state=${filter.state}&filterBy=${filter.filterBy}&province=${filter.province}`;
         return fetch(url).then(response => response.json());
     }
 
     getMapData = filter => {
-        const url = `http://52.200.157.158:8080/evolution/cases-by-month?startDate=${filter.startDate}&endDate=${filter.endDate}&state=${filter.state}&filterBy=${filter.filterBy}`;
+        const url = `http://${app_evolution_url}/evolution/cases-by-month?startDate=${filter.startDate}&endDate=${filter.endDate}&state=${filter.state}&filterBy=${filter.filterBy}`;
         return fetch(url).then(response => response.json());
     }
 /*

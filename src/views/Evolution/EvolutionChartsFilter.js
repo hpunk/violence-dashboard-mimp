@@ -29,58 +29,53 @@ function EvolutionChartsFilter({filter, onChange}){
     const provinceOptions = PROVINCIAS_MANDATORY.filter(p => p.state == filter.state).map(d => <Option key={d.value}>{d.label}</Option>); 
     return (
         <React.Fragment>
-          <EvolutionCardAPP width={20}>
-            <Space  align={"right"}>
-            { filter.filter_by === "STATE" ?
+          
+          <EvolutionCardAPP width={100}>
+          <Space  align={"right"}>
+          { filter.filter_by === "STATE" ?
               <ButtonLabelWrapper>
-                <Text type="primary">Departamento</Text>
+                <Text strong type="primary">Departamento</Text>
                 <Select value={filter.stateLabel} style={{ width: 120 }} onChange={e => onChange('state',e)}>
                   {stateOptions}
                 </Select>
               </ButtonLabelWrapper>
               :
               <ButtonLabelWrapper>
-                <Text type="primary">Provincia</Text>
+                <Text strong type="primary">Provincia</Text>
                 <Select value={filter.provinceLabel} style={{ width: 120 }} onChange={e => onChange('province',e)}>
                   {provinceOptions}
                 </Select>
               </ButtonLabelWrapper>
             }
-            </Space>
-          </EvolutionCardAPP>
-          <EvolutionCardAPP width={20}>
-            <Space  align={"right"}>
-              <ButtonLabelWrapper>
-                <Text type="primary">Sexo víctimas: </Text>
+
+<ButtonLabelWrapper>
+                <Text strong type="primary">Sexo víctimas: </Text>
                 <Select value={filter.victim_sex} style={{ width: 120 }} onChange={e => onChange("victim_sex",e)}>
                   <Option key={"man_victim"}>{"Hombre"}</Option>
                   <Option key={"woman_victim"}>{"Mujer"}</Option>
                   <Option key={"total_victim"}>{"Todos"}</Option>
                 </Select>
               </ButtonLabelWrapper>
-            </Space>
-          </EvolutionCardAPP>
-          <EvolutionCardAPP width={60}>
-          <Space  align={"right"}>
+
             <ButtonLabelWrapper>
-              <Text type="primary">Ver casos de violencia por:</Text>
-              <Text type="secondary">(Máximo 3 a la vez)</Text>
+              <Text strong type="primary">Ver casos de violencia por:</Text>
+              <Text strong type="secondary">(Máximo 3 a la vez)</Text>
               <Checkbox.Group style={{ width: '100%' }} defaultValue={['violence_types']} onChange={(e)=>{ setSelected(e); onChange("types",e); }}>
                 <Row>
                   <Col span={8}>
-                    <Checkbox  disabled={!filter.types.violence_types && selected.length===3} value="violence_types">Tipos violencia</Checkbox>
+                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.violence_types && selected.length===3} value="violence_types">Tipos violencia</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox disabled={!filter.types.first_time && selected.length===3} value="first_time">1ra vez agresión</Checkbox>
+                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.first_time && selected.length===3} value="first_time">1ra vez agresión</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox disabled={!filter.types.factors && selected.length===3} value="factors">Factores del caso</Checkbox>
+                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.factors && selected.length===3} value="factors">Factores del caso</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox disabled={!filter.types.group_age && selected.length===3} value="group_age">Edad de víctima</Checkbox>
+                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.group_age && selected.length===3} value="group_age">Edad de víctima</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox disabled={!filter.types.relation_vict_aggr && selected.length===3} value="relation_vict_aggr">Vínculo</Checkbox>
+                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.relation_vict_aggr && selected.length===3} value="relation_vict_aggr">Vínculo</Checkbox>
                   </Col>
                 </Row>
               </Checkbox.Group>
