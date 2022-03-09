@@ -3,7 +3,7 @@ import { Bar, HorizontalBar } from 'react-chartjs-2';
 
 import PropTypes from 'prop-types';
 
-
+import {QuestionCircleOutlined} from "@ant-design/icons";
 import { 
     Typography,
     Table,
@@ -85,12 +85,18 @@ function AppBody({ location, tableData, handleViewOne, selectMode, setSelectMode
                         disabledDate={disableDate}
                         value={filter.apps_day}
                         format={dateFormatList}
+                        style={{marginRight:"30px"}}
                         onChange={e => {
                             onChange("apps_day",e);
                         }}
                         allowClear={false}
                     />
+                    <div class="tooltip">
+                      <QuestionCircleOutlined />
+                      <span class="tooltiptext">Detalle de acciones preventivas llevadas a cabo en un día específico del mes (Ver Gráfico 1 al lado derecho)</span>
+                    </div>
                     </ButtonLabelWrapper>
+
                     </Space>
                     <Table 
                         columns={headers} 

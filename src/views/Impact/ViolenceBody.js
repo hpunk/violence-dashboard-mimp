@@ -79,7 +79,7 @@ function ViolenceBody({ data, filter, appData }){
                             responsive: true,
                             title: {
                                 display: true,
-                                text: 'Cantidad de acciones preventivas registradas en el mes',
+                                text: 'Gráfico 1: Cantidad de acciones preventivas registradas en el mes',
                                 fontSize: "14"
                             },
                             legend:{
@@ -188,7 +188,7 @@ function ViolenceBody({ data, filter, appData }){
                             },
                             title: {
                                 display: true,
-                                text: 'Cantidad de casos de violencia registrados en el mes por tipo de violencia',
+                                text: 'Gráfico 2: Cantidad de casos de violencia registrados en el mes por tipo de violencia',
                                 fontSize: "14",
                             },
                             interaction: {
