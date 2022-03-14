@@ -40,8 +40,8 @@ class Evolution extends Component{
         labels : {physical_violence: 'V. Física', psychological_violence: 'V. Psicológica', economical_violence: 'V. Económica', sexual_violence: 'V. Sexual'},
         charts_data : null,
         data_filter: {
-          startDate : moment('01/01/2020','DD/MM/YYYY'),
-          endDate : moment('01/02/2020','DD/MM/YYYY'),
+          startDate : moment('10/01/2020','DD/MM/YYYY'),
+          endDate : moment('10/02/2020','DD/MM/YYYY'),
           filter_by: "STATE",
           state: 1,
           stateLabel: "AMAZONAS",
@@ -53,12 +53,24 @@ class Evolution extends Component{
         charts_to_show : ["violence_types"],
         map_data: [],
         date_map: 1,
-        period: null,
+        period: "",
+        loadingMapData : false,
+        loadingChartsData : false,
     }
+    console.log("seteado",this.state.data_filter);
     this.evolutionService = new EvolutionService();
   }
 
   prepareDataForChart = (data) => {
+
+    if(data.length > 0){
+      const initialDate = moment(data[0].startDate,'YYYY-MM-DD').format('DD/MM/YYYY');
+      const finalDate = moment(data[data.length-1].endDate,'YYYY-MM-DD').format('DD/MM/YYYY');
+      const period = `${initialDate}-${finalDate}`;
+      this.setState({ period });  
+    }
+    //const period = `${moment(data_filter.startDate.day('Sunday'),'YYYY-MM-DD').format('DD/MM/YYYY')}-${moment(data_filter.endDate.day('Saturday'),'YYYY-MM-DD').format('DD/MM/YYYY')}`;
+    //this.setState({ period });
 
     let temp = new EvolutionChartData();
     for(let i=0; i<data.length; i++){
@@ -76,19 +88,20 @@ class Evolution extends Component{
 
   loadChartsData = () => {
       const { data_filter } = this.state;
+      this.setState({ loadingChartsData : true });
       const formattedFilter = {
         state : data_filter.state,
-        startDate: data_filter.startDate.format('YYYY-MM-DD'),
-        endDate: data_filter.endDate.format('YYYY-MM-DD'),
+        startDate: moment(data_filter.startDate.startOf('month').format('YYYY-MM-DD'),'YYYY-MM-DD')._i,
+        endDate: moment(data_filter.endDate.endOf('month').format('YYYY-MM-DD'),'YYYY-MM-DD')._i,
         filterBy: data_filter.filter_by,
         province: data_filter.province,
       };
-      const period = `${moment(data_filter.startDate.day('Sunday'),'YYYY-MM-DD').format('DD/MM/YYYY')}-${moment(data_filter.endDate.day('Saturday'),'YYYY-MM-DD').format('DD/MM/YYYY')}`;
-      this.setState({ period });
+      //const period = `${moment(data_filter.startDate.day('Sunday'),'YYYY-MM-DD').format('DD/MM/YYYY')}-${moment(data_filter.endDate.day('Saturday'),'YYYY-MM-DD').format('DD/MM/YYYY')}`;
+      //this.setState({ period });
       this.evolutionService.filterChartData(formattedFilter)
         .then( res => {
             this.prepareDataForChart(res);
-        });
+        }, this.setState({ loadingChartsData : false }));
   }
 
   componentDidMount = () => {
@@ -124,9 +137,16 @@ class Evolution extends Component{
 
   handleMapFilterChange = (field, value) => {
     const { data_filter } = this.state;
-    if(field=="dates"){
-      data_filter["startDate"] = moment(value[0].format('DD/MM/YYYY'),'DD/MM/YYYY');
-      data_filter["endDate"] = moment(value[1].format('DD/MM/YYYY'),'DD/MM/YYYY');
+    console.log("el field ",field," el value ", value);
+    if(field=="startDate"){
+      data_filter["startDate"] = moment(value.format('DD/MM/YYYY'),'DD/MM/YYYY');
+      if(data_filter.startDate.startOf('month').isAfter(data_filter.endDate.endOf('month')))
+        data_filter["endDate"] = moment(data_filter.startDate.format('DD/MM/YYYY'),'DD/MM/YYYY');
+      this.setState({ data_filter }, () => { this.getMapData(); this.loadChartsData(); });
+    } else if (field =="endDate"){
+      data_filter["endDate"] = moment(value.format('DD/MM/YYYY'),'DD/MM/YYYY');
+      if(data_filter.startDate.startOf('month').isAfter(data_filter.endDate.endOf('month')))
+        data_filter["startDate"] = moment(data_filter.endDate.format('DD/MM/YYYY'),'DD/MM/YYYY');
       this.setState({ data_filter }, () => { this.getMapData(); this.loadChartsData(); });
     } else {
       data_filter[field] = value;
@@ -151,20 +171,21 @@ class Evolution extends Component{
 
   getMapData = () => {
     const { data_filter } = this.state;
-    this.setState({ date_map:1 });
+    this.setState({ date_map:1, loadingMapData : true });
     const formattedFilter = {
       state : data_filter.state,
-      startDate: data_filter.startDate.format('YYYY-MM-DD'),
-      endDate: data_filter.endDate.format('YYYY-MM-DD'),
+      startDate: moment(data_filter.startDate.startOf('month').format('YYYY-MM-DD'),'YYYY-MM-DD')._i,
+      endDate: moment(data_filter.endDate.endOf('month').format('YYYY-MM-DD'),'YYYY-MM-DD')._i,
       filterBy: data_filter.filter_by,
     };
+    
     this.evolutionService.getMapData(formattedFilter).then( res => {
-      this.setState({ map_data : res});
+      this.setState({ map_data : res, loadingMapData : false });
     });
   }
     
   render(){
-    const { data_filter, charts_to_show, charts_data, map_data,date_map,titles, period } = this.state;
+    const { data_filter, charts_to_show, charts_data, map_data,date_map,titles, period, loadingMapData, loadingChartsData } = this.state;
     return(
       <EvolutionContainer>
         <MapContainer>
@@ -174,6 +195,7 @@ class Evolution extends Component{
                   filter={data_filter}
                   onChange={this.handleMapFilterChange}
                   onSearch={() => {this.getMapData(); this.loadChartsData();}}
+                  loading={loadingMapData || loadingChartsData}
                 />
             </MapFilterContainer>
             <ChoroplethContainer>

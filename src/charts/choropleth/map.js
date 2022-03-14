@@ -89,16 +89,17 @@ function Map({mapJson, mapData, date, setDate}) {
 
   return (
       <div>
-        <div style={{fontWeight:"bold"}}>Línea de tiempo:</div>
+        <div style={{fontWeight:"bold"}}>{mapData.length == 1 ? "" :"Deslizar para cambiar mes:"}</div>
         <div className="center" style={{"width":"500px", "paddingLeft":"100px"}}>
-          
+          {mapData.length == 1 ?
+          null :
           <Slider
             min={1}
             max={mapData.length}
             tipFormatter={value => { return value!==0 && mapData.length > 0 ? `${MESES[mapData[value-1].month] }/${mapData[value-1].year}`: ""}}
             onChange={e => {setDate(e); setLocalDate(e);}}
             value={typeof date === 'number' ? date : 0}
-          />
+          />}
         </div>
         <div>
           <input label={"Fecha"} disabled={true} key="stateMap" value={mapData.length > 0 ? `${MESES[mapData[date-1].month] }/${mapData[date-1].year}`: ""}/>

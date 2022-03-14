@@ -23,13 +23,13 @@ import PropTypes from 'prop-types';
 
 const { Text } = Typography;
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 
-function EvolutionFilter({filter, onSearch, onChange, loading=true}){
+
+function EvolutionFilter({filter, onSearch, onChange, loading}){
     const [showStateSelector, setShowStateSelector] = useState(filter.filter_by == "PROVINCE");
     const [startLocal,setStartLocal] = useState(filter.startDate);
     const [endLocal,setEndLocal] = useState(filter.endDate);
-    const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
+    const dateFormatList = ['MM/YYYY', 'MM/YYYY'];
 
     const stateOptions = DEPARTAMENTOS_MANDATORY.map(d => <Option key={d.value}>{d.label}</Option>);
 
@@ -44,7 +44,7 @@ function EvolutionFilter({filter, onSearch, onChange, loading=true}){
     }
 
     const disabledEndDate = current => {
-      return (current.diff(startLocal,'days') < 0) || (current.diff(startLocal,'months') >24);
+      return (current.diff(startLocal,'months') < 0) || (current.diff(startLocal,'months') >24);
     }
 
     const disabledDate = current => {
@@ -56,29 +56,46 @@ function EvolutionFilter({filter, onSearch, onChange, loading=true}){
         <InputsCardAPP>
             <Space  align={"right"}>
               <ButtonLabelWrapper>
+                <div>
                 <Text strong type="primary">Rango de fechas:</Text>
-                <RangePicker 
-                  value={[startLocal,endLocal]}
-                  placeholder={["Semana inicio","Semana fin"]}
+                </div>
+                <div>
+                <DatePicker 
+                  value={startLocal}
+                  placeholder={"Mes inicio"}
                   format={dateFormatList}
                   allowClear={false}
                   onChange={e => {
-                    setStartLocal(e[0]);
-                    setEndLocal(e[1]);
-                    onChange("dates",e);
+                    console.log("el e",e);
+                    setStartLocal(e);
+                    if(e.startOf("month").isAfter(endLocal.endOf("month")))
+                      setEndLocal(e.endOf("month"));
+                    onChange("startDate",e);
                   }} 
-                  picker="week"
+                  picker="month"
                   disabledDate={disabledDate}
                 />
-                
-                <ButtonLabelWrapper>
-                <div class="tooltip" style={{width:"50%"}}>
+                <DatePicker 
+                  value={endLocal}
+                  placeholder={"Mes fin"}
+                  format={dateFormatList}
+                  allowClear={false}
+                  onChange={e => {
+                    console.log("el e",e);
+                    setEndLocal(e);
+                    if(startLocal.startOf("month").isAfter(e.endOf("month")))
+                      setStartLocal(e.startOf("month"));
+                    onChange("endDate",e);
+                  }} 
+                  picker="month"
+                  disabledDate={disabledEndDate}
+                />
+                <div class="tooltip" style={{ marginLeft : "10px", marginRight : "10px"}}>
                   <QuestionCircleOutlined />
-                  <span class="tooltiptext">Filtros para los casos de violencia y acciones preventivas: Mes y año, departamento, provincia y distrito</span>
+                  <span class="tooltiptext">Rango de fechas (mes inicio - mes fin)</span>
                 </div>
-                  {loading && <Spin size="large" />}
-                
-                  </ButtonLabelWrapper>
+                {loading && <Spin size="large" />}
+                </div>
               </ButtonLabelWrapper>
 
               {false && <ButtonLabelWrapper>

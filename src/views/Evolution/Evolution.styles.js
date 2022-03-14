@@ -72,7 +72,11 @@ export const InputsCardAPP = styled.div`
     padding: 4px;
     width: 100%;
     height: 70%;
-    max-width: 633px;
+    max-width: 610px;
     border: 2px solid #40a9ff;
     background-color: white;
+`
+
+export const ButtonLabelWrapper = styled.div`
+    display: block;
 `
