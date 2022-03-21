@@ -44,11 +44,11 @@ function EvolutionFilter({filter, onSearch, onChange, loading}){
     }
 
     const disabledEndDate = current => {
-      return (current.diff(startLocal,'months') < 0) || (current.diff(startLocal,'months') >24);
+      return (current.diff(startLocal,'months') < 0) || (current.diff(startLocal,'months') >23);
     }
 
     const disabledDate = current => {
-      return current < moment('01-01-2017','DD-MM-YYYY') || current > moment('03-01-2021','DD-MM-YYYY');
+      return current.isBefore(moment('01-01-2017','DD-MM-YYYY')) || current.isAfter(moment('31-12-2020','DD-MM-YYYY'));
     }
 
     return (
@@ -66,9 +66,8 @@ function EvolutionFilter({filter, onSearch, onChange, loading}){
                   format={dateFormatList}
                   allowClear={false}
                   onChange={e => {
-                    console.log("el e",e);
                     setStartLocal(e);
-                    if(e.startOf("month").isAfter(endLocal.endOf("month")))
+                    if(e.startOf("month").isAfter(endLocal.endOf("month")) || endLocal.diff(e,'months') > 23)
                       setEndLocal(e.endOf("month"));
                     onChange("startDate",e);
                   }} 
@@ -81,7 +80,6 @@ function EvolutionFilter({filter, onSearch, onChange, loading}){
                   format={dateFormatList}
                   allowClear={false}
                   onChange={e => {
-                    console.log("el e",e);
                     setEndLocal(e);
                     if(startLocal.startOf("month").isAfter(e.endOf("month")))
                       setStartLocal(e.startOf("month"));
@@ -92,7 +90,7 @@ function EvolutionFilter({filter, onSearch, onChange, loading}){
                 />
                 <div class="tooltip" style={{ marginLeft : "10px", marginRight : "10px"}}>
                   <QuestionCircleOutlined />
-                  <span class="tooltiptext">Rango de fechas (mes inicio - mes fin)</span>
+                  <span class="tooltiptext">Rango de fechas (mes inicio - mes fin) para visualizar los casos de violencia de forma mensual en el Perú</span>
                 </div>
                 {loading && <Spin size="large" />}
                 </div>

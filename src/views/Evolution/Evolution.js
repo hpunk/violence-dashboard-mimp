@@ -40,8 +40,8 @@ class Evolution extends Component{
         labels : {physical_violence: 'V. Física', psychological_violence: 'V. Psicológica', economical_violence: 'V. Económica', sexual_violence: 'V. Sexual'},
         charts_data : null,
         data_filter: {
-          startDate : moment('10/01/2020','DD/MM/YYYY'),
-          endDate : moment('10/02/2020','DD/MM/YYYY'),
+          startDate : moment('10/01/2017','DD/MM/YYYY'),
+          endDate : moment('10/06/2017','DD/MM/YYYY'),
           filter_by: "STATE",
           state: 1,
           stateLabel: "AMAZONAS",
@@ -140,7 +140,7 @@ class Evolution extends Component{
     console.log("el field ",field," el value ", value);
     if(field=="startDate"){
       data_filter["startDate"] = moment(value.format('DD/MM/YYYY'),'DD/MM/YYYY');
-      if(data_filter.startDate.startOf('month').isAfter(data_filter.endDate.endOf('month')))
+      if(data_filter.startDate.startOf('month').isAfter(data_filter.endDate.endOf('month')) || (data_filter.endDate.diff(data_filter.startDate,'months')>23))
         data_filter["endDate"] = moment(data_filter.startDate.format('DD/MM/YYYY'),'DD/MM/YYYY');
       this.setState({ data_filter }, () => { this.getMapData(); this.loadChartsData(); });
     } else if (field =="endDate"){

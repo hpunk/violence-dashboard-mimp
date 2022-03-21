@@ -14,6 +14,8 @@ import {
 
 import { DEPARTAMENTOS_MANDATORY, PROVINCIAS_MANDATORY } from '../../constants/enums';
 
+import {QuestionCircleOutlined} from "@ant-design/icons";
+
 import {
   EvolutionCardAPP,
 } from './Evolution.styles';
@@ -48,7 +50,7 @@ function EvolutionChartsFilter({filter, onChange}){
               </ButtonLabelWrapper>
             }
 
-<ButtonLabelWrapper>
+              <ButtonLabelWrapper>
                 <Text strong type="primary">Sexo víctimas: </Text>
                 <Select value={filter.victim_sex} style={{ width: 120 }} onChange={e => onChange("victim_sex",e)}>
                   <Option key={"man_victim"}>{"Hombre"}</Option>
@@ -80,6 +82,10 @@ function EvolutionChartsFilter({filter, onChange}){
                 </Row>
               </Checkbox.Group>
             </ButtonLabelWrapper>
+            <div class="tooltip" style={{ marginLeft : "10px", marginRight : "10px"}}>
+              <QuestionCircleOutlined />
+              <span style={{float:"left", position:"relative"}} class="tooltiptext">Filtros para visualizar los casos de violencia de forma semanal para un departamento específico</span>
+            </div>
           </Space>
         </EvolutionCardAPP>
       </React.Fragment>

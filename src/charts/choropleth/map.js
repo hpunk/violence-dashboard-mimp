@@ -102,8 +102,13 @@ function Map({mapJson, mapData, date, setDate}) {
           />}
         </div>
         <div>
-          <input label={"Fecha"} disabled={true} key="stateMap" value={mapData.length > 0 ? `${MESES[mapData[date-1].month] }/${mapData[date-1].year}`: ""}/>
-          <input label={"Casos"} disabled={true} key="stateMap" value={tooltipContent}/>
+          <div style={{display:"flex"}}>
+            <div style={{width:"50%", fontWeight:"bold"}}>Mes y año</div><div style={{width:"50%", fontWeight:"bold"}}>Cantidad de casos</div>
+          </div>
+          <div style={{display:"flex"}}>
+            <input id="fecha" style={{width:"50%", fontWeight:"bold"}}disabled={true} key="stateMap" value={mapData.length > 0 ? `${MESES[mapData[date-1].month] }/${mapData[date-1].year}`: ""}/>
+            <input id="casos" style={{width:"50%", fontWeight:"bold"}} disabled={true} key="stateMap" value={tooltipContent?tooltipContent:"Apuntar a algún lugar en el mapa"}/>
+          </div>
         </div>
       <ReactTooltip>{tooltipContent}</ReactTooltip>
         <ComposableMap
