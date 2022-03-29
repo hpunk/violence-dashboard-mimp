@@ -12,6 +12,8 @@ import {
     ButtonLabelWrapper,
 } from './Clustering.styles';
 
+import {QuestionCircleOutlined} from "@ant-design/icons";
+
 import PropTypes from 'prop-types';
 
 import { DEPARTAMENTOS, PROVINCIAS, DISTRITOS} from '../../constants/enums';
@@ -55,7 +57,7 @@ function DataFilter({filter, onSearch, onChange, isLoading}){
           <InputsCardAPP>
               <Space  align={"right"}>
                 <ButtonLabelWrapper>
-                  <Text type="primary">Fecha inicio</Text>
+                  <Text strong type="primary">Fecha inicio</Text>
                   <DatePicker value={startLocal} format={dateFormatList} onChange={e => {
                       setStartLocal(e);
                       onChange('startDate',e);
@@ -66,7 +68,7 @@ function DataFilter({filter, onSearch, onChange, isLoading}){
                       }} allowClear={false}/>
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
-                  <Text type="primary">Fecha fin</Text>
+                  <Text strong type="primary">Fecha fin</Text>
                   <DatePicker value={endLocal} format={dateFormatList} 
                     disabledDate={disabledEndDate}
                     onChange={e => {
@@ -75,29 +77,34 @@ function DataFilter({filter, onSearch, onChange, isLoading}){
                       }} allowClear={false}/>
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
-                  <Text type="primary">Departamento</Text>
+                  <Text strong type="primary">Departamento</Text>
                   <Select value={filter.stateLabel} style={{ width: 120 }} onChange={e => changeState(e)}>
                     {stateOptions}
                   </Select>
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
-                  <Text type="primary">Provincia</Text>
+                  <Text strong type="primary">Provincia</Text>
                   <Select value={filter.provinceLabel} style={{ width: 120 }} onChange={e => changeProvince(e)}>
                     {provinceOptions}
                   </Select>
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
-                  <Text type="primary">Distrito</Text>
+                  <Text strong type="primary">Distrito</Text>
                   <Select value={filter.districtLabel} style={{ width: 120 }} onChange={e => changeDistrict(e)}>
                     {districtOptions}
                   </Select>
                 </ButtonLabelWrapper>
-                <div style={{marginTop:"25px"}}>
+                <div >
+                  <div class="tooltip" style={{ marginLeft : "45px"}}>
+                    <QuestionCircleOutlined />
+                    <span class="tooltiptext">Filtros para seleccionar los casos de violencia con los que se va a llevar a cabo el agrupamiento</span>
+                  </div>
                   <Button 
                     onClick={() =>{
                         onSearch();
                     }}
                     type={"primary"}
+                    style={{fontWeight:"bold"}}
                     disabled={isLoading}
                   > 
                     Filtrar 

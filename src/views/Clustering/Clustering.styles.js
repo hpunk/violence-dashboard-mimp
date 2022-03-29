@@ -18,7 +18,7 @@ export const DataCountContainer = styled.div`
 `
 
 export const AlgorithmContainer = styled.div`
-    width: 45%;
+    width: 40%;
     height: 100%;
 `
 
@@ -29,13 +29,13 @@ export const ClusteringDataContainer = styled.div`
 `
 
 export const ClusteringGraphic = styled.div`
-    width: 65%;
+    width: 60%;
     height: 100%;
     flex: none;
 `
 
 export const ClusteringDataDownload = styled.div`
-    width: 35%;
+    width: 40%;
     height: 100%;
     flex: none;
 `
@@ -59,6 +59,16 @@ export const InputsCardAlgorithm = styled.div`
     margin: 8px 4px;
     padding: 4px;
     width: 83%;
+    max-width: 549px;
+    border: 2px solid #40a9ff;
+    background-color: white;
+`
+
+export const AlgorithmAdditionalInfo = styled.div`
+    flex: none;
+    margin: 8px 4px;
+    padding: 4px;
+    width: 100%;
     max-width: 549px;
     border: 2px solid #40a9ff;
     background-color: white;

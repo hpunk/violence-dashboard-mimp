@@ -17,6 +17,7 @@ import { clusteringAlgorithmsNames } from './utils/utils';
 import DataFilter from './DataFilter';
 import DataCount from './DataCount';
 import DownloadArea from './DownloadArea';
+import AdditionalInfo from './AdditionalInfo';
 
 const MAX_CASES = 380;
 
@@ -90,7 +91,7 @@ class Clustering extends Component{
     if(field==="algorithm"){
       filter.algorithmLabel = clusteringAlgorithmsNames[`${value}`];
       if(value==2)
-        filter.k = 0;
+        filter.k = 3;
       else if(value==0)
         filter.k = 3;
       else if(value==1){
@@ -137,7 +138,6 @@ class Clustering extends Component{
 
   render(){
     const {flag_dendro, flag_scatter ,filter, count, clusters, dendrogram, loading} = this.state;
-    console.log("el filter",filter);
     return(
       <ClusteringContainer id="clustering-container">
         <ClusteringFilterContainer id="clustering-filter-container">
@@ -153,7 +153,7 @@ class Clustering extends Component{
             <DataCount
               count={count}
             />
-            {!filter.isValid && <div>Se trabajará con una muestra de 380 casos en esta versión</div>}
+            {!filter.isValid && <div style={{fontWeight:"bold"}}>Se trabajará con una muestra de 380 casos en esta versión</div>}
           </DataCountContainer>
           <AlgorithmContainer>
             <ClusteringAlgorithmsFilter
@@ -178,6 +178,9 @@ class Clustering extends Component{
             { !loading && clusters.length > 0 && <DownloadArea
               clusters = {clusters}
             />}
+            <AdditionalInfo 
+              algorithm={filter.algorithm}
+            />
           </ClusteringDataDownload>
         </ClusteringDataContainer>
       </ClusteringContainer>

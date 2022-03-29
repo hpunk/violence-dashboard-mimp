@@ -27,7 +27,7 @@ function ClusteringAlgorithmsFilter({filter, onCluster, onChange, isLoading}){
           <InputsCardAlgorithm>
               <Space  align={"right"}>
                 <ButtonLabelWrapper style={{ maxWidth: '120px' }}>
-                  <Text type="primary">Algoritmo</Text>
+                  <Text strong type="primary">Algoritmo</Text>
                   <Select value={filter.algorithmLabel} style={{ width: 120 }} onChange={e => onChange('algorithm',e)}>
                     <Option key={0}>{'K-Medoids'}</Option>
                     <Option key={1}>{'DBSCAN'}</Option>
@@ -37,7 +37,7 @@ function ClusteringAlgorithmsFilter({filter, onCluster, onChange, isLoading}){
                 {
                   filter.algorithm == 0 &&
                   <ButtonLabelWrapper style={{ maxWidth: '140px' }}>
-                    <Text type="primary">K (# de grupos)</Text>
+                    <Text strong type="primary">K (# de grupos)</Text>
                     <InputNumber min={1} max={12} value={filter.k} onChange={(e)=> onChange("k",e)} />
                   </ButtonLabelWrapper>
                 }
@@ -45,11 +45,11 @@ function ClusteringAlgorithmsFilter({filter, onCluster, onChange, isLoading}){
                   filter.algorithm == 1 &&
                   <React.Fragment>
                     <ButtonLabelWrapper>
-                      <Text type="primary">Núm. vecinos</Text>
+                      <Text strong type="primary">Núm. vecinos</Text>
                       <InputNumber min={1} max={20} style={{ maxWidth: '120px' }} value={filter.mins} onChange={(e)=> onChange("mins",e)} />
                     </ButtonLabelWrapper>
                     <ButtonLabelWrapper>
-                    <Text type="primary">EPS</Text>
+                    <Text strong type="primary">EPS</Text>
                     <InputNumber min={0.01} step="0.01" max={0.8} style={{ maxWidth: '120px' }} value={filter.eps} onChange={(e)=> onChange("eps",e)} />
                   </ButtonLabelWrapper>
                 </React.Fragment>
@@ -57,11 +57,11 @@ function ClusteringAlgorithmsFilter({filter, onCluster, onChange, isLoading}){
                 {
                   filter.algorithm == 2 &&
                   <ButtonLabelWrapper style={{ maxWidth: '120px' }}>
-                    <Text type="primary"># de Grupos</Text>
-                    <InputNumber min={0} max={12} value={filter.k} onChange={(e)=> onChange("k",e)} />
+                    <Text strong type="primary"># de Grupos</Text>
+                    <InputNumber min={1} max={12} value={filter.k} onChange={(e)=> onChange("k",e)} />
                   </ButtonLabelWrapper>
                 }
-                <div style={{marginTop:"25px"}}><Button type={"primary"} onClick={onCluster} disabled={isLoading}> Encontrar grupos </Button></div>
+                <div style={{marginTop:"25px"}}><Button style={{fontWeight:"bold"}} type={"primary"} onClick={onCluster} disabled={isLoading}> Encontrar grupos </Button></div>
               </Space>
             </InputsCardAlgorithm>
         </div>

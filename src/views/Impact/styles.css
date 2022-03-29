@@ -23,6 +23,10 @@
     border: 0;
 }
 
+.ant-input-number-input {
+    font-weight: bold;
+}
+
 .ant-select {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -113,4 +117,33 @@
   
   .tooltip:hover .tooltiptext {
     visibility: visible;
+  }
+
+.imgviewer {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .imgviewer .imgviewercontent {
+    visibility: hidden;
+    width: 1500px;
+    background-color: white;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+  
+    /* Position the tooltip */
+    position: absolute;
+    left: -1000px;
+    z-index: 1;
+  }
+  
+  .imgviewer:hover .imgviewercontent {
+    visibility: visible;
+  }
+
+  .imgviewerbox:hover {
+    background-color: grey;
   }

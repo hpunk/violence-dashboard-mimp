@@ -13,6 +13,7 @@ import {
 } from './Clustering.styles';
 
 import PropTypes from 'prop-types';
+import {QuestionCircleOutlined} from "@ant-design/icons";
 
 const { Text } = Typography;
 const {Option} = Select;
@@ -28,7 +29,11 @@ function DataCount({count}){
           <InputsCardAlgorithm>
               <Space  align={"right"}>
                 <ButtonLabelWrapper style={{ maxWidth: '120px' }}>
-                  <Text type="primary">{count}</Text>
+                  <Text strong type="primary">{count}</Text>
+                  <div class="tooltip" style={{ position:"relative", float:"right"}}>
+                    <QuestionCircleOutlined />
+                    <span class="tooltiptext">Cantidad de casos a ser agrupados</span>
+                  </div>
                 </ButtonLabelWrapper>
               </Space>
             </InputsCardAlgorithm>

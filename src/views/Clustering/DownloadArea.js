@@ -9,10 +9,12 @@ import {
 import { 
     DownloadCard,
     ButtonLabelWrapper,
+    AlgorithmAdditionalInfo,
 } from './Clustering.styles';
 
 import PropTypes from 'prop-types';
 import {json2excel} from 'js2excel';
+import {QuestionCircleOutlined} from "@ant-design/icons";
 
 const { Text } = Typography;
 const {Option} = Select;
@@ -20,7 +22,7 @@ const {Option} = Select;
 function DownloadArea({clusters}){
     let groupOptions = clusters.map(c => c.group);
     groupOptions = groupOptions.map(i => <Option key={i}>{i}</Option>)
-    const [group, setGroup] = useState(0);
+    const [group, setGroup] = useState(1);
     const [loading, setLoading] = useState(false);
 
     const download = () => {
@@ -41,7 +43,16 @@ function DownloadArea({clusters}){
 
     return (
         <div>
-          <div style={{"width":"90%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Descarga de datos:</Text> </div>
+        <AlgorithmAdditionalInfo>
+        <div style={{ display:"flex"}}>
+            <div style={{"width":"90%", "fontSize":"20px", "fontWeight": "bold"}}> 
+                <Text type="primary" >Descarga de datos por grupo:</Text>
+            </div>
+            <div class="tooltip" style={{ width : "10%"}}>
+                <QuestionCircleOutlined />
+                <span class="tooltiptext">Descargar los casos de violencia agrupados de acuerdo al método escogido en forma de archivos .csv</span>
+            </div>
+        </div>
           
               <Space  align={"right"}>
                 <ButtonLabelWrapper style={{ maxWidth: '120px' }}>
@@ -52,6 +63,7 @@ function DownloadArea({clusters}){
                 </ButtonLabelWrapper>
                 <div style={{marginTop:"25px"}}><Button type={"primary"} onClick={download} disabled={loading}> Descargar datos </Button></div>
               </Space>
+        </AlgorithmAdditionalInfo>
             
         </div>
     );
