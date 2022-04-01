@@ -22,7 +22,7 @@ const {Option} = Select;
 function DownloadArea({clusters}){
     let groupOptions = clusters.map(c => c.group);
     groupOptions = groupOptions.map(i => <Option key={i}>{i}</Option>)
-    const [group, setGroup] = useState(1);
+    const [group, setGroup] = useState("");
     const [loading, setLoading] = useState(false);
 
     const download = () => {
@@ -31,7 +31,7 @@ function DownloadArea({clusters}){
         try {
             json2excel({
                 data,
-                name: `datos-grupo-${group}`,
+                name: `datos-${group}`,
                 formateDate: 'dd/mm/yyyy'
             });
             setLoading(false);
@@ -61,7 +61,7 @@ function DownloadArea({clusters}){
                     {groupOptions}
                   </Select>
                 </ButtonLabelWrapper>
-                <div style={{marginTop:"25px"}}><Button type={"primary"} onClick={download} disabled={loading}> Descargar datos </Button></div>
+                <div style={{marginTop:"25px"}}><Button type={"primary"} onClick={download} disabled={group == "" || loading}> Descargar datos </Button></div>
               </Space>
         </AlgorithmAdditionalInfo>
             
