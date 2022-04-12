@@ -84,7 +84,7 @@ function EvolutionChartsFilter({filter, onChange}){
             </ButtonLabelWrapper>
             <div class="tooltip" style={{ marginLeft : "10px", marginRight : "10px"}}>
               <QuestionCircleOutlined />
-              <span style={{float:"left", position:"relative"}} class="tooltiptext">Filtros para visualizar los casos de violencia de forma semanal para un departamento específico</span>
+              <span style={{left:"-200px", position:"absolute"}} class="tooltiptext">Filtros para visualizar los casos de violencia de forma semanal para un departamento específico</span>
             </div>
           </Space>
         </EvolutionCardAPP>
