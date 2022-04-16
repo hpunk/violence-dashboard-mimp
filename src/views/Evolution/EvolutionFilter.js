@@ -44,7 +44,7 @@ function EvolutionFilter({filter, onSearch, onChange, loading}){
     }
 
     const disabledEndDate = current => {
-      return (current.diff(startLocal,'months') < 0) || (current.diff(startLocal,'months') >23);
+      return (current.diff(startLocal,'months') < 0) || (current.diff(startLocal,'months') >11);
     }
 
     const disabledDate = current => {
@@ -90,7 +90,7 @@ function EvolutionFilter({filter, onSearch, onChange, loading}){
                 />
                 <div class="tooltip" style={{ marginLeft : "10px", marginRight : "10px"}}>
                   <QuestionCircleOutlined />
-                  <span class="tooltiptext">Rango de fechas (mes inicio - mes fin) para visualizar los casos de violencia de forma mensual en el Perú</span>
+                  <span class="tooltiptext">Rango de fechas para visualizar los casos de violencia de forma mensual en el Perú (máximo 12 meses)</span>
                 </div>
                 {loading && <Spin size="large" />}
                 </div>

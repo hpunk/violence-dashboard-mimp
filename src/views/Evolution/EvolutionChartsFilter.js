@@ -61,23 +61,23 @@ function EvolutionChartsFilter({filter, onChange}){
 
             <ButtonLabelWrapper>
               <Text strong type="primary">Ver casos de violencia por:</Text>
-              <Text strong type="secondary">(Máximo 3 a la vez)</Text>
+              <Text strong type="secondary">(Máximo 2 a la vez)</Text>
               <Checkbox.Group style={{ width: '100%' }} defaultValue={['violence_types']} onChange={(e)=>{ setSelected(e); onChange("types",e); }}>
                 <Row>
                   <Col span={8}>
-                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.violence_types && selected.length===3} value="violence_types">Tipos violencia</Checkbox>
+                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.violence_types && selected.length===2} value="violence_types">Tipos violencia</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.first_time && selected.length===3} value="first_time">1ra vez agresión</Checkbox>
+                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.first_time && selected.length===2} value="first_time">1ra vez agresión</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.factors && selected.length===3} value="factors">Factores del caso</Checkbox>
+                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.factors && selected.length===2} value="factors">Factores del caso</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.group_age && selected.length===3} value="group_age">Edad de víctima</Checkbox>
+                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.group_age && selected.length===2} value="group_age">Edad de víctima</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.relation_vict_aggr && selected.length===3} value="relation_vict_aggr">Vínculo</Checkbox>
+                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.relation_vict_aggr && selected.length===2} value="relation_vict_aggr">Vínculo</Checkbox>
                   </Col>
                 </Row>
               </Checkbox.Group>

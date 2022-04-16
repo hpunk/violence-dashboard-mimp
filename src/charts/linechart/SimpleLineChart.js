@@ -31,7 +31,7 @@ function SimpleLineChart({data, dates, title }){
                 bodyFontSize: 14,
                 xPadding: 10,
                 intersect: false,
-                mode: "index",
+                mode: "nearest",
                 yPadding: 10,
                 callbacks: {
                     label: (tooltipItem, data) => {

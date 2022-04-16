@@ -153,7 +153,7 @@ class Clustering extends Component{
             <DataCount
               count={count}
             />
-            {!filter.isValid && <div style={{fontWeight:"bold"}}>Se trabajará con una muestra de 380 casos en esta versión</div>}
+            {!filter.isValid && <div style={{fontWeight:"bold", fontSize:"15px"}}>Se usará una muestra de 380 casos en esta versión</div>}
           </DataCountContainer>
           <AlgorithmContainer>
             <ClusteringAlgorithmsFilter
@@ -168,10 +168,10 @@ class Clustering extends Component{
           <ClusteringGraphic>
             { loading && <Spin size="large" />}
             { !loading && !dendrogram && clusters.length > 0  &&
-              <iframe key={flag_scatter} width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~gustavo_alzamora_2021/11.embed"></iframe>
+              <iframe key={flag_scatter} width="90%" height="85%" frameborder="0" scrolling="no" src="//plotly.com/~gustavo_alzamora_2021/11.embed?link=false"></iframe>
             }
             { !loading && dendrogram &&
-              <iframe key={flag_dendro} width="900" height="800" frameborder="0" scrolling="no" src="//plotly.com/~gustavo_alzamora_2021/23.embed"></iframe>
+              <iframe key={flag_dendro} width="90%" height="85%" frameborder="0" scrolling="no" src="//plotly.com/~gustavo_alzamora_2021/23.embed?link=false"></iframe>
             }
           </ClusteringGraphic>
           <ClusteringDataDownload>

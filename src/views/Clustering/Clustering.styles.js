@@ -7,8 +7,8 @@ export const ClusteringFilterContainer = styled.div`
 `
 
 export const DataFilterContainer = styled.div`
-    width: 45%;
-    margin-right:5%;
+    width: 47%;
+    margin-right:3%;
     height: 100%;
 `
 
@@ -30,7 +30,8 @@ export const ClusteringDataContainer = styled.div`
 
 export const ClusteringGraphic = styled.div`
     width: 60%;
-    height: 100%;
+    height: 90%;
+    margin-top: 4%;
     flex: none;
 `
 

@@ -22,7 +22,7 @@ export const EvolutionContainer = styled.div`
 
 export const SingleChartContainer = styled.div`
     width: 95%;
-    height: 28%;
+    height: 44%;
     padding-left: 4%;
     display: flex;
     margin-bottom:3%
