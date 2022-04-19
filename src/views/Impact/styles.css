@@ -126,8 +126,8 @@
   
   .imgviewer .imgviewercontent {
     visibility: hidden;
-    width: 1500px;
-    background-color: white;
+    width: 1200px;
+    background-color: black;
     color: #fff;
     font-weight: bold;
     text-align: center;
@@ -136,7 +136,7 @@
   
     /* Position the tooltip */
     position: absolute;
-    left: -1100px;
+    left: -1000px;
     z-index: 1;
   }
   
@@ -144,6 +144,6 @@
     visibility: visible;
   }
 
-  .imgviewerbox:hover {
-    background-color: grey;
+  .imgviewer:hover {
+    background-color: lightgrey;
   }
