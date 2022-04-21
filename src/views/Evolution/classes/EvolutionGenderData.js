@@ -4,17 +4,17 @@ import EvolutionGenderGroup from './EvolutionGenderGroup';
 
 export default class EvolutionGenderData {
     constructor() {
-        this.physical_violence = new AttributeData("V. Física");
-        this.psychological_violence = new AttributeData("V. Psicológica");
-        this.economical_violence = new AttributeData("V. Económica");
-        this.sexual_violence = new AttributeData("V. Sexual");
+        this.physical_violence = new AttributeData("Violencia Física");
+        this.psychological_violence = new AttributeData("Violencia Psicológica");
+        this.economical_violence = new AttributeData("Violencia Económica");
+        this.sexual_violence = new AttributeData("Violencia Sexual");
         this.first_time = new AttributeData("1° vez agresión");
-        this.aggr_alcohol = new AttributeData("Agres. Alcohol");
-        this.aggr_drugs = new AttributeData("Agres. Drogas");
-        this.vict_alcohol = new AttributeData("Víct. Alcohol");
-        this.vict_drugs = new AttributeData("Víct. Drogas");
-        this.vict_lgtbi = new AttributeData("Víct. LGBTI+");
-        this.vict_disability = new AttributeData("Víct. con discapacidad");
+        this.aggr_alcohol = new AttributeData("Agresor ingirió alcohol");
+        this.aggr_drugs = new AttributeData("Agresor usó drogas");
+        this.vict_alcohol = new AttributeData("Víctima ingirió alcohol");
+        this.vict_drugs = new AttributeData("Víctima usó drogas");
+        this.vict_lgtbi = new AttributeData("Víctima relacionada a LGBTI+");
+        this.vict_disability = new AttributeData("Víctima con discapacidad");
         this.inf = new AttributeData("Infantes");
         this.nin = new AttributeData("Niños");
         this.adol = new AttributeData("Adolescentes");
