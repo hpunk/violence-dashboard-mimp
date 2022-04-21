@@ -78,19 +78,19 @@ function DataFilter({filter, onSearch, onChange, isLoading}){
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
                   <Text strong type="primary">Departamento</Text>
-                  <Select value={filter.stateLabel} style={{ width: 120 }} onChange={e => changeState(e)}>
+                  <Select dropdownMatchSelectWidth={false} value={filter.stateLabel} style={{ width: 120 }} onChange={e => changeState(e)}>
                     {stateOptions}
                   </Select>
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
                   <Text strong type="primary">Provincia</Text>
-                  <Select value={filter.provinceLabel} style={{ width: 120 }} onChange={e => changeProvince(e)}>
+                  <Select dropdownMatchSelectWidth={false} value={filter.provinceLabel} style={{ width: 120 }} onChange={e => changeProvince(e)}>
                     {provinceOptions}
                   </Select>
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
                   <Text strong type="primary">Distrito</Text>
-                  <Select value={filter.districtLabel} style={{ width: 120 }} onChange={e => changeDistrict(e)}>
+                  <Select dropdownMatchSelectWidth={false} value={filter.districtLabel} style={{ width: 120 }} onChange={e => changeDistrict(e)}>
                     {districtOptions}
                   </Select>
                 </ButtonLabelWrapper>

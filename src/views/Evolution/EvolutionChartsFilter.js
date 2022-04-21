@@ -37,7 +37,7 @@ function EvolutionChartsFilter({filter, onChange}){
           { filter.filter_by === "STATE" ?
               <ButtonLabelWrapper>
                 <Text strong type="primary">Departamento</Text>
-                <Select value={filter.stateLabel} style={{ width: 120 }} onChange={e => onChange('state',e)}>
+                <Select dropdownMatchSelectWidth={false} value={filter.stateLabel} style={{ width: 120 }} onChange={e => onChange('state',e)}>
                   {stateOptions}
                 </Select>
               </ButtonLabelWrapper>
