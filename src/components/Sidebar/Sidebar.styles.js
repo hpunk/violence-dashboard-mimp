@@ -72,6 +72,9 @@ export const MenuItem = styled.div`
 export const Text = styled.p`
   display: ${p => p.isSidebarOpen ? 'inline' : 'none'};
 `
+export const TextSmall = styled.p`
+  display: ${p => !p.isSidebarOpen ? 'inline' : 'none'};
+`
 
 export const Icon = styled.img`
   ${p => p.isSidebarOpen && `padding-right: 20px; transition: .2s ease-in padding-right`};

@@ -78,7 +78,12 @@ const Sidebar = props => {
             isSidebarOpen={isSidebarOpen}
             colorPalette={colorPalette}
           >
-            <s.Icon isSidebarOpen={isSidebarOpen} src={item.icon} />
+            {item.isMain
+              ?
+              <s.Icon isSidebarOpen={isSidebarOpen} src={item.icon} />
+              :
+              <s.TextSmall isSidebarOpen={isSidebarOpen} >{item.icon}</s.TextSmall>
+            }
             <s.Text isSidebarOpen={isSidebarOpen}>{item.name}</s.Text>
           </s.MenuItem>
         </Link>
