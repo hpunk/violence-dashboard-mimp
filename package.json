@@ -29,6 +29,7 @@
     "react-scripts": "3.4.3",
     "react-simple-maps": "^2.3.0",
     "react-tooltip": "^4.2.17",
+    "reactjs-popup": "^2.0.5",
     "s": "^1.0.0"
   },
   "scripts": {
