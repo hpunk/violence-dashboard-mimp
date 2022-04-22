@@ -50,7 +50,7 @@ function ClusteringAlgorithmsFilter({filter, onCluster, onChange, isLoading}){
                     </ButtonLabelWrapper>
                     <ButtonLabelWrapper>
                     <Text strong type="primary">EPS</Text>
-                    <InputNumber min={0.01} step="0.01" max={0.8} style={{ maxWidth: '120px' }} value={filter.eps} onChange={(e)=> onChange("eps",e)} />
+                    <InputNumber min={0.1} step="0.01" max={0.18} style={{ maxWidth: '120px' }} value={filter.eps} onChange={(e)=> onChange("eps",e)} />
                   </ButtonLabelWrapper>
                 </React.Fragment>
                 }
