@@ -48,7 +48,7 @@ class Evolution extends Component{
           province: 101,
           provinceLabel: "CHACHAPOYAS",
           victim_sex: "man_victim",
-          types: new ChartFilterTypes(),
+          types: new ChartFilterTypes(true),
         },
         charts_to_show : ["violence_types"],
         map_data: [],
@@ -57,7 +57,7 @@ class Evolution extends Component{
         loadingMapData : false,
         loadingChartsData : false,
     }
-    console.log("seteado",this.state.data_filter);
+    
     this.evolutionService = new EvolutionService();
   }
 
@@ -69,8 +69,6 @@ class Evolution extends Component{
       const period = `${initialDate}-${finalDate}`;
       this.setState({ period });  
     }
-    //const period = `${moment(data_filter.startDate.day('Sunday'),'YYYY-MM-DD').format('DD/MM/YYYY')}-${moment(data_filter.endDate.day('Saturday'),'YYYY-MM-DD').format('DD/MM/YYYY')}`;
-    //this.setState({ period });
 
     let temp = new EvolutionChartData();
     for(let i=0; i<data.length; i++){
@@ -96,8 +94,7 @@ class Evolution extends Component{
         filterBy: data_filter.filter_by,
         province: data_filter.province,
       };
-      //const period = `${moment(data_filter.startDate.day('Sunday'),'YYYY-MM-DD').format('DD/MM/YYYY')}-${moment(data_filter.endDate.day('Saturday'),'YYYY-MM-DD').format('DD/MM/YYYY')}`;
-      //this.setState({ period });
+      
       this.evolutionService.filterChartData(formattedFilter)
         .then( res => {
             this.prepareDataForChart(res);
@@ -113,11 +110,12 @@ class Evolution extends Component{
       const { data_filter, charts_to_show } = this.state;
       let new_charts_to_show = [];
       if(field === "types"){
-        data_filter.types = new ChartFilterTypes();
+        data_filter.types = new ChartFilterTypes(false);
         new_charts_to_show = value;
-        if(values.length > 0){
+        if(value.length > 0){
             value.forEach(type => data_filter.types[type] = true);
         }
+        console.log(data_filter.types)
       }
       else{
         data_filter[field] = value;
@@ -137,7 +135,7 @@ class Evolution extends Component{
 
   handleMapFilterChange = (field, value) => {
     const { data_filter } = this.state;
-    console.log("el field ",field," el value ", value);
+    
     if(field=="startDate"){
       data_filter["startDate"] = moment(value.format('DD/MM/YYYY'),'DD/MM/YYYY');
       if(data_filter.startDate.startOf('month').isAfter(data_filter.endDate.endOf('month')) || (data_filter.endDate.diff(data_filter.startDate,'months')>23))
