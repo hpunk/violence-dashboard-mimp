@@ -1,2 +1,2 @@
-export const app_evolution_url = "localhost:8080";
-export const clustering_url = "localhost:8000";
+export const app_evolution_url = "evolution.proyectotesisgaav.cloudns.ph/";
+export const clustering_url = "clustering.proyectotesisgaav.cloudns.ph/";

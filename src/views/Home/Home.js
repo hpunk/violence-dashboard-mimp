@@ -34,14 +34,14 @@ const Home = () => {
           <img src={evolutionImage} width={"100%"} alt="evolution_image" />
           <Paragraph><pre>El segundo módulo "Evolución de la violencia", puede ser usado para visualizar cómo es que los casos de violencia reportados varían a través del tiempo en los diferentes departamentos del Perú</pre></Paragraph>
           <Popup modal nested trigger={<div style={{textAlign:"center"}}><button> Ver tutorial</button></div>}>
-            <iframe width="1120" height="630" src="https://www.youtube.com/embed/jH9VR5mhcW0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="1120" height="630" src="https://www.youtube.com/embed/w5KGwNNZCPs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </Popup>
         </ModuleContainer>
         <ModuleContainer>
           <img src={clusteringImage} width={"100%"} alt="clustering_image" />
           <Paragraph><pre>El tercer módulo "Clustering", permite llevar a cabo la identificación de grupos de casos de violencia basándose en qué tan parecidas son las características presentes en los casos registrados</pre></Paragraph>
           <Popup modal nested trigger={<div style={{textAlign:"center"}}><button> Ver tutorial</button></div>}>
-            <iframe width="1120" height="630" src="https://www.youtube.com/embed/jH9VR5mhcW0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="1120" height="630" src="https://www.youtube.com/embed/ayPYWbW99zA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </Popup>
         </ModuleContainer>
       </ModulesAreaContainer>
