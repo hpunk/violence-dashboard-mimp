@@ -59,7 +59,7 @@ function ViolenceBody({ data, filter, appData }){
         <React.Fragment>
             <div>
 
-                <div style={{height:'500px', width: '98%', maxWidth:"820px", marginTop:"30px", paddingLeft:"3.6%"}}>
+                <div style={{height:'350px', width: '98%', maxWidth:"550px", marginTop:"10px", paddingLeft:"3.6%"}}>
                     <Line
                         data={{
                             labels: xLineLabel,
@@ -80,7 +80,7 @@ function ViolenceBody({ data, filter, appData }){
                             title: {
                                 display: true,
                                 text: 'Gráfico 1: Cantidad de acciones preventivas registradas en el mes',
-                                fontSize: "14"
+                                fontSize: "11"
                             },
                             legend:{
                                 labels: {
@@ -93,9 +93,9 @@ function ViolenceBody({ data, filter, appData }){
                             },
                             tooltips: {
                                 displayColors: true,
-                                titleFontSize: 14,
+                                titleFontSize: 11,
                                 
-                                bodyFontSize: 14,
+                                bodyFontSize: 11,
                                 xPadding: 10,
                                 intersect: false,
                                 mode: "index",
@@ -123,7 +123,7 @@ function ViolenceBody({ data, filter, appData }){
                                         display: true,
                                         labelString: 'Número de acciones preventivas',
                                         weight : "bold",
-                                        fontSize: "17"
+                                        fontSize: "13"
                                     }
                                 }],
                                 xAxes: [{
@@ -133,13 +133,13 @@ function ViolenceBody({ data, filter, appData }){
                                         display: true,
                                         labelString: 'Días del mes',
                                         weight : "bold",
-                                        fontSize: "17"
+                                        fontSize: "13"
                                     }
                                 }],
                             }
                         }}/>
                 </div>
-                <div style={{height:'500px', width: '98%', maxWidth:"820px", marginTop:"30px", paddingLeft:"3.6%"}}>
+                <div style={{height:'350px', width: '98%', maxWidth:"550px", marginTop:"10px", paddingLeft:"3.6%"}}>
                     <Line
                         data={{
                             labels: xLineLabel,
@@ -189,7 +189,7 @@ function ViolenceBody({ data, filter, appData }){
                             title: {
                                 display: true,
                                 text: 'Gráfico 2: Cantidad de casos de violencia registrados en el mes por tipo de violencia',
-                                fontSize: "14",
+                                fontSize: "11",
                             },
                             interaction: {
                                 intersect: false,
@@ -197,9 +197,9 @@ function ViolenceBody({ data, filter, appData }){
                             },
                             tooltips: {
                                 displayColors: true,
-                                titleFontSize: 14,
+                                titleFontSize: 11,
                                 
-                                bodyFontSize: 14,
+                                bodyFontSize: 11,
                                 xPadding: 10,
                                 intersect: false,
                                 mode: "index",
@@ -225,7 +225,7 @@ function ViolenceBody({ data, filter, appData }){
                                         display: true,
                                         labelString: 'Número de casos',
                                         weight : "bold",
-                                        fontSize: "17"
+                                        fontSize: "13"
                                     },
                                     ticks: {
                                         precision: 0,
@@ -238,7 +238,7 @@ function ViolenceBody({ data, filter, appData }){
                                         display: true,
                                         labelString: 'Días del mes',
                                         weight : "bold",
-                                        fontSize: "17"
+                                        fontSize: "13"
                                     }
                                 }],
                             }

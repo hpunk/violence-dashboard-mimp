@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 
 export const SidebarContainer = styled.div`
   width: ${p => p.isSidebarOpen ? '20%' : '5%'};
-  max-width: 280px;
-  min-width: 80px;
+  max-width: 210px;
+  min-width: 60px;
   background-image: linear-gradient(
     315deg,
     ${p => p.colorPalette.bgColor1} 0%,
@@ -22,6 +22,8 @@ export const SidebarHeader = styled.h3`
   text-align: center;
   margin-bottom: 10px;
   letter-spacing: 6px;
+  font-size: 14px;
+  font-weight: bold;
   font-family: ${p => p.font}
 `
 
@@ -39,7 +41,8 @@ export const MenuItem = styled.div`
   `};
 
   padding: 6px 20px;
-  font-weight: 600;
+  font-weight: bold;
+  font-size: 11px;
   color: ${p => p.selected ? p.colorPalette.fontColorSelected : p.colorPalette.fontColor} ;  
   font-family: ${p => p.font};
   white-space: nowrap;

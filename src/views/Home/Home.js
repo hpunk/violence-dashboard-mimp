@@ -19,8 +19,8 @@ const Home = () => {
       <TitleContainer>
         <div style={{fontSize:"20px", fontWeight:"bold"}}>Herramienta de analítica visual para datos sobre violencia publicados por el MIMP</div>
         <div style={{fontSize:"14px", fontWeight:"bold"}}>Tesista: Gustavo André Alzamora Vargas</div>
-        <div style={{fontSize:"16px", fontWeight:"bold"}}>La presente herramienta usa datos de casos de violencia y acciones preventivas publicados por el MIMP para los años 2017, 2018, 2019, 2020</div>
-        <button style={{height:"28px", width:"300px"}}><a style={{fontSize:"14px", fontWeight:"bold"}} target="_blank" href="https://forms.gle/hHEmAYEX3NnLJT3t6">Completar formulario de evaluación</a></button>
+        <div style={{fontSize:"14px", fontWeight:"bold"}}>La presente herramienta usa datos de casos de violencia y acciones preventivas publicados por el MIMP para los años 2017, 2018, 2019, 2020</div>
+        <button style={{height:"26px", width:"300px"}}><a style={{fontSize:"12px", fontWeight:"bold"}} target="_blank" href="https://forms.gle/hHEmAYEX3NnLJT3t6">Completar formulario de evaluación</a></button>
       </TitleContainer>
       <ModulesAreaContainer>
         <ModuleContainer>

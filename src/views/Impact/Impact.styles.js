@@ -19,8 +19,8 @@ export const ImpactContainer = styled.div`
 
 export const InputsCardAPP = styled.div`
     flex: none;
-    margin: 8px 4px;
-    padding: 4px;
+    margin: 4px 2px;
+    padding: 2px;
     width: 80%;
     border: 2px solid #40a9ff;
     background-color: white;

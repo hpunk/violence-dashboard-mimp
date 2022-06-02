@@ -7,7 +7,7 @@ export const TitleContainer = styled.div`
 
 export const ModulesAreaContainer = styled.div`
     width: 100%;
-    height: 60%;
+    height: 70%;
     display: flex;
     background-color: white;
     justify-content: space-around;

@@ -45,33 +45,33 @@ function AppFilters({filter, loading, onChange}){
 
     return (
         <React.Fragment>
-          <div style={{"width":"100%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text strong type="primary" >Impacto de Acciones Preventivas Promocionales en casos de violencia:</Text> </div>
+          <div style={{"width":"100%", "fontSize":"15px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text strong type="primary" >Impacto de Acciones Preventivas Promocionales en casos de violencia:</Text> </div>
           <InputsCardAPP>
               <Space  align={"right"}>
                 <ButtonLabelWrapper>
-                  <Text strong type="primary">Período (mes - año) </Text>
+                  <div style={{fontSize:"12px", fontWeight:"bold"}}>Período (mes - año) </div>
                   <DatePicker value={startLocal} format={dateFormatList}
                     picker={"month"}
                     onChange={e => {setStartLocal(e); onChange('startDate',e);}}
                     allowClear={false}
-                    style={{ fontWeight : "bold"}}
+                    style={{ fontWeight : "bold", fontSize: "10px", width:"150px"}}
                   />
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
-                  <Text strong type="primary">Departamento</Text>
-                  <Select dropdownMatchSelectWidth={false} value={filter.stateLabel} style={{ width: 120 }} onChange={e => changeState(e)}>
+                  <div style={{fontSize:"12px", fontWeight:"bold"}}>Departamento</div>
+                  <Select dropdownMatchSelectWidth={false} value={filter.stateLabel} style={{ width: "90px", fontSize:"10px" }} onChange={e => changeState(e)}>
                     {stateOptions}
                   </Select>
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
-                  <Text strong type="primary">Provincia</Text>
-                  <Select dropdownMatchSelectWidth={false} value={filter.provinceLabel} style={{ width: 120 }} onChange={e => changeProvince(e)}>
+                  <div style={{fontSize:"12px", fontWeight:"bold"}}>Provincia</div>
+                  <Select dropdownMatchSelectWidth={false} value={filter.provinceLabel} style={{ width: "90px", fontSize:"10px" }} onChange={e => changeProvince(e)}>
                     {provinceOptions}
                   </Select>
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
-                  <Text strong type="primary">Distrito</Text>
-                  <Select dropdownMatchSelectWidth={false} value={filter.districtLabel} style={{ width: 120 }} onChange={e => changeDistrict(e)}>
+                  <div style={{fontSize:"12px", fontWeight:"bold"}}>Distrito</div>
+                  <Select dropdownMatchSelectWidth={false} value={filter.districtLabel} style={{ width: "90px", fontSize:"10px" }} onChange={e => changeDistrict(e)}>
                     {districtOptions}
                   </Select>
                 </ButtonLabelWrapper>
@@ -80,7 +80,7 @@ function AppFilters({filter, loading, onChange}){
                   <span class="tooltiptext">Filtros para los casos de violencia y acciones preventivas: Mes y año, departamento, provincia y distrito</span>
                 </div>
                 <div style={{marginTop:"15px"}}>
-                  {loading && <Spin size="large" />}
+                  {loading && <Spin size="medium" />}
                 </div>
               </Space>
               
