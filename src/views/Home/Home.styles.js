@@ -2,12 +2,12 @@ import styled from '@emotion/styled';
 
 export const TitleContainer = styled.div`
     width: 100%;
-    height: 15%;
+    height: 17%;
 `
 
 export const ModulesAreaContainer = styled.div`
     width: 100%;
-    height: 55%;
+    height: 60%;
     display: flex;
     background-color: white;
     justify-content: space-around;
