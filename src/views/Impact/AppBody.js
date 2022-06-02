@@ -83,6 +83,7 @@ function AppBody({ location, tableData, handleViewOne, selectMode, setSelectMode
                     <div style={{fontWeight:"bold", fontSize:"12px"}}>{`Acciones preventivas llevadas a cabo en ${location}`}</div>
                     <div style={{fontWeight:"bold", fontSize:"12px"}}>el día 
                         <DatePicker
+                            size="small"
                             disabledDate={disableDate}
                             value={filter.apps_day}
                             format={dateFormatList}

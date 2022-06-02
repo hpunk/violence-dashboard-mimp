@@ -70,8 +70,9 @@ function ViolenceBody({ data, filter, appData }){
                                     label: 'Acciones Preventivas Promocionales',
                                     borderColor: PieHoverColors[0],
                                     borderWidth: 2,
-                                    radius: 2,
-                                    backgroundColor: 'transparent',
+                                    radius: 1,
+                                    backgroundColor: PieHoverColors[0],
+                                    fill: false,
                                 },
                             ]
                         }}
@@ -85,6 +86,7 @@ function ViolenceBody({ data, filter, appData }){
                             legend:{
                                 labels: {
                                     usePointStyle : true,
+                                    fontSize:11,
                                 }
                             },
                             interaction: {
@@ -150,32 +152,36 @@ function ViolenceBody({ data, filter, appData }){
                                     label: 'Económica',
                                     borderColor: PieHoverColors[0],
                                     borderWidth: 2,
-                                    radius: 2,
-                                    backgroundColor: 'transparent',
+                                    radius: 1,
+                                    backgroundColor: PieHoverColors[0],
+                                    fill: false,
                                 },
                                 {
                                     data: data && data.physicalV ?  data.physicalV : [],
                                     label: 'Física',
                                     borderColor:PieHoverColors[1],
-                                    borderWidth: 2,
-                                    radius: 2,
-                                    backgroundColor: 'transparent',
+                                    borderWidth: 1,
+                                    radius: 1,
+                                    backgroundColor: PieHoverColors[1],
+                                    fill: false,
                                 },
                                 {
                                     data: data && data.psychologicalV ? data.psychologicalV : [],
                                     label: 'Psicológica',
                                     borderColor: PieHoverColors[2],
-                                    borderWidth: 2,
-                                    radius: 2,
-                                    backgroundColor: 'transparent',
+                                    borderWidth: 1,
+                                    radius: 1,
+                                    backgroundColor: PieHoverColors[2],
+                                    fill: false,
                                 },
                                 {
                                     data: data && data.sexualV ?  data.sexualV : [],
                                     label: 'Sexual',
                                     borderColor: PieHoverColors[3],
-                                    borderWidth: 2,
-                                    radius: 2,
-                                    backgroundColor: 'transparent',
+                                    borderWidth: 1,
+                                    radius: 1,
+                                    backgroundColor: PieHoverColors[3],
+                                    fill: false,
                                 },
                             ]
                         }}
@@ -184,6 +190,7 @@ function ViolenceBody({ data, filter, appData }){
                             legend:{
                                 labels: {
                                     usePointStyle : true,
+                                    fontSize:11,
                                 }
                             },
                             title: {

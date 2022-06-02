@@ -56,13 +56,14 @@ function EvolutionFilter({filter, onSearch, onChange, loading}){
         <InputsCardAPP>
             <Space  align={"right"}>
               <ButtonLabelWrapper>
-                <div>
-                <Text strong type="primary">Rango de fechas:</Text>
+                <div style={{fontSize:"12px", fontWeight:"bold"}}>
+                {"Rango de fechas:"}
                 </div>
                 <div>
                 <DatePicker 
                   value={startLocal}
                   placeholder={"Mes inicio"}
+                  size="small"
                   format={dateFormatList}
                   allowClear={false}
                   onChange={e => {
@@ -72,10 +73,12 @@ function EvolutionFilter({filter, onSearch, onChange, loading}){
                     onChange("startDate",e);
                   }} 
                   picker="month"
+                  style={{width:"150px"}}
                   disabledDate={disabledDate}
                 />
                 <DatePicker 
                   value={endLocal}
+                  size="small"
                   placeholder={"Mes fin"}
                   format={dateFormatList}
                   allowClear={false}
@@ -86,13 +89,14 @@ function EvolutionFilter({filter, onSearch, onChange, loading}){
                     onChange("endDate",e);
                   }} 
                   picker="month"
+                  style={{width:"150px"}}
                   disabledDate={disabledEndDate}
                 />
                 <div class="tooltip" style={{ marginLeft : "10px", marginRight : "10px"}}>
                   <QuestionCircleOutlined />
                   <span class="tooltiptext">Rango de fechas para visualizar los casos de violencia de forma mensual en el Perú (máximo 12 meses)</span>
                 </div>
-                {loading && <Spin size="large" />}
+                {loading && <Spin size="medium" />}
                 </div>
               </ButtonLabelWrapper>
 

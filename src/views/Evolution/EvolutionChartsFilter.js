@@ -36,23 +36,23 @@ function EvolutionChartsFilter({filter, onChange}){
           <Space  align={"right"}>
           { filter.filter_by === "STATE" ?
               <ButtonLabelWrapper>
-                <Text strong type="primary">Departamento</Text>
-                <Select dropdownMatchSelectWidth={false} value={filter.stateLabel} style={{ width: 120 }} onChange={e => onChange('state',e)}>
+                <div style={{fontSize:"12px", fontWeight:"bold"}}>Departamento</div>
+                <Select dropdownMatchSelectWidth={false} size={"small"} value={filter.stateLabel} style={{ width: "93px" }} onChange={e => onChange('state',e)}>
                   {stateOptions}
                 </Select>
               </ButtonLabelWrapper>
               :
               <ButtonLabelWrapper>
-                <Text strong type="primary">Provincia</Text>
-                <Select value={filter.provinceLabel} style={{ width: 120 }} onChange={e => onChange('province',e)}>
+                <div style={{fontSize:"12px", fontWeight:"bold"}}>Provincia</div>
+                <Select value={filter.provinceLabel} size={"small"} style={{ width: "90px" }} onChange={e => onChange('province',e)}>
                   {provinceOptions}
                 </Select>
               </ButtonLabelWrapper>
             }
 
               <ButtonLabelWrapper>
-                <Text strong type="primary">Sexo víctimas: </Text>
-                <Select value={filter.victim_sex} style={{ width: 120 }} onChange={e => onChange("victim_sex",e)}>
+                <div style={{fontSize:"12px", fontWeight:"bold"}}>Sexo víctimas: </div>
+                <Select value={filter.victim_sex} size={"small"} style={{ width: "85px" }} onChange={e => onChange("victim_sex",e)}>
                   <Option key={"man_victim"}>{"Hombre"}</Option>
                   <Option key={"woman_victim"}>{"Mujer"}</Option>
                   <Option key={"total_victim"}>{"Todos"}</Option>
@@ -60,29 +60,28 @@ function EvolutionChartsFilter({filter, onChange}){
               </ButtonLabelWrapper>
 
             <ButtonLabelWrapper>
-              <Text strong type="primary">Ver casos de violencia por:</Text>
-              <Text strong type="secondary">(Máximo 2 a la vez)</Text>
+              <div style={{fontSize:"12px", fontWeight:"bold"}}>Ver casos de violencia por: (Máximo 2 a la vez)</div>
               <Checkbox.Group style={{ width: '100%' }} defaultValue={['violence_types']} onChange={(e)=>{ setSelected(e); onChange("types",e); }}>
                 <Row>
                   <Col span={8}>
-                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.violence_types && selected.length===2} value="violence_types">Tipos violencia</Checkbox>
+                    <Checkbox style={{fontWeight:"bold", fontSize: "11px", width:"120px"}} disabled={!filter.types.violence_types && selected.length===2} value="violence_types">Tipos violencia</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.first_time && selected.length===2} value="first_time">1ra vez agresión</Checkbox>
+                    <Checkbox style={{fontWeight:"bold", fontSize: "11px", width:"120px"}} disabled={!filter.types.first_time && selected.length===2} value="first_time">1ra vez agresión</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.factors && selected.length===2} value="factors">Factores del caso</Checkbox>
+                    <Checkbox style={{fontWeight:"bold", fontSize: "11px", width:"130px"}} disabled={!filter.types.factors && selected.length===2} value="factors">Factores de caso</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.group_age && selected.length===2} value="group_age">Edad de víctima</Checkbox>
+                    <Checkbox style={{fontWeight:"bold", fontSize: "11px"}} disabled={!filter.types.group_age && selected.length===2} value="group_age">Edad de víctima</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox style={{fontWeight:"bold"}} disabled={!filter.types.relation_vict_aggr && selected.length===2} value="relation_vict_aggr">Vínculo</Checkbox>
+                    <Checkbox style={{fontWeight:"bold", fontSize: "11px"}} disabled={!filter.types.relation_vict_aggr && selected.length===2} value="relation_vict_aggr">Vínculo</Checkbox>
                   </Col>
                 </Row>
               </Checkbox.Group>
             </ButtonLabelWrapper>
-            <div class="tooltip" style={{ marginLeft : "10px", marginRight : "10px"}}>
+            <div class="tooltip" style={{ marginRight : "1px"}}>
               <QuestionCircleOutlined />
               <span style={{left:"-200px", position:"absolute"}} class="tooltiptext">Filtros para visualizar los casos de violencia de forma semanal para un departamento específico</span>
             </div>

@@ -188,7 +188,7 @@ class Evolution extends Component{
       <EvolutionContainer>
         <MapContainer>
             <MapFilterContainer>
-            <div style={{"width":"100%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Evolución de violencia en Perú:</Text> </div>
+            <div style={{"width":"100%", "fontSize":"15px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Evolución de violencia en Perú:</Text> </div>
                 <EvolutionFilter
                   filter={data_filter}
                   onChange={this.handleMapFilterChange}
@@ -197,7 +197,7 @@ class Evolution extends Component{
                 />
             </MapFilterContainer>
             <ChoroplethContainer>
-              <div style={{"width":"100%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px", "marginTop": "10px"}}> <Text type="primary" >Casos de violencia por departamento por mes:</Text> </div>
+              <div style={{"width":"100%", "fontSize":"15px", "fontWeight": "bold", "marginLeft":"10px", "marginTop": "10px"}}> <Text type="primary" >Casos de violencia por departamento por mes:</Text> </div>
               <MapCardAPP>
               <Map 
                 mapJson={PERU_DEPARTAMENTO}
@@ -216,8 +216,8 @@ class Evolution extends Component{
                 onChange={this.handleChartFilterChange}
             />
           </ChartsFilterContainer>
-          <div style={{width:"99%",height:"90%"}}>
-          <div style={{"width":"100%", height:"5%","fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >{`Casos de violencia por semana para el departamento de ${data_filter.stateLabel} en período ${period}`}</Text> </div>
+          <div style={{width:"99%",height:"85%"}}>
+          <div style={{"width":"100%", height:"5%","fontSize":"14px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >{`Casos de violencia por semana para el departamento de ${data_filter.stateLabel} en período ${period}`}</Text> </div>
           <div style={{width:"100%",height:"95%"}}>
           { charts_data && charts_data.dates.length > 0 ? 
             charts_to_show.map(chart => 

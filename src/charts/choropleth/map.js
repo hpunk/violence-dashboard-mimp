@@ -7,7 +7,7 @@ import LinearGradient from './LinearGradient.js';
 import './map.css';
 
 const PROJECTION_CONFIG = {
-  scale: 1300,
+  scale: 1200,
   center: [-74.9629, -9.5937]
 };
 
@@ -89,8 +89,8 @@ function Map({mapJson, mapData, date, setDate}) {
 
   return (
       <div>
-        <div style={{fontWeight:"bold"}}>{mapData.length == 1 ? "" :"Deslizar para cambiar mes:"}</div>
-        <div className="center" style={{"width":"500px", "paddingLeft":"100px"}}>
+        <div style={{ fontWeight:"bold", fontSize:"12px" }}>{mapData.length == 1 ? "" :"Deslizar para cambiar mes:"}</div>
+        <div className="center" style={{"width":"400px", "paddingLeft":"100px"}}>
           {mapData.length == 1 ?
           null :
           <Slider
@@ -103,7 +103,7 @@ function Map({mapJson, mapData, date, setDate}) {
         </div>
         <div>
           <div style={{display:"flex"}}>
-            <div style={{width:"50%", fontWeight:"bold"}}>Mes y año</div><div style={{width:"50%", fontWeight:"bold"}}>Cantidad de casos</div>
+            <div style={{width:"50%", fontWeight:"bold", fontSize:"12px"}}>Mes y año</div><div style={{width:"50%", fontWeight:"bold", fontSize:"12px"}}>Cantidad de casos</div>
           </div>
           <div style={{display:"flex"}}>
             <input id="fecha" style={{width:"50%", fontWeight:"bold"}}disabled={true} key="stateMap" value={mapData.length > 0 ? `${MESES[mapData[date-1].month] }/${mapData[date-1].year}`: ""}/>
@@ -114,7 +114,7 @@ function Map({mapJson, mapData, date, setDate}) {
         <ComposableMap
           projectionConfig={PROJECTION_CONFIG}
           projection="geoMercator"
-          width={450}
+          width={500}
           height={450}
           data-tip=""
         >

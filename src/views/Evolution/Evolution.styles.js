@@ -29,7 +29,7 @@ export const SingleChartContainer = styled.div`
 `
 export const ChartsFilterContainer = styled.div`
     width: 93%;
-    height: 9%;
+    height: 14%;
     padding-left: 7%;
     margin-top: 1%;
     display: flex;

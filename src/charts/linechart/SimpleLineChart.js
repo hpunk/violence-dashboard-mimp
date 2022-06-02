@@ -10,7 +10,7 @@ function SimpleLineChart({data, dates, title }){
       <Line
         data={{
             labels: labels,
-            datasets: data.map((e,i) => ({data:e.data, label:e.label, borderColor:colors[i], backgroundColor: colors[i], fill: false, borderWidth:2, radius:2})),
+            datasets: data.map((e,i) => ({data:e.data, label:e.label, borderColor:colors[i], backgroundColor: colors[i], fill: false, borderWidth:2, radius:1})),
         }}
         options={
           {
@@ -24,11 +24,17 @@ function SimpleLineChart({data, dates, title }){
               display: true,
               text: title,
             },
+            legend:{
+                labels: {
+                    usePointStyle : true,
+                    fontSize:11,
+                }
+            },
             tooltips: {
                 displayColors: true,
-                titleFontSize: 14,
+                titleFontSize: 11,
                 backgroundColor: 'black',
-                bodyFontSize: 14,
+                bodyFontSize: 11,
                 xPadding: 10,
                 intersect: false,
                 mode: "nearest",

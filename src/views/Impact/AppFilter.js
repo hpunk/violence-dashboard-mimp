@@ -52,6 +52,7 @@ function AppFilters({filter, loading, onChange}){
                   <div style={{fontSize:"12px", fontWeight:"bold"}}>Período (mes - año) </div>
                   <DatePicker value={startLocal} format={dateFormatList}
                     picker={"month"}
+                    size="small"
                     onChange={e => {setStartLocal(e); onChange('startDate',e);}}
                     allowClear={false}
                     style={{ fontWeight : "bold", fontSize: "10px", width:"150px"}}
@@ -59,19 +60,19 @@ function AppFilters({filter, loading, onChange}){
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
                   <div style={{fontSize:"12px", fontWeight:"bold"}}>Departamento</div>
-                  <Select dropdownMatchSelectWidth={false} value={filter.stateLabel} style={{ width: "90px", fontSize:"10px" }} onChange={e => changeState(e)}>
+                  <Select dropdownMatchSelectWidth={false} size="small" value={filter.stateLabel} style={{ width: "90px", fontSize:"10px" }} onChange={e => changeState(e)}>
                     {stateOptions}
                   </Select>
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
                   <div style={{fontSize:"12px", fontWeight:"bold"}}>Provincia</div>
-                  <Select dropdownMatchSelectWidth={false} value={filter.provinceLabel} style={{ width: "90px", fontSize:"10px" }} onChange={e => changeProvince(e)}>
+                  <Select dropdownMatchSelectWidth={false} size="small" value={filter.provinceLabel} style={{ width: "90px", fontSize:"10px" }} onChange={e => changeProvince(e)}>
                     {provinceOptions}
                   </Select>
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
                   <div style={{fontSize:"12px", fontWeight:"bold"}}>Distrito</div>
-                  <Select dropdownMatchSelectWidth={false} value={filter.districtLabel} style={{ width: "90px", fontSize:"10px" }} onChange={e => changeDistrict(e)}>
+                  <Select dropdownMatchSelectWidth={false} size="small" value={filter.districtLabel} style={{ width: "90px", fontSize:"10px" }} onChange={e => changeDistrict(e)}>
                     {districtOptions}
                   </Select>
                 </ButtonLabelWrapper>
