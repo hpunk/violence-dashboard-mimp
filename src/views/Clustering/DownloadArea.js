@@ -45,8 +45,8 @@ function DownloadArea({clusters}){
         <div>
         <AlgorithmAdditionalInfo>
         <div style={{ display:"flex"}}>
-            <div style={{"width":"90%", "fontSize":"20px", "fontWeight": "bold"}}> 
-                <Text type="primary" >Descarga de datos por grupo:</Text>
+            <div style={{"width":"50%", "fontSize":"20px", "fontWeight": "bold"}}> 
+                <div style={{fontSize:"13px", fontWeight:"bold"}} >Descarga de datos por grupo:</div>
             </div>
             <div class="tooltip" style={{ width : "10%"}}>
                 <QuestionCircleOutlined />
@@ -56,12 +56,12 @@ function DownloadArea({clusters}){
           
               <Space  align={"right"}>
                 <ButtonLabelWrapper style={{ maxWidth: '120px' }}>
-                  <Text type="primary">Grupo</Text>
-                  <Select value={group} style={{ width: 120 }} onChange={e => setGroup(e)}>
+                  <div style={{fontSize:"11px", fontWeight:"bold"}} >Grupo</div>
+                  <Select size="small" value={group} style={{ width: "100px" }} onChange={e => setGroup(e)}>
                     {groupOptions}
                   </Select>
                 </ButtonLabelWrapper>
-                <div style={{marginTop:"25px"}}><Button type={"primary"} onClick={download} disabled={group == "" || loading}> Descargar datos </Button></div>
+                <div style={{marginTop:"15px"}}><Button type={"primary"} style={{height:"30px", fontSize:"11px"}} size="small" onClick={download} disabled={group == "" || loading}> Descargar datos </Button></div>
               </Space>
         </AlgorithmAdditionalInfo>
             

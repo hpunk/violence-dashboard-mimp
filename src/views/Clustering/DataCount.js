@@ -25,14 +25,15 @@ function DataCount({count}){
     
     return (
         <div>
-          <div style={{"width":"100%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Casos:</Text> </div>
+          <div style={{"width":"100%", "fontSize":"15px", "fontWeight": "bold", "marginLeft":"5px"}}> <Text type="primary" >Casos:</Text> </div>
           <InputsCardAlgorithm>
               <Space  align={"right"}>
-                <ButtonLabelWrapper style={{ maxWidth: '120px' }}>
-                  <Text strong type="primary">{count}</Text>
-                  <div class="tooltip" style={{ position:"relative", float:"right"}}>
+                <ButtonLabelWrapper >
+                  <div style={{fontSize:"13px",fontWeight:"bold"}}>{count}
+                  <div class="tooltip" style={{ marginLeft: "2px", position:"relative", float:"right"}}>
                     <QuestionCircleOutlined />
                     <span class="tooltiptext">Cantidad de casos a ser agrupados</span>
+                  </div>
                   </div>
                 </ButtonLabelWrapper>
               </Space>

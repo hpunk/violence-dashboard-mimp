@@ -2,18 +2,19 @@ import styled from '@emotion/styled';
 
 export const ClusteringFilterContainer = styled.div`
     width: 100%;
-    height: 10%;
+    height: 15%;
     display: flex;
 `
 
 export const DataFilterContainer = styled.div`
-    width: 47%;
+    width: 51%;
     margin-right:3%;
     height: 100%;
+    max-width: 596px
 `
 
 export const DataCountContainer = styled.div`
-    width: 10%;
+    width: 6%;
     height: 100%;
 `
 
@@ -24,14 +25,13 @@ export const AlgorithmContainer = styled.div`
 
 export const ClusteringDataContainer = styled.div`
     width: 100%;
-    height: 90%;
+    height: 85%;
     display: flex;
 `
 
 export const ClusteringGraphic = styled.div`
-    width: 60%;
+    width: 55%;
     height: 90%;
-    margin-top: 4%;
     flex: none;
 `
 
@@ -48,8 +48,8 @@ export const ClusteringContainer = styled.div`
 
 export const InputsCardAPP = styled.div`
     flex: none;
-    margin: 8px 4px;
-    padding: 4px;
+
+    
     width: 100%;
     border: 2px solid #40a9ff;
     background-color: white;
@@ -70,7 +70,7 @@ export const AlgorithmAdditionalInfo = styled.div`
     margin: 8px 4px;
     padding: 4px;
     width: 100%;
-    max-width: 549px;
+    max-width: 509px;
     border: 2px solid #40a9ff;
     background-color: white;
 `
@@ -79,7 +79,7 @@ export const DownloadCard = styled.div`
     flex: none;
     margin: 8px 4px;
     padding: 4px;
-    width: 80%;
+    width: 70%;
     max-width: 500px;
     border: 2px solid #40a9ff;
     background-color: white;
@@ -87,5 +87,4 @@ export const DownloadCard = styled.div`
 
 export const ButtonLabelWrapper = styled.div`
     display: block;
-    min-width : 115px;
 `

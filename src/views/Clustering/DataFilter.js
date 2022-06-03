@@ -53,12 +53,12 @@ function DataFilter({filter, onSearch, onChange, isLoading}){
 
     return (
         <React.Fragment>
-          <div style={{"width":"100%", "fontSize":"20px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Grupos dentro de casos de violencia:</Text> </div>
+          <div style={{"width":"100%", "fontSize":"15px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Grupos dentro de casos de violencia:</Text> </div>
           <InputsCardAPP>
               <Space  align={"right"}>
                 <ButtonLabelWrapper>
-                  <Text strong type="primary">Fecha inicio</Text>
-                  <DatePicker value={startLocal} format={dateFormatList} onChange={e => {
+                  <div style={{fontSize:"12px", fontWeight:"bold"}}>Fecha inicio</div>
+                  <DatePicker value={startLocal} style={{width:"110px"}} size={"small"} format={dateFormatList} onChange={e => {
                       setStartLocal(e);
                       onChange('startDate',e);
                       if((endLocal.diff(e,'days') < 0) || (Number(endLocal.format('YYYY'))-Number(e.format('YYYY')) > 0)){
@@ -68,8 +68,9 @@ function DataFilter({filter, onSearch, onChange, isLoading}){
                       }} allowClear={false}/>
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
-                  <Text strong type="primary">Fecha fin</Text>
-                  <DatePicker value={endLocal} format={dateFormatList} 
+                  <div style={{fontSize:"12px", fontWeight:"bold"}}>Fecha fin</div>
+                  <DatePicker size={"small"} value={endLocal} format={dateFormatList}
+                    style={{width:"110px"}}
                     disabledDate={disabledEndDate}
                     onChange={e => {
                       setEndLocal(e);
@@ -77,25 +78,25 @@ function DataFilter({filter, onSearch, onChange, isLoading}){
                       }} allowClear={false}/>
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
-                  <Text strong type="primary">Departamento</Text>
-                  <Select dropdownMatchSelectWidth={false} value={filter.stateLabel} style={{ width: 120 }} onChange={e => changeState(e)}>
+                  <div style={{fontSize:"12px", fontWeight:"bold"}}>Departamento</div>
+                  <Select dropdownMatchSelectWidth={false} size={"small"} value={filter.stateLabel} style={{ width: "90px" }} onChange={e => changeState(e)}>
                     {stateOptions}
                   </Select>
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
-                  <Text strong type="primary">Provincia</Text>
-                  <Select dropdownMatchSelectWidth={false} value={filter.provinceLabel} style={{ width: 120 }} onChange={e => changeProvince(e)}>
+                  <div style={{fontSize:"12px", fontWeight:"bold"}}>Provincia</div>
+                  <Select dropdownMatchSelectWidth={false} size={"small"} value={filter.provinceLabel} style={{ width: "90px" }} onChange={e => changeProvince(e)}>
                     {provinceOptions}
                   </Select>
                 </ButtonLabelWrapper>
                 <ButtonLabelWrapper>
-                  <Text strong type="primary">Distrito</Text>
-                  <Select dropdownMatchSelectWidth={false} value={filter.districtLabel} style={{ width: 120 }} onChange={e => changeDistrict(e)}>
+                  <div style={{fontSize:"12px", fontWeight:"bold"}}>Distrito</div>
+                  <Select dropdownMatchSelectWidth={false} size={"small"} value={filter.districtLabel} style={{ width: "90px" }} onChange={e => changeDistrict(e)}>
                     {districtOptions}
                   </Select>
                 </ButtonLabelWrapper>
-                <div >
-                  <div class="tooltip" style={{ marginLeft : "45px"}}>
+                <div style={{width:"50px"}}>
+                  <div class="tooltip" style={{ marginLeft : "38px"}}>
                     <QuestionCircleOutlined />
                     <span class="tooltiptext">Filtros para seleccionar los casos de violencia con los que se va a llevar a cabo el agrupamiento</span>
                   </div>
@@ -104,7 +105,7 @@ function DataFilter({filter, onSearch, onChange, isLoading}){
                         onSearch();
                     }}
                     type={"primary"}
-                    style={{fontWeight:"bold"}}
+                    style={{fontWeight:"bold", fontSize:"11px", width:"55px", height:"25px"}}
                     disabled={isLoading}
                   > 
                     Filtrar 
