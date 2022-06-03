@@ -153,7 +153,7 @@ class Clustering extends Component{
             <DataCount
               count={count}
             />
-            {!filter.isValid && <div style={{fontWeight:"bold", fontSize:"15px"}}>Se usará una muestra de 380 casos en esta versión</div>}
+            {!filter.isValid && <div style={{fontWeight:"bold", fontSize:"10px"}}>Se usará una muestra de 380 casos en esta versión</div>}
           </DataCountContainer>
           <AlgorithmContainer>
             <ClusteringAlgorithmsFilter

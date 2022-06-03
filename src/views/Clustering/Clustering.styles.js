@@ -8,13 +8,13 @@ export const ClusteringFilterContainer = styled.div`
 
 export const DataFilterContainer = styled.div`
     width: 51%;
-    margin-right:3%;
+    margin-right:1%;
     height: 100%;
     max-width: 596px
 `
 
 export const DataCountContainer = styled.div`
-    width: 6%;
+    width: 8%;
     height: 100%;
 `
 
