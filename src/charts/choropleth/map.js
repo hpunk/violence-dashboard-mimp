@@ -7,7 +7,7 @@ import LinearGradient from './LinearGradient.js';
 import './map.css';
 
 const PROJECTION_CONFIG = {
-  scale: 1200,
+  scale: 1150,
   center: [-74.9629, -9.5937]
 };
 
@@ -115,7 +115,7 @@ function Map({mapJson, mapData, date, setDate}) {
           projectionConfig={PROJECTION_CONFIG}
           projection="geoMercator"
           width={500}
-          height={450}
+          height={400}
           data-tip=""
         >
           <Geographies geography={mapJson}>

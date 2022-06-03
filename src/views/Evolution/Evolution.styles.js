@@ -38,13 +38,13 @@ export const ChartsFilterContainer = styled.div`
 
 export const MapFilterContainer = styled.div`
     width: 98%;
-    height: 10%;
+    height: 12%;
     flex: none;
     align-content:'center';
 `
 export const ChoroplethContainer = styled.div`
     width: 98%;
-    height: 90%;
+    height: 88%;
     background-color: 'black';
 `
 

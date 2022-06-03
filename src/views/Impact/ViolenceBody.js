@@ -57,9 +57,9 @@ function ViolenceBody({ data, filter, appData }){
 
     return (
         <React.Fragment>
-            <div>
+            <div style={{height:'100%'}}>
 
-                <div style={{height:'350px', width: '98%', maxWidth:"550px", marginTop:"10px", paddingLeft:"3.6%"}}>
+                <div style={{height:'48%', width: '98%', maxWidth:"550px", marginTop:"10px", paddingLeft:"3.6%"}}>
                     <Line
                         data={{
                             labels: xLineLabel,
@@ -141,7 +141,7 @@ function ViolenceBody({ data, filter, appData }){
                             }
                         }}/>
                 </div>
-                <div style={{height:'350px', width: '98%', maxWidth:"550px", marginTop:"10px", paddingLeft:"3.6%"}}>
+                <div style={{height:'48%', width: '98%', maxWidth:"550px", marginTop:"10px", paddingLeft:"3.6%"}}>
                     <Line
                         data={{
                             labels: xLineLabel,

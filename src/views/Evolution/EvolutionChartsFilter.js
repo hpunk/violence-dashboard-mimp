@@ -73,10 +73,10 @@ function EvolutionChartsFilter({filter, onChange}){
                     <Checkbox style={{fontWeight:"bold", fontSize: "11px", width:"130px"}} disabled={!filter.types.factors && selected.length===2} value="factors">Factores de caso</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox style={{fontWeight:"bold", fontSize: "11px"}} disabled={!filter.types.group_age && selected.length===2} value="group_age">Edad de víctima</Checkbox>
+                    <Checkbox style={{fontWeight:"bold", fontSize: "11px"}} disabled={!filter.types.relation_vict_aggr && selected.length===2} value="relation_vict_aggr">Vínculo</Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox style={{fontWeight:"bold", fontSize: "11px"}} disabled={!filter.types.relation_vict_aggr && selected.length===2} value="relation_vict_aggr">Vínculo</Checkbox>
+                    <Checkbox style={{fontWeight:"bold", fontSize: "11px", width:"130px"}} disabled={!filter.types.group_age && selected.length===2} value="group_age">Edad de víctima</Checkbox>
                   </Col>
                 </Row>
               </Checkbox.Group>
