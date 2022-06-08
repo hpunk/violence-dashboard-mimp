@@ -53,7 +53,7 @@ function DataFilter({filter, onSearch, onChange, isLoading}){
 
     return (
         <React.Fragment>
-          <div style={{"width":"100%", "fontSize":"15px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Grupos dentro de casos de violencia:</Text> </div>
+          <div style={{"width":"100%", "fontSize":"15px", "fontWeight": "bold", "marginLeft":"10px"}}> <Text type="primary" >Identificación de grupos en casos de violencia:</Text> </div>
           <InputsCardAPP>
               <Space  align={"right"}>
                 <ButtonLabelWrapper>
